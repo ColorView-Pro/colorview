@@ -1,19 +1,54 @@
+/* Light Theme (default) */
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --button: #e1e1e1;
+    --button-text: #000000;
+}
+
+/* Dark Theme */
+.dark {
+    --bg: #0f0f0f;
+    --text: #ffffff;
+    --button: #333333;
+    --button-text: #ffffff;
+}
+
 body {
+    background: var(--bg);
+    color: var(--text);
     text-align: center;
     font-family: Arial, sans-serif;
-    background: #f5f8ff;
-    padding: 20px;
+}
+
+button, select {
+    background: var(--button);
+    color: var(--button-text);
+    padding: 10px 20px;
+    border: none;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
 .logo-container {
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 .logo {
-    width: 200px;
-    height: auto;
+    width: 130px;
+    display: block;
+    margin: auto;
 }
 
-.lang-box {
-    margin-bottom: 20px;
+.theme-btn {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.lang-select {
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }
