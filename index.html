@@ -1,44 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="gold">
 <head>
-    <meta charset="UTF-8">
-    <title>ColorView</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ColorView</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-
-    <!-- Theme Toggle -->
-    <button id="themeToggle" class="theme-btn">🌙 Dark</button>
-
-    <!-- Language Selector -->
-    <select id="languageSelect" class="lang-select">
-        <option value="en">English</option>
-        <option value="ar">العربية</option>
-    </select>
-
-    <!-- Logo -->
-    <div class="logo-container">
-        <img src="logo.png" class="logo">
+  <header class="header">
+    <div class="left">
+      <img id="logo" src="logo.png" class="logo" alt="ColorView Logo">
+      <h1 class="brand">ColorView</h1>
     </div>
 
-    <h1 id="title">Upload an Image</h1>
+    <div class="right">
+      <select id="languageSelect">
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+      </select>
 
-    <input type="file" id="imageUpload" accept="image/*">
+      <button id="themeToggle" class="ghost">Light Mode</button>
+    </div>
+  </header>
 
-    <br><br>
+  <main class="main">
+    <p id="subtitle" class="subtitle">Upload an image and preview color‑vision filters</p>
 
-    <img id="preview" style="max-width:400px; display:none; border: 2px solid #000;">
+    <label class="upload-box" for="imageUpload">
+      <input id="imageUpload" type="file" accept="image/*">
+      <span class="upload-text">Choose Image</span>
+    </label>
 
-    <br><br>
-    <canvas id="canvas" style="display:none; border:2px solid #000;"></canvas>
+    <div class="preview-wrap">
+      <img id="preview" alt="Preview" style="display:none;">
+      <canvas id="canvas" style="display:none;"></canvas>
+    </div>
 
-    <br><br>
+    <div class="controls">
+      <button class="filter" data-filter="protanopia" id="btnPro">Red‑Weak</button>
+      <button class="filter" data-filter="deuteranopia" id="btnDeu">Green‑Weak</button>
+      <button class="filter" data-filter="tritanopia" id="btnTri">Blue‑Weak</button>
+      <button id="btnReset" class="ghost">Reset</button>
+    </div>
+  </main>
 
-    <button class="filterBtn" data-type="pro">Red‑Weak</button>
-    <button class="filterBtn" data-type="deu">Green‑Weak</button>
-    <button class="filterBtn" data-type="tri">Blue‑Weak</button>
-    <button id="resetBtn">Reset</button>
+  <footer class="footer">
+    <small>By Nour Eldeen & Ahmed Sameh — ColorView</small>
+  </footer>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
