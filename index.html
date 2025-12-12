@@ -7,36 +7,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="light-mode">
-
+    <div id="splash-screen">
+        <img id="splash-logo" src="logo.png" alt="ColorView Pro Logo">
+    </div>
     <svg style="height: 0; width: 0; position: absolute;">
         <defs>
             <filter id="mono">
                 <feColorMatrix type="matrix" values="0.333 0.333 0.333 0 0
                                                     0.333 0.333 0.333 0 0
                                                     0.333 0.333 0.333 0 0
-                                                    0     0     0     1 0" />
+                                                    0 0 0 1 0" />
             </filter>
             <filter id="deutan">
                 <feColorMatrix type="matrix" values="0.625 0.375 0.000 0 0
                                                     0.700 0.300 0.000 0 0
                                                     0.000 0.300 0.700 0 0
-                                                    0     0     0     1 0" />
+                                                    0 0 0 1 0" />
             </filter>
             <filter id="protan">
                 <feColorMatrix type="matrix" values="0.567 0.433 0.000 0 0
                                                     0.558 0.442 0.000 0 0
                                                     0.000 0.242 0.758 0 0
-                                                    0     0     0     1 0" />
+                                                    0 0 0 1 0" />
             </filter>
             <filter id="tritan">
                 <feColorMatrix type="matrix" values="0.950 0.050 0.000 0 0
                                                     0.000 0.433 0.567 0 0
                                                     0.000 0.475 0.525 0 0
-                                                    0     0     0     1 0" />
+                                                    0 0 0 1 0" />
             </filter>
         </defs>
     </svg>
-
     <header>
         <div id="logo-container">
             <img id="logo-image" src="logo.png" alt="ColorView Pro Logo">
@@ -46,11 +47,9 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm0-4a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7.98-6.16c-.03.43-.09.85-.18 1.25l1.66 1.28c.17.13.2.39.07.57l-1.6 2.76a.46.46 0 0 1-.58.14l-1.92-.73c-.5.42-1.05.77-1.65 1.05l-.32 2.05a.46.46 0 0 1-.45.42H9.36a.46.46 0 0 1-.45-.42l-.32-2.05a8.77 8.77 0 0 1-1.65-1.05l-1.92.73a.46.46 0 0 1-.58-.14L2.84 14.1a.46.46 0 0 1 .07-.57l1.66-1.28c-.09-.4-.15-.82-.18-1.25L3.8 9.5a.46.46 0 0 1 .45-.42h3.36c.03-.43.09-.85.18-1.25L7.13 6.55a.46.46 0 0 1 .57-.14l1.92.73c.5-.42 1.05-.77 1.65-1.05l.32-2.05c.02-.27.24-.48.51-.48h3.36c.27 0 .49.21.51.48l.32 2.05c.6.28 1.15.63 1.65 1.05l1.92-.73c.18-.07.39-.03.57.14l1.6 2.76c.14.18.1.44-.07.57l-1.66 1.28z"/></svg>
         </button>
     </header>
-
     <div id="app-container">
         <main id="main-content">
             <h2 id="main-content-title">Color Picker & Values</h2>
-
             <div id="color-preview-container">
                 <div id="current-color-preview">
                     <img id="uploaded-image" src="" alt="Uploaded design preview" style="display:none;">
@@ -68,7 +67,6 @@
                         <label for="hslInput">HSL</label>
                         <input type="text" id="hslInput" value="203, 63%, 53%" readonly>
                     </div>
-
                     <div class="input-group" style="padding: 0; border: none; background: none;">
                         <input type="file" id="imageUpload" accept="image/*" style="display: none;">
                         <button id="uploadBtn" style="flex-grow: 1; padding: 10px; background: var(--color-accent); color: white; border: none; border-radius: 4px; cursor: pointer;">
@@ -78,10 +76,8 @@
                             Clear
                         </button>
                     </div>
-
                 </div>
             </div>
-
             <div id="colorblind-disclaimer">
                 <p id="disclaimer-text">For the best use of this feature, You should have someone with you who is not colorblind</p>
                 <div class="disclaimer-actions">
@@ -89,8 +85,6 @@
                     <button id="disclaimer-never-btn">Never Show Again</button>
                 </div>
             </div>
-
-
             <h3 id="hsl-controls-title">HSL Controls</h3>
             <div id="hsl-sliders">
                 <div class="slider-control">
@@ -109,12 +103,9 @@
                     <span class="slider-value" id="lValue">53%</span>
                 </div>
             </div>
-
         </main>
-
         <aside id="simulation-area">
             <h2 id="simulation-area-title">Color Blindness View</h2>
-
             <div id="colorblind-picker">
                 <p id="simulation-desc">Simulate for accessible design:</p>
                 <select id="colorblind-mode-select">
@@ -125,7 +116,6 @@
                     <option value="achromatopsia">Achromatopsia (Monochrome)</option>
                 </select>
             </div>
-
             <div id="mode-info-box">
                 <h3 id="mode-info-title">No Simulation Selected</h3>
                 <ul id="mode-info-list">
@@ -137,30 +127,23 @@
                 <h4 id="normal-vision-test">Normal Vision Test</h4>
                 <div class="simulation-content"></div>
             </div>
-
             <div class="simulation-box deuteranopia">
                 <h4 id="deuteranopia-test">Deuteranopia Test</h4>
                 <div class="simulation-content"></div>
             </div>
-
             <div class="simulation-box protanopia">
                 <h4 id="protanopia-test">Protanopia Test</h4>
                 <div class="simulation-content"></div>
             </div>
-
         </aside>
-
     </div>
-
     <footer id="main-footer">
         <p id="single-line-footer">
             ColorView Pro made by Ahmed Sameh and Nour Eldeen. | ColorView Pro © All rights reserved.
         </p>
     </footer>
-
     <div id="settings-drawer">
         <h2 id="settings-h2">Settings</h2>
-
         <div class="settings-option">
             <h3 id="theme-h3">Theme</h3>
             <div class="settings-controls">
@@ -168,7 +151,6 @@
                 <button id="darkModeBtn">Dark Mode</button>
             </div>
         </div>
-
         <div class="settings-option">
             <h3 id="language-h3">Language</h3>
             <div class="settings-controls">
@@ -179,7 +161,6 @@
 Yours
 Nour Eldeen & Ahmed Sameh.</p>
         </div>
-
         <div class="settings-option">
             <h3 id="layout-h3">Display Layout</h3>
             <div class="settings-controls">
@@ -188,7 +169,6 @@ Nour Eldeen & Ahmed Sameh.</p>
             </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>

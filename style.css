@@ -1,6 +1,6 @@
 /* ====================================
- *  1. CSS Custom Properties (Themes)
- *  ==================================== */
+ * 1. CSS Custom Properties (Themes)
+ * ==================================== */
 :root {
     /* Light Mode Defaults */
     --color-bg: #f8f8f8;
@@ -10,12 +10,10 @@
     --color-accent: #3498db;
     --color-border: #ecf0f1;
     --filter-colorblind: none;
-
     /* Logo Gradient Variable (Light Mode Default) */
     --logo-color-light: #000000; /* True black for light mode text */
     --logo-gradient-dark: linear-gradient(90deg, #D4A017 0%, #303030 50%, #D4A017 100%);
 }
-
 .dark-mode {
     /* BLACK AND GOLD THEME */
     --color-bg: #000000;
@@ -25,10 +23,9 @@
     --color-accent: #D4A017;
     --color-border: #222222;
 }
-
 /* ====================================
- *  2. Base Styling & Layout & Animations
- *  ==================================== */
+ * 2. Base Styling & Layout & Animations
+ * ==================================== */
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -37,7 +34,6 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
     overflow-x: hidden;
 }
-
 #app-container {
 display: grid;
 grid-template-columns: 2fr 1fr; /* PC Layout default */
@@ -46,17 +42,14 @@ margin: 0 auto;
 min-height: calc(100vh - 50px);
 transition: grid-template-columns 0.3s ease; /* Smooth transition for layout switch */
 }
-
 /* Mobile Layout Override Class */
 .mobile-layout #app-container {
     grid-template-columns: 1fr; /* Single column for mobile view */
 }
-
 .mobile-layout #simulation-area {
     border-left: none;
     border-top: 1px solid var(--color-border);
 }
-
 /* --- Header / Navigation --- */
 header {
     grid-column: 1 / -1;
@@ -71,25 +64,21 @@ header {
     z-index: 100;
     transition: background-color 0.4s ease, border-color 0.4s ease;
 }
-
 /* Logo Container for alignment */
 #logo-container {
 display: flex;
 align-items: center;
 gap: 10px;
 }
-
 /* Logo Image Styling (Made bigger) */
 #logo-image {
 height: 50px;
 width: auto;
 transition: transform 0.3s ease;
 }
-
 #logo-image:hover {
 transform: scale(1.05);
 }
-
 /* Logo Text Styling */
 #logo-text {
 font-size: 24px;
@@ -97,7 +86,6 @@ font-weight: bold;
 color: var(--logo-color-light);
 transition: color 0.4s ease;
 }
-
 .dark-mode #logo-text {
     /* Apply the gold/black gradient */
     background: var(--logo-gradient-dark);
@@ -107,7 +95,6 @@ transition: color 0.4s ease;
     color: transparent;
     transition: none;
 }
-
 #settings-btn {
 background: none;
 border: none;
@@ -116,22 +103,19 @@ padding: 8px;
 color: var(--color-text);
 transition: color 0.2s, transform 0.3s;
 }
-
 #settings-btn:hover {
 color: var(--color-accent);
 transform: rotate(15deg);
 }
-
 /* SVG Gear Icon Styling */
 #settings-btn svg {
 width: 24px;
 height: 24px;
 fill: currentColor;
 }
-
 /* ====================================
- *  BUTTON STYLING (Black in Light, Gold in Dark)
- *  ==================================== */
+ * BUTTON STYLING (Black in Light, Gold in Dark)
+ * ==================================== */
 .settings-controls button {
     padding: 8px 15px;
     border: 1px solid var(--color-text);
@@ -141,23 +125,19 @@ fill: currentColor;
     border-radius: 4px;
     transition: background-color 0.2s, color 0.2s, border-color 0.4s;
 }
-
 .settings-controls button:hover {
     background-color: var(--color-text);
     color: var(--color-surface);
 }
-
 .dark-mode .settings-controls button {
     border-color: var(--color-accent);
     background-color: var(--color-bg);
     color: var(--color-text);
 }
-
 .dark-mode .settings-controls button:hover {
     background-color: var(--color-accent);
     color: var(--color-bg);
 }
-
 /* Active state for layout buttons */
 .settings-controls button.active {
     background-color: var(--color-accent);
@@ -165,8 +145,6 @@ fill: currentColor;
     border-color: var(--color-accent);
     box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
-
-
 /* --- Disclaimer Buttons --- */
 #colorblind-disclaimer {
 background-color: var(--color-surface);
@@ -178,38 +156,32 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 }
-
 #colorblind-disclaimer p {
 margin: 0;
 flex-grow: 1;
 font-weight: 500;
 }
-
 .disclaimer-actions button {
     margin-left: 10px;
     padding: 8px 12px;
     border-radius: 4px;
     cursor: pointer;
-
     /* Overriding default button styles for clear visibility */
     background-color: var(--color-accent);
     color: var(--color-bg);
     border: 1px solid var(--color-accent);
 }
-
 .disclaimer-actions button:hover {
     opacity: 0.8;
 }
-
 #disclaimer-never-btn {
 background-color: var(--color-border);
 color: var(--color-text);
 border: 1px solid var(--color-border);
 }
-
 /* ====================================
- *  FOOTER STYLING (FIXED AND UPDATED)
- *  ==================================== */
+ * FOOTER STYLING (FIXED AND UPDATED)
+ * ==================================== */
 #main-footer {
 grid-column: 1 / -1;
 text-align: center;
@@ -219,48 +191,40 @@ font-size: 12px;
 color: var(--color-text-secondary);
 border-top: 1px solid var(--color-border);
 transition: color 0.4s ease, border-color 0.4s ease;
-
 /* FIX: Set the footer to display as a flex container to stack children */
 display: flex;
 flex-direction: column;
 align-items: center;
 gap: 2px; /* Small gap between the two lines */
 }
-
 #main-footer p {
 margin: 0; /* Remove default paragraph margins */
 padding: 0;
 line-height: 1.5;
 }
-
 #footer-credits {
 font-weight: 500;
 }
-
 #footer-copyright {
 /* Slightly lighter text for the copyright notice */
 font-size: 11px;
 color: var(--color-text-secondary);
 opacity: 0.8;
 }
-
-
 /* ====================================
- *  3. Color Picker Area (Left)
- *  ==================================== */
+ * 3. Color Picker Area (Left)
+ * ==================================== */
 #main-content {
 padding: 30px;
 display: flex;
 flex-direction: column;
 gap: 15px;
 }
-
 #color-preview-container {
 display: flex;
 gap: 20px;
 align-items: flex-start;
 }
-
 #current-color-preview {
 width: 150px;
 height: 150px;
@@ -273,27 +237,22 @@ display: flex;
 justify-content: center;
 align-items: center;
 }
-
 #current-color-preview.pulse {
 animation: pulse 0.3s ease-in-out;
 }
-
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.03); }
     100% { transform: scale(1); }
 }
-
 #uploaded-image {
 width: 100%;
 height: 100%;
 object-fit: cover;
 }
-
 #input-controls {
 flex-grow: 1; /* Allows controls to take available space */
 }
-
 .input-group {
     display: flex;
     gap: 10px;
@@ -305,18 +264,15 @@ flex-grow: 1; /* Allows controls to take available space */
     transition: background-color 0.4s, border-color 0.4s;
     margin-bottom: 10px; /* Space out the groups */
 }
-
 .input-group:focus-within {
     border-color: var(--color-accent);
     box-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
 }
-
 .input-group label {
     width: 40px;
     font-weight: bold;
     color: var(--color-text-secondary);
 }
-
 .input-group input[type="text"] {
     flex-grow: 1;
     background: none;
@@ -326,7 +282,6 @@ flex-grow: 1; /* Allows controls to take available space */
     outline: none;
     text-transform: uppercase;
 }
-
 /* HSL Sliders */
 .slider-control {
     display: flex;
@@ -347,7 +302,6 @@ flex-grow: 1; /* Allows controls to take available space */
     text-align: right;
     font-size: 14px;
 }
-
 /* Upload Buttons - Specific Accent Styling */
 #uploadBtn {
 background: var(--color-accent) !important;
@@ -357,16 +311,13 @@ color: var(--color-bg) !important;
 transform: scale(1.02);
 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
-
 #clearImageBtn {
 background: var(--color-surface);
 color: var(--color-text);
 }
-
-
 /* ====================================
- *  4. Colorblind Simulation (Right)
- *  ==================================== */
+ * 4. Colorblind Simulation (Right)
+ * ==================================== */
 #simulation-area {
 background-color: var(--color-surface);
 padding: 30px;
@@ -377,7 +328,6 @@ gap: 20px;
 height: 100%;
 transition: background-color 0.4s, border-color 0.4s;
 }
-
 /* Style for the info box */
 #mode-info-box {
 padding: 15px;
@@ -386,7 +336,6 @@ border-radius: 6px;
 background-color: var(--color-surface);
 transition: background-color 0.4s;
 }
-
 #mode-info-box h3 {
 margin-top: 0;
 color: var(--color-accent);
@@ -394,7 +343,6 @@ font-size: 16px;
 border-bottom: 1px solid var(--color-border);
 padding-bottom: 8px;
 }
-
 #mode-info-box ul {
 list-style: disc;
 padding-left: 20px;
@@ -405,7 +353,6 @@ color: var(--color-text);
 #mode-info-box li {
 margin-bottom: 5px;
 }
-
 .simulation-box {
     padding: 15px;
     border-radius: 6px;
@@ -413,23 +360,19 @@ margin-bottom: 5px;
     background-color: var(--color-bg);
     transition: background-color 0.4s, border-color 0.4s;
 }
-
 .simulation-box h4 {
     margin-top: 0;
     color: var(--color-accent);
 }
-
 .simulation-content {
     height: 100px;
     background: linear-gradient(to right, #2ecc71, #f1c40f, #e74c3c);
     border-radius: 4px;
     filter: var(--filter-colorblind);
 }
-
-
 /* ====================================
- *  5. Settings Drawer
- *  ==================================== */
+ * 5. Settings Drawer
+ * ==================================== */
 #settings-drawer {
 position: fixed;
 top: 0;
@@ -444,48 +387,78 @@ padding: 20px;
 box-shadow: -5px 0 15px rgba(0,0,0,0.4);
 z-index: 200;
 }
-
 #settings-drawer.open {
 transform: translateX(0);
 }
-
 .settings-option {
     margin-bottom: 15px;
     padding-bottom: 15px;
     border-bottom: 1px solid var(--color-border);
 }
-
 /* ====================================
- *  6. Mobile UI Mode (Responsiveness)
- *  ==================================== */
+ * 6. Mobile UI Mode (Responsiveness)
+ * ==================================== */
 @media (max-width: 800px) {
     /* This overrides the grid-template-columns for small screens automatically */
     #app-container {
     grid-template-columns: 1fr;
     }
-
     #main-content {
     padding: 15px;
     }
-
     header {
         padding: 10px 15px;
     }
-
     #color-preview-container {
     flex-direction: column;
     align-items: center;
     }
-
     #current-color-preview {
     width: 100%;
     max-width: 250px;
     height: 150px;
     }
-
     #simulation-area {
     padding: 15px;
     border-left: none;
     border-top: 1px solid var(--color-border);
+    }
+}
+/* ====================================
+ * 7. Splash Screen Styling
+ * ==================================== */
+#splash-screen {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: var(--color-bg);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000;
+opacity: 1;
+transition: opacity 0.5s ease;
+}
+
+#splash-logo {
+height: 150px; /* Larger for splash effect */
+width: auto;
+animation: splashAnim 1.5s ease-in-out;
+}
+
+@keyframes splashAnim {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
     }
 }

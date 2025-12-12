@@ -1,7 +1,6 @@
 // ====================================
 // JavaScript Logic
 // ====================================
-
 // --- Elements ---
 const body = document.body;
 const logoImage = document.getElementById('logo-image');
@@ -10,49 +9,40 @@ const uploadedImage = document.getElementById('uploaded-image');
 const hexInput = document.getElementById('hexInput');
 const rgbInput = document.getElementById('rgbInput');
 const hslInput = document.getElementById('hslInput');
-
 const hRange = document.getElementById('hRange');
 const sRange = document.getElementById('sRange');
 const lRange = document.getElementById('lRange');
 const hValue = document.getElementById('hValue');
 const sValue = document.getElementById('sValue');
 const lValue = document.getElementById('lValue');
-
 const settingsBtn = document.getElementById('settings-btn');
 const settingsDrawer = document.getElementById('settings-drawer');
 const lightModeBtn = document.getElementById('lightModeBtn');
 const darkModeBtn = document.getElementById('darkModeBtn');
 const colorblindSelect = document.getElementById('colorblind-mode-select');
-
 const imageUpload = document.getElementById('imageUpload');
 const uploadBtn = document.getElementById('uploadBtn');
 const clearImageBtn = document.getElementById('clearImageBtn');
-
 const languageSelect = document.getElementById('languageSelect');
-
 const disclaimerPanel = document.getElementById('colorblind-disclaimer');
 const disclaimerText = document.getElementById('disclaimer-text');
 const disclaimerOkBtn = document.getElementById('disclaimer-ok-btn');
 const disclaimerNeverBtn = document.getElementById('disclaimer-never-btn');
-
 const pcLayoutBtn = document.getElementById('pcLayoutBtn');
 const mobileLayoutBtn = document.getElementById('mobileLayoutBtn');
-
 // NEW INFO BOX ELEMENTS
 const modeInfoBox = document.getElementById('mode-info-box');
 const modeInfoTitle = document.getElementById('mode-info-title');
 const modeInfoList = document.getElementById('mode-info-list');
-
 // NEW FOOTER ELEMENT
 const singleLineFooter = document.getElementById('single-line-footer');
-
-
+// NEW SPLASH ELEMENTS
+const splashScreen = document.getElementById('splash-screen');
+const splashLogo = document.getElementById('splash-logo');
 // --- State ---
 let H = parseInt(hRange.value);
 let S = parseInt(sRange.value);
 let L = parseInt(lRange.value);
-
-
 // --- Localization Data (UPDATED FOR SINGLE LINE FOOTER) ---
 const translations = {
     en: {
@@ -74,10 +64,8 @@ const translations = {
         mobile_layout: 'Mobile Layout',
         upload_btn: 'Upload Image for Simulation',
         clear_btn: 'Clear',
-
         // --- FOOTER UPDATES ---
         single_line_footer: 'ColorView Pro made by Ahmed Sameh and Nour Eldeen. | ColorView Pro © All rights reserved.',
-
         disclaimer: 'For the best use of this feature, You should have someone with you who is not colorblind',
         disclaimer_ok: 'Ok',
         disclaimer_never: 'Never Show Again',
@@ -155,10 +143,8 @@ const translations = {
         mobile_layout: 'تخطيط الهاتف',
         upload_btn: 'تحميل صورة للمحاكاة',
         clear_btn: 'مسح',
-
         // --- FOOTER UPDATES ---
         single_line_footer: 'ColorView Pro صُنع بواسطة أحمد سامح ونور الدين. | ColorView Pro © جميع الحقوق محفوظة.',
-
         disclaimer: 'للاستفادة  من هذه الميزة يجب أن يكون معك شخص غير مصاب بعمى الألوان',
         disclaimer_ok: 'حسنا',
         disclaimer_never: 'لا تظهر مره اخرى',
@@ -218,10 +204,7 @@ const translations = {
         }
     }
 };
-
-
 // --- Color Conversion Functions ---
-
 function hslToRgb(h, s, l) {
     s /= 100; l /= 100;
     let c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c / 2, r = 0, g = 0, b = 0;
@@ -241,11 +224,9 @@ function hexToHsl(hex) {
     if (cleanHex.length < 6) return [H, S, L];
     const result = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cleanHex);
     if (!result) return [H, S, L];
-
     let r = parseInt(result[1], 16) / 255; let g = parseInt(result[2], 16) / 255; let b = parseInt(result[3], 16) / 255;
     const max = Math.max(r, g, b), min = Math.min(r, g, b);
     let h, s, l = (max + min) / 2;
-
     if (max === min) {
         h = s = 0;
     } else {
@@ -258,24 +239,18 @@ function hexToHsl(hex) {
         }
         h /= 6;
     }
-
     return [ Math.round(h * 360), Math.round(s * 100), Math.round(l * 100) ];
 }
-
-
 // --- Core Update Function ---
 function updateColor(source, newH, newS, newL) {
     H = newH !== undefined ? newH : H;
     S = newS !== undefined ? newS : S;
     L = newL !== undefined ? newL : L;
-
     H = Math.max(0, Math.min(360, H));
     S = Math.max(0, Math.min(100, S));
     L = Math.max(0, Math.min(100, L));
-
     const [R, G, B] = hslToRgb(H, S, L);
     const hex = rgbToHex(R, G, B).toUpperCase();
-
     // Update HSL Sliders and Values
     if (source !== 'slider') {
         hRange.value = H;
@@ -285,19 +260,16 @@ function updateColor(source, newH, newS, newL) {
     hValue.textContent = H;
     sValue.textContent = S + '%';
     lValue.textContent = L + '%';
-
     // Update Inputs
     if (source !== 'hex') {
         hexInput.value = hex;
     }
     rgbInput.value = `${R}, ${G}, ${B}`;
     hslInput.value = `${H}, ${S}%, ${L}%`;
-
     // Update Preview Color (unless an image is active)
     if(uploadedImage.style.display !== 'block') {
         preview.style.backgroundColor = `hsl(${H}, ${S}%, ${L}%)`;
     }
-
     // Apply pulse effect
     if (source !== 'image' && source !== 'clear') {
         preview.classList.remove('pulse');
@@ -305,26 +277,20 @@ function updateColor(source, newH, newS, newL) {
         preview.classList.add('pulse');
     }
 }
-
-
 // --- UI Update Function ---
 function updateUIContent(langCode) {
     const lang = translations[langCode] || translations.en;
     const currentMode = colorblindSelect.value;
-
     document.body.dir = lang.dir;
-
     // Header/Main Content
     document.getElementById('main-content-title').textContent = lang.main_title;
     document.getElementById('hsl-controls-title').textContent = lang.hsl_controls;
-
     // Simulation Area
     document.getElementById('simulation-area-title').textContent = lang.simulation_title;
     document.getElementById('simulation-desc').textContent = lang.simulation_desc;
     document.getElementById('normal-vision-test').textContent = lang.normal_vision;
     document.getElementById('deuteranopia-test').textContent = lang.deuteranopia;
     document.getElementById('protanopia-test').textContent = lang.protanopia;
-
     // Settings Drawer
     document.getElementById('settings-h2').textContent = lang.settings_h2;
     document.getElementById('theme-h3').textContent = lang.theme_h3;
@@ -334,22 +300,17 @@ function updateUIContent(langCode) {
     darkModeBtn.textContent = lang.dark_mode;
     pcLayoutBtn.textContent = lang.pc_layout;
     mobileLayoutBtn.textContent = lang.mobile_layout;
-
     // Buttons
     uploadBtn.textContent = lang.upload_btn;
     clearImageBtn.textContent = lang.clear_btn;
-
     // Footer UPDATED:
     singleLineFooter.textContent = lang.single_line_footer;
-
     // Disclaimer Panel
     disclaimerText.textContent = lang.disclaimer;
     disclaimerOkBtn.textContent = lang.disclaimer_ok;
     disclaimerNeverBtn.textContent = lang.disclaimer_never;
-
     // Update the colorblind info box content on language change
     updateModeInfo(currentMode, lang);
-
     // Rebuild Language Options
     languageSelect.innerHTML = '';
     lang.lang_options.forEach(option => {
@@ -359,29 +320,21 @@ function updateUIContent(langCode) {
         languageSelect.appendChild(opt);
     });
     languageSelect.value = langCode;
-
     localStorage.setItem('cvp_language', langCode);
 }
-
-
 // --- Function to Update Mode Info Box ---
 function updateModeInfo(mode, currentLang) {
     const lang = currentLang || translations[localStorage.getItem('cvp_language') || 'en'];
     const info = lang.info[mode];
-
     modeInfoTitle.textContent = info.title;
     modeInfoList.innerHTML = '';
-
     info.points.forEach(pointText => {
         const li = document.createElement('li');
         li.textContent = pointText;
         modeInfoList.appendChild(li);
     });
 }
-
-
 // --- Layout Control Functions ---
-
 function setLayout(layoutMode) {
     if (layoutMode === 'mobile') {
         body.classList.add('mobile-layout');
@@ -395,11 +348,9 @@ function setLayout(layoutMode) {
         localStorage.setItem('cvp_layout', 'pc');
     }
 }
-
 // -----------------------------------
 // --- Event Listeners and Initializers ---
 // -----------------------------------
-
 // 1. Color Picker/HSL Control Listeners
 [hRange, sRange, lRange].forEach(slider => {
     slider.addEventListener('input', () => {
@@ -409,32 +360,26 @@ function setLayout(layoutMode) {
         updateColor('slider', newH, newS, newL);
     });
 });
-
 hexInput.addEventListener('input', (e) => {
     let val = e.target.value.toUpperCase().replace(/[^0-9A-F#]/g, '');
     if (!val.startsWith('#')) val = '#' + val.replace('#', '');
-
     if (val.length > 7) val = val.substring(0, 7);
     hexInput.value = val;
-
     if (val.length === 7) {
         const [newH, newS, newL] = hexToHsl(val);
         updateColor('hex', newH, newS, newL);
     }
 });
-
 // 2. Image Upload Logic
 uploadBtn.addEventListener('click', () => {
     imageUpload.click();
 });
-
 clearImageBtn.addEventListener('click', () => {
     uploadedImage.src = '';
     uploadedImage.style.display = 'none';
     clearImageBtn.style.display = 'none';
     updateColor('clear', H, S, L);
 });
-
 imageUpload.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -448,12 +393,10 @@ imageUpload.addEventListener('change', (e) => {
         reader.readAsDataURL(file);
     }
 });
-
 // 3. Theme Toggles
 function setTheme(mode) {
     body.classList.remove('light-mode', 'dark-mode');
     body.classList.add(mode);
-
     if (mode === 'dark-mode') {
         logoImage.src = 'logo-dark.png';
     } else {
@@ -461,24 +404,19 @@ function setTheme(mode) {
     }
     localStorage.setItem('cvp_theme', mode);
 }
-
 lightModeBtn.addEventListener('click', () => setTheme('light-mode'));
 darkModeBtn.addEventListener('click', () => setTheme('dark-mode'));
-
 // 4. Language Selector Listener
 languageSelect.addEventListener('change', (e) => {
     updateUIContent(e.target.value);
 });
-
 // 5. Layout Buttons Listeners
 pcLayoutBtn.addEventListener('click', () => setLayout('pc'));
 mobileLayoutBtn.addEventListener('click', () => setLayout('mobile'));
-
 // 6. Settings Drawer
 settingsBtn.addEventListener('click', () => {
     settingsDrawer.classList.toggle('open');
 });
-
 document.addEventListener('click', (e) => {
     if (settingsDrawer.classList.contains('open') &&
         !settingsDrawer.contains(e.target) &&
@@ -487,61 +425,54 @@ document.addEventListener('click', (e) => {
         settingsDrawer.classList.remove('open');
         }
 });
-
 // 7. Disclaimer Actions
 function checkAndShowDisclaimer() {
     const neverShow = localStorage.getItem('cvp_disclaimer_hidden') === 'true';
     disclaimerPanel.style.display = neverShow ? 'none' : 'flex';
 }
-
 disclaimerOkBtn.addEventListener('click', () => {
     disclaimerPanel.style.display = 'none';
 });
-
 disclaimerNeverBtn.addEventListener('click', () => {
     localStorage.setItem('cvp_disclaimer_hidden', 'true');
     disclaimerPanel.style.display = 'none';
 });
-
-
 // 8. Colorblind Simulation Select
 colorblindSelect.addEventListener('change', (e) => {
     const mode = e.target.value;
     let filterUrl = 'none';
-
     switch(mode) {
         case 'deuteranopia': filterUrl = 'url(\'#deutan\')'; break;
         case 'protanopia': filterUrl = 'url(\'#protan\')'; break;
         case 'tritanopia': filterUrl = 'url(\'#tritan\')'; break;
         case 'achromatopsia': filterUrl = 'url(\'#mono\')'; break;
     }
-
     document.documentElement.style.setProperty('--filter-colorblind', filterUrl);
-
     // Update the dynamic information box
     updateModeInfo(mode);
 });
-
-
 // --- Initialization on Load ---
-
 // 1. Initialize Color
 updateColor('init', H, S, L);
-
 // 2. Initialize Language (This calls updateUIContent, which calls updateModeInfo)
 const storedLang = localStorage.getItem('cvp_language') || 'en';
 updateUIContent(storedLang);
-
 // 3. Initialize Theme
 const storedTheme = localStorage.getItem('cvp_theme') || 'light-mode';
 setTimeout(() => setTheme(storedTheme), 0);
-
 // 4. Initialize Layout
 const storedLayout = localStorage.getItem('cvp_layout') || 'pc';
 setLayout(storedLayout);
-
 // 5. Check and show disclaimer on load
 checkAndShowDisclaimer();
-
 // Ensure initial info box content is set (Safe check after initialization)
 updateModeInfo(colorblindSelect.value);
+// 6. Handle Splash Screen Animation
+splashLogo.src = storedTheme === 'dark-mode' ? 'logo-dark.png' : 'logo.png';
+// Fade out splash after animation completes (1.5s anim + 0.5s hold)
+setTimeout(() => {
+    splashScreen.style.opacity = '0';
+    setTimeout(() => {
+        splashScreen.style.display = 'none';
+    }, 500); // Match transition duration
+}, 2000);
