@@ -222,6 +222,8 @@ padding: 30px;
 display: flex;
 flex-direction: column;
 gap: 15px;
+align-self: start; /* hard guarantee: never stretch to match the taller sidebar column */
+height: fit-content;
 }
 #color-preview-container {
 display: flex;
@@ -345,7 +347,8 @@ border-left: 1px solid var(--color-border);
 display: flex;
 flex-direction: column;
 gap: 20px;
-min-height: 100%;
+align-self: start; /* size to its own content only — no percentage heights, which caused a circular grid-sizing overflow */
+height: fit-content;
 transition: background-color 0.4s, border-color 0.4s;
 }
 /* Style for the info box */
