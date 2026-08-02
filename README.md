@@ -54,9 +54,6 @@ ColorView Pro is a color picker and image tool built to help colorblind people, 
 - PC and mobile layout switch
 - Save "my condition" once and the right simulation mode auto-selects every time
 
-**📱 Works Offline**
-- Install it to your home screen and it keeps working with no internet connection
-
 ## About
 
 Hi 👋 We're Nour Eldeen and Ahmed Sameh — two students who wanted to build something that actually helps people. ColorView Pro started as a way to make color blindness simulation and design accessibility checks available to anyone, for free, right in the browser. We used AI tools to help us learn and move faster while building it.
