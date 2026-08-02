@@ -1,0 +1,39 @@
+{
+  "name": "colorview-pro",
+  "version": "1.0.0",
+  "description": "ColorView Pro - Accessible Color Tool by Nour Eldeen and Ahmed Sameh",
+  "main": "main.js",
+  "author": "Nour Eldeen & Ahmed Sameh",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.colorviewpro.app",
+    "productName": "ColorView Pro",
+    "files": [
+      "main.js",
+      "app/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "ColorViewPro-Setup-${version}.exe"
+    }
+  }
+}
