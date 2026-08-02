@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ColorView Pro - Accessible Color Tool</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3498db">
+    <link rel="icon" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
 </head>
 <body class="light-mode">
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="splash-screen">
         <img id="splash-logo" src="logo.png" alt="ColorView Pro Logo">
     </div>
@@ -36,6 +41,32 @@
                                                     0.000 0.475 0.525 0 0
                                                     0 0 0 1 0" />
             </filter>
+            <!-- Dynamic filter: values are rewritten by script.js to blend severity 0-100% -->
+            <filter id="dynamicCB">
+                <feColorMatrix id="dynamicCBMatrix" type="matrix" values="1 0 0 0 0
+                                                    0 1 0 0 0
+                                                    0 0 1 0 0
+                                                    0 0 0 1 0" />
+            </filter>
+            <!-- Simple daltonization-style correction filters (shift the confused channel toward a distinguishable one) -->
+            <filter id="correctProtan">
+                <feColorMatrix type="matrix" values="0.3 0.7 0.0 0 0
+                                                    0.0 1.0 0.0 0 0
+                                                    0.0 0.0 1.0 0 0
+                                                    0 0 0 1 0" />
+            </filter>
+            <filter id="correctDeutan">
+                <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
+                                                    0.4 0.6 0.0 0 0
+                                                    0.0 0.0 1.0 0 0
+                                                    0 0 0 1 0" />
+            </filter>
+            <filter id="correctTritan">
+                <feColorMatrix type="matrix" values="1.0 0.0 0.0 0 0
+                                                    0.0 1.0 0.0 0 0
+                                                    0.0 0.3 0.7 0 0
+                                                    0 0 0 1 0" />
+            </filter>
         </defs>
     </svg>
     <header>
@@ -43,12 +74,16 @@
             <img id="logo-image" src="logo.png" alt="ColorView Pro Logo">
             <span id="logo-text">COLORVIEW PRO</span>
         </div>
-        <button id="settings-btn">
+        <button id="settings-btn" aria-label="Open settings">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm0-4a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm7.98-6.16c-.03.43-.09.85-.18 1.25l1.66 1.28c.17.13.2.39.07.57l-1.6 2.76a.46.46 0 0 1-.58.14l-1.92-.73c-.5.42-1.05.77-1.65 1.05l-.32 2.05a.46.46 0 0 1-.45.42H9.36a.46.46 0 0 1-.45-.42l-.32-2.05a8.77 8.77 0 0 1-1.65-1.05l-1.92.73a.46.46 0 0 1-.58-.14L2.84 14.1a.46.46 0 0 1 .07-.57l1.66-1.28c-.09-.4-.15-.82-.18-1.25L3.8 9.5a.46.46 0 0 1 .45-.42h3.36c.03-.43.09-.85.18-1.25L7.13 6.55a.46.46 0 0 1 .57-.14l1.92.73c.5-.42 1.05-.77 1.65-1.05l.32-2.05c.02-.27.24-.48.51-.48h3.36c.27 0 .49.21.51.48l.32 2.05c.6.28 1.15.63 1.65 1.05l1.92-.73c.18-.07.39-.03.57.14l1.6 2.76c.14.18.1.44-.07.57l-1.66 1.28z"/></svg>
         </button>
     </header>
     <div id="app-container">
         <main id="main-content">
+            <div id="colorFactBanner">
+                <span id="colorFactText">Loading today's color fact...</span>
+                <button id="colorFactCloseBtn" aria-label="Dismiss color fact">✕</button>
+            </div>
             <h2 id="main-content-title">Color Picker & Values</h2>
             <div id="color-preview-container">
                 <div id="current-color-preview">
@@ -58,6 +93,13 @@
                     <div class="input-group">
                         <label for="hexInput">HEX</label>
                         <input type="text" id="hexInput" maxlength="7" value="#3498DB">
+                        <button type="button" id="eyedropperBtn" class="icon-btn" aria-label="Pick color from screen with eyedropper" title="Eyedropper">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 5.63l-2.34-2.34a1 1 0 0 0-1.41 0l-3.12 3.12-1.93-1.91-1.41 1.41 1.42 1.42L3 16.25V21h4.75l8.92-8.92 1.42 1.42 1.41-1.41-1.92-1.92 3.12-3.12a1 1 0 0 0 0-1.42zM6.92 19H5v-1.92l8.06-8.06 1.92 1.92z"/></svg>
+                        </button>
+                        <button type="button" id="favBtn" class="icon-btn" aria-label="Save current color to favorites" title="Add to favorites">★</button>
+                    </div>
+                    <div id="colorNameRow">
+                        <span id="closestNameLabel">Closest name:</span> <span id="colorNameValue">Curious Blue</span>
                     </div>
                     <div class="input-group">
                         <label for="rgbInput">RGB</label>
@@ -88,33 +130,111 @@
             <h3 id="hsl-controls-title">HSL Controls</h3>
             <div id="hsl-sliders">
                 <div class="slider-control">
-                    <label>H</label>
+                    <label for="hRange">H</label>
                     <input type="range" id="hRange" min="0" max="360" value="203">
                     <span class="slider-value" id="hValue">203</span>
                 </div>
                 <div class="slider-control">
-                    <label>S</label>
+                    <label for="sRange">S</label>
                     <input type="range" id="sRange" min="0" max="100" value="63">
                     <span class="slider-value" id="sValue">63%</span>
                 </div>
                 <div class="slider-control">
-                    <label>L</label>
+                    <label for="lRange">L</label>
                     <input type="range" id="lRange" min="0" max="100" value="53">
                     <span class="slider-value" id="lValue">53%</span>
+                </div>
+            </div>
+
+            <!-- ===== New Color Tools Grid ===== -->
+            <div id="colorToolsGrid">
+                <div class="tool-card" id="dangerPairsCard">
+                    <h4 id="dangerPairsTitle">Danger Pairs</h4>
+                    <p id="dangerPairsDesc" style="font-size:13px; color:var(--color-text-secondary); margin:0;">Checks your current color against commonly-confused colors under each colorblindness type.</p>
+                    <div id="dangerPairsBox"></div>
+                </div>
+                <div class="tool-card" id="contrastCard">
+                    <h4 id="contrastTitle">Contrast Checker (WCAG)</h4>
+                    <div class="contrast-row">
+                        <div>
+                            <label for="contrastColor1" id="foregroundLabel" style="font-size:12px;">Foreground</label><br>
+                            <input type="text" id="contrastColor1" value="#3498DB" maxlength="7" style="width:80px;">
+                        </div>
+                        <div>
+                            <label for="contrastColor2" id="backgroundLabel" style="font-size:12px;">Background</label><br>
+                            <input type="text" id="contrastColor2" value="#FFFFFF" maxlength="7" style="width:80px;">
+                        </div>
+                        <div class="contrast-swatch" id="contrastPreview">Aa</div>
+                    </div>
+                    <div class="contrast-result" id="contrastResultText">Ratio: --</div>
+                </div>
+                <div class="tool-card" id="paletteCard">
+                    <div class="tool-card-header">
+                        <h4 id="paletteTitle" style="margin:0;">Colorblind-Safe Palette</h4>
+                        <button class="small-btn" id="generatePaletteBtn">Generate</button>
+                    </div>
+                    <div class="swatch-row" id="paletteSwatchRow"></div>
+                </div>
+                <div class="tool-card" id="harmonyCard">
+                    <h4 id="harmonyTitle" style="margin:0;">Color Harmony</h4>
+                    <div class="harmony-group">
+                        <h5 id="complementaryLabel">Complementary</h5>
+                        <div class="swatch-row" id="complementarySwatches"></div>
+                    </div>
+                    <div class="harmony-group">
+                        <h5 id="analogousLabel">Analogous</h5>
+                        <div class="swatch-row" id="analogousSwatches"></div>
+                    </div>
+                    <div class="harmony-group">
+                        <h5 id="triadicLabel">Triadic</h5>
+                        <div class="swatch-row" id="triadicSwatches"></div>
+                    </div>
+                </div>
+                <div class="tool-card" id="recentFavCard" style="grid-column: 1 / -1;">
+                    <div class="tool-card-header">
+                        <h4 id="recentTitle" style="margin:0;">Recent Colors</h4>
+                    </div>
+                    <div class="swatch-row" id="recentSwatches"></div>
+                    <div class="tool-card-header" style="margin-top:12px;">
+                        <h4 id="favoritesTitle" style="margin:0;">Favorites</h4>
+                    </div>
+                    <div class="swatch-row" id="favoriteSwatches"></div>
+                    <div class="export-row">
+                        <button class="small-btn" id="exportCssBtn">Export CSS Variables</button>
+                        <button class="small-btn" id="exportJsonBtn">Export JSON</button>
+                        <button class="small-btn" id="exportPngBtn">Export Swatch PNG</button>
+                    </div>
                 </div>
             </div>
         </main>
         <aside id="simulation-area">
             <h2 id="simulation-area-title">Color Blindness View</h2>
+            <div id="achievementsBar"></div>
             <div id="colorblind-picker">
                 <p id="simulation-desc">Simulate for accessible design:</p>
                 <select id="colorblind-mode-select">
-                    <option value="none">No Simulation (Normal Vision)</option>
-                    <option value="deuteranopia">Deuteranopia (Common Red/Green)</option>
-                    <option value="protanopia">Protanopia (Red-Weak)</option>
-                    <option value="tritanopia">Tritanopia (Blue/Yellow)</option>
-                    <option value="achromatopsia">Achromatopsia (Monochrome)</option>
+                    <option value="none" id="opt-cb-none">No Simulation (Normal Vision)</option>
+                    <option value="protanopia" id="opt-cb-protanopia">Protanopia (Red-Blind)</option>
+                    <option value="protanomaly" id="opt-cb-protanomaly">Protanomaly (Red-Weak)</option>
+                    <option value="deuteranopia" id="opt-cb-deuteranopia">Deuteranopia (Green-Blind)</option>
+                    <option value="deuteranomaly" id="opt-cb-deuteranomaly">Deuteranomaly (Green-Weak)</option>
+                    <option value="tritanopia" id="opt-cb-tritanopia">Tritanopia (Blue-Blind)</option>
+                    <option value="tritanomaly" id="opt-cb-tritanomaly">Tritanomaly (Blue-Weak)</option>
+                    <option value="achromatopsia" id="opt-cb-achromatopsia">Achromatopsia (Monochrome)</option>
+                    <option value="achromatomaly" id="opt-cb-achromatomaly">Achromatomaly (Weak Monochrome)</option>
                 </select>
+                <div class="severity-row">
+                    <label for="severityRange" style="font-size:12px;">Severity</label>
+                    <input type="range" id="severityRange" min="0" max="100" value="100">
+                    <span class="slider-value" id="severityValue">100%</span>
+                </div>
+                <div class="whole-site-toggle-row" style="margin-top:8px;">
+                    <span id="wholeSiteLabel" style="font-size:13px;">Preview whole site in this mode</span>
+                    <label class="switch">
+                        <input type="checkbox" id="wholeSiteToggle">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
             </div>
             <div id="mode-info-box">
                 <h3 id="mode-info-title">No Simulation Selected</h3>
@@ -135,6 +255,45 @@
                 <h4 id="protanopia-test">Protanopia Test</h4>
                 <div class="simulation-content"></div>
             </div>
+
+            <!-- ===== Image Tools ===== -->
+            <div class="tool-card" id="imageToolsCard">
+                <h4 id="imageToolsTitle">Image Tools</h4>
+                <div id="imageDropZone">Drag & drop an image here, or paste from clipboard</div>
+                <textarea id="imageCaption" placeholder="Add a caption / alt text for this image..." rows="2" style="display:none;"></textarea>
+                <div class="three-panel-view" id="threePanelView">
+                    <div class="panel-block">
+                        <h5>Original</h5>
+                        <img id="panelOriginal" alt="Original uploaded image">
+                    </div>
+                    <div class="panel-block">
+                        <h5>Simulated</h5>
+                        <img id="panelSimulated" alt="Simulated colorblind view of the image">
+                    </div>
+                    <div class="panel-block">
+                        <h5>Corrected</h5>
+                        <img id="panelCorrected" alt="Daltonized / corrected view of the image">
+                    </div>
+                </div>
+                <div class="export-row">
+                    <button class="small-btn" id="webcamBtn">Live Webcam Mode</button>
+                    <button class="small-btn" id="batchUploadBtn">Batch Upload</button>
+                    <button class="small-btn" id="downloadSimBtn">Download Result</button>
+                    <button class="small-btn" id="shareCardBtn">Before/After Card</button>
+                </div>
+                <input type="file" id="batchImageUpload" accept="image/*" multiple style="display:none;">
+                <video id="webcamVideo" autoplay playsinline></video>
+                <div id="batchGallery"></div>
+            </div>
+
+            <div class="tool-card" id="chartCheckerCard">
+                <div class="tool-card-header">
+                    <h4 id="chartCheckerTitle" style="margin:0;">Chart / Graph Checker</h4>
+                    <label class="small-btn" for="chartUpload" id="chartUploadLabel" style="cursor:pointer;">Upload Chart</label>
+                </div>
+                <input type="file" id="chartUpload" accept="image/*" style="display:none;">
+                <div id="chartCheckerResult">Upload a chart or graph image to check whether its colors stay distinguishable for colorblind viewers.</div>
+            </div>
         </aside>
     </div>
     <footer id="main-footer">
@@ -142,6 +301,7 @@
             ColorView Pro made by Ahmed Sameh and Nour Eldeen. | ColorView Pro © 2026 All rights reserved.
         </p>
     </footer>
+    <div id="achievementToast"></div>
     <div id="settings-drawer">
         <h2 id="settings-h2">Settings</h2>
         <div class="settings-option">
@@ -149,6 +309,11 @@
             <div class="settings-controls">
                 <button id="lightModeBtn">Light Mode</button>
                 <button id="darkModeBtn">Dark Mode</button>
+                <button id="customModeBtn">Custom</button>
+            </div>
+            <div class="custom-theme-row">
+                <label for="customAccentInput" style="font-size:12px;" id="customAccentLabel">Custom accent color:</label>
+                <input type="color" id="customAccentInput" value="#3498db">
             </div>
         </div>
         <div class="settings-option">
@@ -157,9 +322,6 @@
                 <select id="languageSelect">
                 </select>
             </div>
-            <p>Hello to everyone who opened this to know about us, We are 2 normal students, The first is one is Nour Eldeen and The second one is Ahmed Sameh, We have been thinking about making a project that can help the environment and the community, something that is genuinely rare to find, and no one still made it, We researched and found the perfect idea. Making a website to help color blind people, First we started by choosing which programming language will we choose and we found the perfect one and it was HTML because we were making a website so we are obviously going to choose it. We started coding with our knowledge and we researched and we kept reading articles on the diseases that color blind people face and what are the scientific names for every disease, then we started getting information about it, Then I kept thinking the whole time and such a good idea came in my mind, adding a color panel will make it even better. The fact that you can choose any color you want with HEX and RGB and HSL Sliders. You upload the image you have 2 useful things, If you are a person and you are trying to see what a color blind person sees that's helpful, It makes you be grateful for what you have and always thank god no matter what, Now the second useful thing and most important as a colorblind person we are trying to make you see the image that you choosed as close as possible as the original image. Not only that but we also added that you get to see the recent colors that you choosed the last time you logged in and you can select your favorite colors, It was such a hard progress to code all of this (Color Panel, Improving the UI for mobile users) so we used the help of chatgpt and gemini, They helped us improve our coding skills and English skills too. It's such an advantage for us and this era. We improved the ui and added english in the language, We also researched about the diseases like Tritanopia and Protanopia.. etc. Basically when you select the disease that you have in your eyes it gives you information about it. We also added a good UI for Mobile users, We added dark mode AKA gold mode. All of this was done in 5 days, But we stayed up and worked hard, woke up early. We even fought but we still understood eachother because teamwork and working hard is the key for success. I hope you like our project, More updates and features are coming soon.
-Yours
-Nour Eldeen & Ahmed Sameh.</p>
         </div>
         <div class="settings-option">
             <h3 id="layout-h3">Display Layout</h3>
@@ -167,6 +329,51 @@ Nour Eldeen & Ahmed Sameh.</p>
                 <button id="pcLayoutBtn">PC Layout</button>
                 <button id="mobileLayoutBtn">Mobile Layout</button>
             </div>
+        </div>
+        <div class="settings-option">
+            <h3 id="accessibilityH3">Accessibility</h3>
+            <div class="font-size-controls">
+                <button class="small-btn" id="fontSmallBtn">A-</button>
+                <button class="small-btn" id="fontMediumBtn">A</button>
+                <button class="small-btn" id="fontLargeBtn">A+</button>
+            </div>
+            <div class="whole-site-toggle-row" style="margin-top:10px;">
+                <span id="dyslexiaFontLabel" style="font-size:13px;">Dyslexia-friendly font</span>
+                <label class="switch">
+                    <input type="checkbox" id="dyslexiaFontToggle">
+                    <span class="switch-slider"></span>
+                </label>
+            </div>
+            <div class="whole-site-toggle-row" style="margin-top:10px;">
+                <span id="reduceMotionLabel" style="font-size:13px;">Reduce motion</span>
+                <label class="switch">
+                    <input type="checkbox" id="reduceMotionToggle">
+                    <span class="switch-slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="settings-option">
+            <h3 id="personalizationH3">Personalization</h3>
+            <label for="myConditionSelect" style="font-size:13px;" id="myConditionLabel">My condition (auto-selects simulation):</label>
+            <div class="settings-controls" style="margin-top:6px;">
+                <select id="myConditionSelect">
+                    <option value="none" id="opt-mc-none">None / Not sure</option>
+                    <option value="protanopia" id="opt-mc-protanopia">Protanopia</option>
+                    <option value="protanomaly" id="opt-mc-protanomaly">Protanomaly</option>
+                    <option value="deuteranopia" id="opt-mc-deuteranopia">Deuteranopia</option>
+                    <option value="deuteranomaly" id="opt-mc-deuteranomaly">Deuteranomaly</option>
+                    <option value="tritanopia" id="opt-mc-tritanopia">Tritanopia</option>
+                    <option value="tritanomaly" id="opt-mc-tritanomaly">Tritanomaly</option>
+                    <option value="achromatopsia" id="opt-mc-achromatopsia">Achromatopsia</option>
+                </select>
+            </div>
+            <p id="imageHistoryLabel" style="font-size:13px; margin-bottom:4px;">Recent images (stored on this device only):</p>
+            <div id="imageHistoryGallery"></div>
+        </div>
+        <div class="settings-option" style="border-bottom:none;">
+            <h3 id="aboutH3">About</h3>
+            <p id="aboutText" style="font-size:13px; line-height:1.6;">Hello to everyone who opened this to know about us. We are 2 normal students, Nour Eldeen and Ahmed Sameh. We wanted to build something that helps the community, so we made ColorView Pro to help colorblind people and the people designing for them. You can pick colors with HEX, RGB and HSL, simulate 8 types of color blindness with adjustable severity, check contrast and safe palettes, and preview your own images and even your camera through each mode. We used AI tools to help us learn and move faster while building this. Thank you for trying it out — more updates are coming soon.</p>
+            <p id="aboutCredit" style="font-size:12px; color:var(--color-text-secondary);">— Nour Eldeen & Ahmed Sameh</p>
         </div>
     </div>
     <script src="script.js"></script>

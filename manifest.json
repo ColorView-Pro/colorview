@@ -1,0 +1,18 @@
+{
+  "name": "ColorView Pro - Accessible Color Tool",
+  "short_name": "ColorView Pro",
+  "description": "A colorblind-accessible color picker and image simulation tool by Nour Eldeen and Ahmed Sameh.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f8f8f8",
+  "theme_color": "#3498db",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
