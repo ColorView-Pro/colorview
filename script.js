@@ -2410,6 +2410,8 @@ function updateUIContent(langCode) {
     localStorage.setItem('cvp_language', langCode);
     const modeVal = colorblindSelect.value;
     document.body.dir = lang.dir;
+    htmlEl.lang = langCode;
+    htmlEl.dir = lang.dir;
     document.getElementById('main-content-title').textContent = lang.main_title;
     document.getElementById('hsl-controls-title').textContent = lang.hsl_controls;
     document.getElementById('simulation-area-title').textContent = lang.simulation_title;
