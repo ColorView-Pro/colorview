@@ -6,7 +6,7 @@
 
 **A free, accessible color tool for colorblind users and the designers building for them.**
 
-[**🔗 Use ColorView Pro**](https://colorview-pro.github.io/colorview/)
+[**🔗 Use ColorView Pro**](https://colorview-pro.github.io/colorview/) &nbsp;•&nbsp; [**💻 Download for Windows**](https://github.com/colorview-pro/colorview/releases/latest)
 
 </div>
 
