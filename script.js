@@ -222,7 +222,12 @@ const translations = {
         },
         lang_options: [
             { code: 'en', name: 'English' },
-            { code: 'ar', name: 'العربية' }
+            { code: 'ar', name: 'العربية' },
+            { code: 'es', name: 'Español' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'pt', name: 'Português' }
         ],
         info: {
             none: {
@@ -423,7 +428,12 @@ const translations = {
         },
         lang_options: [
             { code: 'en', name: 'English' },
-            { code: 'ar', name: 'العربية' }
+            { code: 'ar', name: 'العربية' },
+            { code: 'es', name: 'Español' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'pt', name: 'Português' }
         ],
         info: {
             none: {
@@ -511,6 +521,1036 @@ const translations = {
             'عمى الألوان الديوتري الخفيف هو أكثر أنواع عمى الألوان شيوعًا.',
             'اللون الأزرق هو اللون الأكثر تفضيلاً عالميًا عبر الثقافات المختلفة.',
             'اختبار إيشيهارا، المستخدم حتى اليوم، صممه الدكتور شينوبو إيشيهارا عام 1917.'
+        ]
+    },
+    es: {
+        dir: 'ltr',
+        main_title: 'Selector de Color y Valores',
+        hsl_controls: 'Controles HSL',
+        simulation_title: 'Vista de Daltonismo',
+        simulation_desc: 'Simula para un diseño accesible:',
+        normal_vision: 'Prueba de Visión Normal',
+        deuteranopia: 'Prueba de Deuteranopía',
+        protanopia: 'Prueba de Protanopía',
+        settings_h2: 'Configuración',
+        theme_h3: 'Tema',
+        light_mode: 'Modo Claro',
+        dark_mode: 'Modo Oscuro',
+        custom_mode: 'Personalizado',
+        language_h3: 'Idioma',
+        layout_h3: 'Diseño de Pantalla',
+        pc_layout: 'Diseño de PC',
+        mobile_layout: 'Diseño Móvil',
+        upload_btn: 'Subir Imagen para Simulación',
+        clear_btn: 'Borrar',
+        single_line_footer: 'ColorView Pro creado por Ahmed Sameh y Nour Eldeen. | ColorView Pro © Todos los derechos reservados.',
+        disclaimer: 'Para un mejor uso de esta función, deberías tener contigo a alguien que no sea daltónico',
+        disclaimer_ok: 'Aceptar',
+        disclaimer_never: 'No Mostrar de Nuevo',
+        closest_name: 'Nombre más cercano:',
+        danger_pairs_title: 'Pares Peligrosos',
+        danger_pairs_desc: 'Compara tu color actual con colores comúnmente confundidos en cada tipo de daltonismo.',
+        contrast_title: 'Verificador de Contraste (WCAG)',
+        foreground: 'Primer Plano',
+        background: 'Fondo',
+        palette_title: 'Paleta Segura para Daltónicos',
+        generate: 'Generar',
+        harmony_title: 'Armonía de Color',
+        complementary: 'Complementario',
+        analogous: 'Análogo',
+        triadic: 'Tríada',
+        recent_title: 'Colores Recientes',
+        favorites_title: 'Favoritos',
+        export_css: 'Exportar Variables CSS',
+        export_json: 'Exportar JSON',
+        export_png: 'Exportar Muestra PNG',
+        whole_site_label: 'Vista previa de todo el sitio en este modo',
+        image_tools_title: 'Herramientas de Imagen',
+        drop_zone: 'Arrastra y suelta una imagen aquí, o pega desde el portapapeles',
+        webcam_btn: 'Modo de Cámara en Vivo',
+        batch_btn: 'Carga por Lotes',
+        download_btn: 'Descargar Resultado',
+        share_card_btn: 'Tarjeta Antes/Después',
+        chart_checker_title: 'Verificador de Gráficos',
+        chart_upload_btn: 'Subir Gráfico',
+        chart_checker_placeholder: 'Sube una imagen de gráfico para comprobar si sus colores siguen siendo distinguibles para personas daltónicas.',
+        accessibility_h3: 'Accesibilidad',
+        dyslexia_font_label: 'Fuente para dislexia',
+        reduce_motion_label: 'Reducir movimiento',
+        personalization_h3: 'Personalización',
+        my_condition_label: 'Mi condición (selecciona la simulación automáticamente):',
+        image_history_label: 'Imágenes recientes (guardadas solo en este dispositivo):',
+        about_h3: 'Acerca de',
+        about_text: 'Hola a todos los que abrieron esto para saber sobre nosotros. Somos 2 estudiantes normales, Nour Eldeen y Ahmed Sameh. Queríamos construir algo que ayudara a la comunidad, así que creamos ColorView Pro para ayudar a las personas daltónicas y a quienes diseñan para ellas. Puedes elegir colores en HEX, RGB y HSL, simular 8 tipos de daltonismo con severidad ajustable, comprobar el contraste y paletas seguras, y previsualizar tus propias imágenes e incluso tu cámara en cada modo. Usamos herramientas de IA para aprender y avanzar más rápido mientras construíamos esto. Gracias por probarlo — pronto llegarán más actualizaciones.',
+        about_credit: '— Nour Eldeen y Ahmed Sameh',
+        danger_safe_note: '✓ No se detectaron confusiones comunes para este color.',
+        danger_warning_template: '⚠ Bajo {mode}, este color puede confundirse con: {names}.',
+        danger_colors: {
+            Red: 'Rojo', Green: 'Verde', Brown: 'Marrón',
+            Orange: 'Naranja', Blue: 'Azul', Purple: 'Morado'
+        },
+        custom_accent_label: 'Color de acento personalizado:',
+        achievement_unlocked_prefix: 'Logro desbloqueado: ',
+        locked_label: 'Bloqueado',
+        unlocked_label: 'Desbloqueado',
+        select_options: {
+            none_full: 'Sin Simulación (Visión Normal)',
+            protanopia_full: 'Protanopía (Ciego al Rojo)',
+            protanomaly_full: 'Protanomalía (Rojo Débil)',
+            deuteranopia_full: 'Deuteranopía (Ciego al Verde)',
+            deuteranomaly_full: 'Deuteranomalía (Verde Débil)',
+            tritanopia_full: 'Tritanopía (Ciego al Azul)',
+            tritanomaly_full: 'Tritanomalía (Azul Débil)',
+            achromatopsia_full: 'Acromatopsia (Monocromo)',
+            achromatomaly_full: 'Acromatomalía (Monocromo Débil)',
+            none_short: 'Ninguno / No estoy seguro',
+            protanopia_short: 'Protanopía',
+            protanomaly_short: 'Protanomalía',
+            deuteranopia_short: 'Deuteranopía',
+            deuteranomaly_short: 'Deuteranomalía',
+            tritanopia_short: 'Tritanopía',
+            tritanomaly_short: 'Tritanomalía',
+            achromatopsia_short: 'Acromatopsia'
+        },
+        achievements: {
+            uploaded_image: 'Primera Subida',
+            used_eyedropper: 'Experto Cuentagotas',
+            favorite_color: 'Coleccionista de Colores',
+            tried_all_modes: 'Espectro Completo',
+            used_webcam: 'Espectador en Vivo',
+            used_batch: 'Maestro de Lotes',
+            exported_palette: 'Exportador',
+            checked_chart: 'Verificador de Gráficos',
+            downloaded_result: 'Descargador',
+            shared_card: 'Narrador',
+            dark_mode_used: 'Ave Nocturna',
+            custom_theme_used: 'Toque Personal'
+        },
+        lang_options: [
+            { code: 'en', name: 'English' },
+            { code: 'ar', name: 'العربية' },
+            { code: 'es', name: 'Español' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'pt', name: 'Português' }
+        ],
+        info: {
+            none: {
+                title: 'Ninguna Simulación Seleccionada',
+                points: [
+                    'Selecciona un modo de daltonismo arriba para aprender sobre él.',
+                    'Los cuadros de abajo mostrarán cómo se ve tu diseño en ese modo.'
+                ]
+            },
+            protanopia: {
+                title: 'Protanopía (Ciego al Rojo)',
+                points: [
+                    'La protanopía es un tipo de daltonismo en el que el ojo no puede detectar la luz roja.',
+                    'Quienes la padecen suelen confundir el rojo con el verde o el marrón.',
+                    'Los tonos rojos pueden parecer más oscuros de lo que realmente son.',
+                    'Suele ser hereditaria y estar presente desde el nacimiento.',
+                    'La vida diaria es normal, pero algunas tareas basadas en el color pueden ser más difíciles.'
+                ]
+            },
+            protanomaly: {
+                title: 'Protanomalía (Rojo Débil)',
+                points: [
+                    'La protanomalía es una forma más leve de deficiencia al rojo, no daltonismo total.',
+                    'Los rojos, naranjas y verdes pueden verse apagados o desplazados.',
+                    'El deslizador de severidad muestra una versión más leve del cambio de la protanopía.',
+                    'Suele ser hereditaria y estar presente desde el nacimiento.'
+                ]
+            },
+            deuteranopia: {
+                title: 'Deuteranopía (Ciego al Verde)',
+                points: [
+                    'La deuteranopía es un tipo de daltonismo en el que el ojo no puede detectar la luz verde.',
+                    'Quienes la padecen suelen confundir el verde con el rojo o el amarillo.',
+                    'Los tonos verdes pueden parecer apagados o descoloridos.',
+                    'Suele ser hereditaria y estar presente desde el nacimiento.',
+                    'La vida diaria es normal, pero algunas tareas basadas en el color pueden ser más difíciles.'
+                ]
+            },
+            deuteranomaly: {
+                title: 'Deuteranomalía (Verde Débil)',
+                points: [
+                    'La deuteranomalía es la deficiencia de color más común, una forma más leve de debilidad al verde.',
+                    'El verde y el rojo pueden parecer más cercanos entre sí de lo que realmente son.',
+                    'El deslizador de severidad muestra una versión más leve del cambio de la deuteranopía.',
+                    'Suele ser hereditaria y estar presente desde el nacimiento.'
+                ]
+            },
+            tritanopia: {
+                title: 'Tritanopía (Ciego al Azul)',
+                points: [
+                    'La tritanopía es un tipo de daltonismo en el que el ojo no puede detectar la luz azul.',
+                    'Quienes la padecen suelen confundir el azul con el verde o el amarillo.',
+                    'Los tonos azules pueden parecer más verdosos o descoloridos.',
+                    'Suele ser hereditaria y estar presente desde el nacimiento.',
+                    'La vida diaria es normal, pero algunas tareas basadas en el color pueden ser más difíciles.'
+                ]
+            },
+            tritanomaly: {
+                title: 'Tritanomalía (Azul Débil)',
+                points: [
+                    'La tritanomalía es una forma más rara y leve de deficiencia azul-amarillo.',
+                    'Puede ser más difícil distinguir el azul del verde, o el amarillo del rosa.',
+                    'El deslizador de severidad muestra una versión más leve del cambio de la tritanopía.'
+                ]
+            },
+            achromatopsia: {
+                title: 'Acromatopsia (Monocromo)',
+                points: [
+                    'La monocromacía es una forma rara de daltonismo en la que el ojo no puede distinguir ningún color.',
+                    'Quienes la padecen ven el mundo en tonos de gris, negro y blanco.',
+                    'Ocurre cuando dos o los tres tipos de células cono no funcionan.',
+                    'Suele ser hereditaria y aparecer desde el nacimiento.',
+                    'La vida diaria es normal, pero las tareas basadas en el color pueden ser mucho más difíciles.'
+                ]
+            },
+            achromatomaly: {
+                title: 'Acromatomalía (Monocromo Débil)',
+                points: [
+                    'La acromatomalía es una forma más leve de monocromacía: los colores se ven desvaídos en lugar de completamente grises.',
+                    'Ocurre cuando las células cono funcionan, pero de forma débil.',
+                    'El deslizador de severidad muestra una versión más leve del cambio de la acromatopsia.'
+                ]
+            }
+        },
+        facts: [
+            'Aproximadamente 1 de cada 12 hombres y 1 de cada 200 mujeres tiene alguna forma de deficiencia en la visión del color.',
+            'La deuteranomalía (verde débil) es el tipo más común de daltonismo.',
+            'Los perros no son completamente daltónicos: ven bien los azules y amarillos, pero no tan bien los rojos y verdes.',
+            'El daltonismo total (acromatopsia) es raro y afecta aproximadamente a 1 de cada 30,000 personas.',
+            'El azul es el color más universalmente preferido en todas las culturas.',
+            'La mantis marina tiene hasta 16 tipos de receptores de color; los humanos solo tenemos 3.',
+            'El daltonismo es mucho más común en los hombres porque los genes involucrados están en el cromosoma X.',
+            'La prueba de Ishihara, todavía utilizada hoy en día, fue diseñada en 1917 por el Dr. Shinobu Ishihara.'
+        ]
+    },
+    ru: {
+        dir: 'ltr',
+        main_title: 'Выбор цвета и значения',
+        hsl_controls: 'Управление HSL',
+        simulation_title: 'Просмотр дальтонизма',
+        simulation_desc: 'Симуляция для доступного дизайна:',
+        normal_vision: 'Тест нормального зрения',
+        deuteranopia: 'Тест дейтеранопии',
+        protanopia: 'Тест протанопии',
+        settings_h2: 'Настройки',
+        theme_h3: 'Тема',
+        light_mode: 'Светлый режим',
+        dark_mode: 'Тёмный режим',
+        custom_mode: 'Свой вариант',
+        language_h3: 'Язык',
+        layout_h3: 'Макет отображения',
+        pc_layout: 'Макет ПК',
+        mobile_layout: 'Мобильный макет',
+        upload_btn: 'Загрузить изображение для симуляции',
+        clear_btn: 'Очистить',
+        single_line_footer: 'ColorView Pro создан Ахмедом Самехом и Нур Эльдин. | ColorView Pro © Все права защищены.',
+        disclaimer: 'Для наилучшего использования этой функции рядом с вами должен быть кто-то без дальтонизма',
+        disclaimer_ok: 'Ок',
+        disclaimer_never: 'Больше не показывать',
+        closest_name: 'Ближайшее название:',
+        danger_pairs_title: 'Опасные пары',
+        danger_pairs_desc: 'Сравнивает текущий цвет с часто путаемыми цветами при каждом типе дальтонизма.',
+        contrast_title: 'Проверка контраста (WCAG)',
+        foreground: 'Передний план',
+        background: 'Фон',
+        palette_title: 'Безопасная палитра для дальтоников',
+        generate: 'Создать',
+        harmony_title: 'Гармония цвета',
+        complementary: 'Дополнительные',
+        analogous: 'Аналогичные',
+        triadic: 'Триада',
+        recent_title: 'Недавние цвета',
+        favorites_title: 'Избранное',
+        export_css: 'Экспорт переменных CSS',
+        export_json: 'Экспорт JSON',
+        export_png: 'Экспорт образца PNG',
+        whole_site_label: 'Просмотр всего сайта в этом режиме',
+        image_tools_title: 'Инструменты для изображений',
+        drop_zone: 'Перетащите изображение сюда или вставьте из буфера обмена',
+        webcam_btn: 'Режим live-камеры',
+        batch_btn: 'Пакетная загрузка',
+        download_btn: 'Скачать результат',
+        share_card_btn: 'Карточка до/после',
+        chart_checker_title: 'Проверка графиков',
+        chart_upload_btn: 'Загрузить график',
+        chart_checker_placeholder: 'Загрузите изображение диаграммы или графика, чтобы проверить, остаются ли его цвета различимыми для людей с дальтонизмом.',
+        accessibility_h3: 'Доступность',
+        dyslexia_font_label: 'Шрифт для дислексии',
+        reduce_motion_label: 'Уменьшить анимацию',
+        personalization_h3: 'Персонализация',
+        my_condition_label: 'Моё состояние (автоматически выбирает симуляцию):',
+        image_history_label: 'Недавние изображения (хранятся только на этом устройстве):',
+        about_h3: 'О нас',
+        about_text: 'Привет всем, кто открыл это, чтобы узнать о нас. Мы — два обычных студента, Нур Эльдин и Ахмед Самех. Мы хотели создать что-то полезное для сообщества, поэтому сделали ColorView Pro, чтобы помочь людям с дальтонизмом и тем, кто создаёт дизайн для них. Вы можете выбирать цвета в форматах HEX, RGB и HSL, симулировать 8 типов дальтонизма с регулируемой степенью тяжести, проверять контраст и безопасные палитры, а также просматривать свои изображения и даже камеру в каждом режиме. Мы использовали инструменты ИИ, чтобы учиться и работать быстрее при создании этого приложения. Спасибо, что попробовали — скоро появятся новые обновления.',
+        about_credit: '— Нур Эльдин и Ахмед Самех',
+        danger_safe_note: '✓ Обычных путаниц для этого цвета не обнаружено.',
+        danger_warning_template: '⚠ При режиме {mode} этот цвет можно спутать с: {names}.',
+        danger_colors: {
+            Red: 'Красный', Green: 'Зелёный', Brown: 'Коричневый',
+            Orange: 'Оранжевый', Blue: 'Синий', Purple: 'Фиолетовый'
+        },
+        custom_accent_label: 'Свой акцентный цвет:',
+        achievement_unlocked_prefix: 'Достижение открыто: ',
+        locked_label: 'Заблокировано',
+        unlocked_label: 'Открыто',
+        select_options: {
+            none_full: 'Без симуляции (нормальное зрение)',
+            protanopia_full: 'Протанопия (не видит красный)',
+            protanomaly_full: 'Протаномалия (слабое восприятие красного)',
+            deuteranopia_full: 'Дейтеранопия (не видит зелёный)',
+            deuteranomaly_full: 'Дейтераномалия (слабое восприятие зелёного)',
+            tritanopia_full: 'Тританопия (не видит синий)',
+            tritanomaly_full: 'Тританомалия (слабое восприятие синего)',
+            achromatopsia_full: 'Ахроматопсия (монохромное зрение)',
+            achromatomaly_full: 'Ахроматомалия (слабое монохромное зрение)',
+            none_short: 'Нет / не уверен(а)',
+            protanopia_short: 'Протанопия',
+            protanomaly_short: 'Протаномалия',
+            deuteranopia_short: 'Дейтеранопия',
+            deuteranomaly_short: 'Дейтераномалия',
+            tritanopia_short: 'Тританопия',
+            tritanomaly_short: 'Тританомалия',
+            achromatopsia_short: 'Ахроматопсия'
+        },
+        achievements: {
+            uploaded_image: 'Первая загрузка',
+            used_eyedropper: 'Мастер пипетки',
+            favorite_color: 'Коллекционер цветов',
+            tried_all_modes: 'Полный спектр',
+            used_webcam: 'Зритель вживую',
+            used_batch: 'Мастер пакетов',
+            exported_palette: 'Экспортёр',
+            checked_chart: 'Проверяющий графики',
+            downloaded_result: 'Загрузчик',
+            shared_card: 'Рассказчик',
+            dark_mode_used: 'Ночная сова',
+            custom_theme_used: 'Личный штрих'
+        },
+        lang_options: [
+            { code: 'en', name: 'English' },
+            { code: 'ar', name: 'العربية' },
+            { code: 'es', name: 'Español' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'pt', name: 'Português' }
+        ],
+        info: {
+            none: {
+                title: 'Симуляция не выбрана',
+                points: [
+                    'Выберите режим дальтонизма выше, чтобы узнать о нём подробнее.',
+                    'Ниже показано, как выглядит ваш дизайн в этом режиме.'
+                ]
+            },
+            protanopia: {
+                title: 'Протанопия (не видит красный)',
+                points: [
+                    'Протанопия — это тип дальтонизма, при котором глаз не способен воспринимать красный свет.',
+                    'Люди с этим состоянием часто путают красный с зелёным или коричневым.',
+                    'Красные оттенки могут казаться темнее, чем они есть на самом деле.',
+                    'Обычно передаётся по наследству и присутствует с рождения.',
+                    'Повседневная жизнь протекает нормально, но некоторые задачи, связанные с цветом, могут быть сложнее.'
+                ]
+            },
+            protanomaly: {
+                title: 'Протаномалия (слабое восприятие красного)',
+                points: [
+                    'Протаномалия — более лёгкая форма недостатка восприятия красного, а не полный дальтонизм.',
+                    'Красные, оранжевые и зелёные цвета могут казаться приглушёнными или смещёнными.',
+                    'Ползунок степени тяжести показывает более лёгкую версию сдвига при протанопии.',
+                    'Обычно передаётся по наследству и присутствует с рождения.'
+                ]
+            },
+            deuteranopia: {
+                title: 'Дейтеранопия (не видит зелёный)',
+                points: [
+                    'Дейтеранопия — это тип дальтонизма, при котором глаз не способен воспринимать зелёный свет.',
+                    'Люди с этим состоянием часто путают зелёный с красным или жёлтым.',
+                    'Зелёные оттенки могут казаться тусклыми или блёклыми.',
+                    'Обычно передаётся по наследству и присутствует с рождения.',
+                    'Повседневная жизнь протекает нормально, но некоторые задачи, связанные с цветом, могут быть сложнее.'
+                ]
+            },
+            deuteranomaly: {
+                title: 'Дейтераномалия (слабое восприятие зелёного)',
+                points: [
+                    'Дейтераномалия — самая распространённая недостаточность цветовосприятия, более лёгкая форма слабости к зелёному.',
+                    'Зелёный и красный могут казаться ближе друг к другу, чем на самом деле.',
+                    'Ползунок степени тяжести показывает более лёгкую версию сдвига при дейтеранопии.',
+                    'Обычно передаётся по наследству и присутствует с рождения.'
+                ]
+            },
+            tritanopia: {
+                title: 'Тританопия (не видит синий)',
+                points: [
+                    'Тританопия — это тип дальтонизма, при котором глаз не способен воспринимать синий свет.',
+                    'Люди с этим состоянием часто путают синий с зелёным или жёлтым.',
+                    'Синие оттенки могут казаться более зеленоватыми или блёклыми.',
+                    'Обычно передаётся по наследству и присутствует с рождения.',
+                    'Повседневная жизнь протекает нормально, но некоторые задачи, связанные с цветом, могут быть сложнее.'
+                ]
+            },
+            tritanomaly: {
+                title: 'Тританомалия (слабое восприятие синего)',
+                points: [
+                    'Тританомалия — более редкая и лёгкая форма сине-жёлтой недостаточности цветовосприятия.',
+                    'Может быть сложнее отличить синий от зелёного или жёлтый от розового.',
+                    'Ползунок степени тяжести показывает более лёгкую версию сдвига при тританопии.'
+                ]
+            },
+            achromatopsia: {
+                title: 'Ахроматопсия (монохромное зрение)',
+                points: [
+                    'Монохромазия — редкая форма дальтонизма, при которой глаз вообще не может различать цвета.',
+                    'Люди с этим состоянием видят мир в оттенках серого, чёрного и белого.',
+                    'Возникает, когда два или все три типа колбочек не работают.',
+                    'Обычно передаётся по наследству и проявляется с рождения.',
+                    'Повседневная жизнь протекает нормально, но задачи, связанные с цветом, могут быть намного сложнее.'
+                ]
+            },
+            achromatomaly: {
+                title: 'Ахроматомалия (слабое монохромное зрение)',
+                points: [
+                    'Ахроматомалия — более лёгкая форма монохромазии: цвета выглядят блёклыми, а не полностью серыми.',
+                    'Возникает, когда колбочки работают, но слабо.',
+                    'Ползунок степени тяжести показывает более лёгкую версию сдвига при ахроматопсии.'
+                ]
+            }
+        },
+        facts: [
+            'Примерно у 1 из 12 мужчин и у 1 из 200 женщин наблюдается та или иная форма нарушения цветового зрения.',
+            'Дейтераномалия (слабое восприятие зелёного) — самый распространённый тип дальтонизма.',
+            'Собаки не полностью дальтоники — они хорошо видят синий и жёлтый, но плохо красный и зелёный.',
+            'Полный дальтонизм (ахроматопсия) встречается редко, примерно у 1 из 30 000 человек.',
+            'Синий цвет — самый универсально любимый цвет во всех культурах мира.',
+            'У раков-богомолов до 16 типов цветовых рецепторов — у людей всего 3.',
+            'Дальтонизм гораздо чаще встречается у мужчин, потому что связанные с ним гены находятся на X-хромосоме.',
+            'Тест Исихары, используемый и сегодня, был разработан в 1917 году доктором Синобу Исихарой.'
+        ]
+    },
+    fr: {
+        dir: 'ltr',
+        main_title: 'Sélecteur de couleur et valeurs',
+        hsl_controls: 'Contrôles HSL',
+        simulation_title: 'Vue du daltonisme',
+        simulation_desc: "Simuler pour une conception accessible :",
+        normal_vision: 'Test de vision normale',
+        deuteranopia: 'Test de deutéranopie',
+        protanopia: 'Test de protanopie',
+        settings_h2: 'Paramètres',
+        theme_h3: 'Thème',
+        light_mode: 'Mode clair',
+        dark_mode: 'Mode sombre',
+        custom_mode: 'Personnalisé',
+        language_h3: 'Langue',
+        layout_h3: "Disposition de l'affichage",
+        pc_layout: 'Disposition PC',
+        mobile_layout: 'Disposition mobile',
+        upload_btn: 'Téléverser une image pour la simulation',
+        clear_btn: 'Effacer',
+        single_line_footer: "ColorView Pro créé par Ahmed Sameh et Nour Eldeen. | ColorView Pro © Tous droits réservés.",
+        disclaimer: "Pour une meilleure utilisation de cette fonctionnalité, une personne non daltonienne devrait être avec vous",
+        disclaimer_ok: 'Ok',
+        disclaimer_never: 'Ne plus afficher',
+        closest_name: 'Nom le plus proche :',
+        danger_pairs_title: 'Paires à risque',
+        danger_pairs_desc: 'Compare votre couleur actuelle à des couleurs couramment confondues pour chaque type de daltonisme.',
+        contrast_title: 'Vérificateur de contraste (WCAG)',
+        foreground: 'Premier plan',
+        background: 'Arrière-plan',
+        palette_title: 'Palette sûre pour daltoniens',
+        generate: 'Générer',
+        harmony_title: 'Harmonie des couleurs',
+        complementary: 'Complémentaire',
+        analogous: 'Analogue',
+        triadic: 'Triade',
+        recent_title: 'Couleurs récentes',
+        favorites_title: 'Favoris',
+        export_css: 'Exporter les variables CSS',
+        export_json: 'Exporter en JSON',
+        export_png: "Exporter l'échantillon PNG",
+        whole_site_label: 'Aperçu de tout le site dans ce mode',
+        image_tools_title: "Outils d'image",
+        drop_zone: 'Glissez-déposez une image ici, ou collez depuis le presse-papiers',
+        webcam_btn: 'Mode webcam en direct',
+        batch_btn: 'Téléversement par lot',
+        download_btn: 'Télécharger le résultat',
+        share_card_btn: 'Carte avant/après',
+        chart_checker_title: 'Vérificateur de graphiques',
+        chart_upload_btn: 'Téléverser un graphique',
+        chart_checker_placeholder: 'Téléversez une image de graphique pour vérifier si ses couleurs restent distinguables pour les personnes daltoniennes.',
+        accessibility_h3: 'Accessibilité',
+        dyslexia_font_label: 'Police adaptée à la dyslexie',
+        reduce_motion_label: 'Réduire les animations',
+        personalization_h3: 'Personnalisation',
+        my_condition_label: 'Ma condition (sélectionne automatiquement la simulation) :',
+        image_history_label: 'Images récentes (stockées uniquement sur cet appareil) :',
+        about_h3: 'À propos',
+        about_text: "Bonjour à tous ceux qui ont ouvert cette page pour en savoir plus sur nous. Nous sommes deux étudiants ordinaires, Nour Eldeen et Ahmed Sameh. Nous voulions créer quelque chose d'utile pour la communauté, alors nous avons conçu ColorView Pro pour aider les personnes daltoniennes et celles qui conçoivent pour elles. Vous pouvez choisir des couleurs en HEX, RGB et HSL, simuler 8 types de daltonisme avec une sévérité ajustable, vérifier le contraste et les palettes sûres, et prévisualiser vos propres images et même votre caméra dans chaque mode. Nous avons utilisé des outils d'IA pour apprendre et avancer plus vite en construisant ceci. Merci de l'essayer — d'autres mises à jour arrivent bientôt.",
+        about_credit: '— Nour Eldeen & Ahmed Sameh',
+        danger_safe_note: '✓ Aucune confusion courante détectée pour cette couleur.',
+        danger_warning_template: '⚠ En mode {mode}, cette couleur peut être confondue avec : {names}.',
+        danger_colors: {
+            Red: 'Rouge', Green: 'Vert', Brown: 'Marron',
+            Orange: 'Orange', Blue: 'Bleu', Purple: 'Violet'
+        },
+        custom_accent_label: "Couleur d'accent personnalisée :",
+        achievement_unlocked_prefix: 'Succès débloqué : ',
+        locked_label: 'Verrouillé',
+        unlocked_label: 'Débloqué',
+        select_options: {
+            none_full: 'Aucune simulation (vision normale)',
+            protanopia_full: 'Protanopie (aveugle au rouge)',
+            protanomaly_full: 'Protanomalie (rouge faible)',
+            deuteranopia_full: 'Deutéranopie (aveugle au vert)',
+            deuteranomaly_full: 'Deutéranomalie (vert faible)',
+            tritanopia_full: 'Tritanopie (aveugle au bleu)',
+            tritanomaly_full: 'Tritanomalie (bleu faible)',
+            achromatopsia_full: 'Achromatopsie (monochrome)',
+            achromatomaly_full: 'Achromatomalie (monochrome faible)',
+            none_short: 'Aucun / Pas sûr',
+            protanopia_short: 'Protanopie',
+            protanomaly_short: 'Protanomalie',
+            deuteranopia_short: 'Deutéranopie',
+            deuteranomaly_short: 'Deutéranomalie',
+            tritanopia_short: 'Tritanopie',
+            tritanomaly_short: 'Tritanomalie',
+            achromatopsia_short: 'Achromatopsie'
+        },
+        achievements: {
+            uploaded_image: 'Premier envoi',
+            used_eyedropper: 'Pro de la pipette',
+            favorite_color: 'Collectionneur de couleurs',
+            tried_all_modes: 'Spectre complet',
+            used_webcam: 'Spectateur en direct',
+            used_batch: 'Maître des lots',
+            exported_palette: 'Exportateur',
+            checked_chart: 'Vérificateur de graphiques',
+            downloaded_result: 'Téléchargeur',
+            shared_card: "Conteur d'histoires",
+            dark_mode_used: 'Oiseau de nuit',
+            custom_theme_used: 'Touche personnelle'
+        },
+        lang_options: [
+            { code: 'en', name: 'English' },
+            { code: 'ar', name: 'العربية' },
+            { code: 'es', name: 'Español' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'pt', name: 'Português' }
+        ],
+        info: {
+            none: {
+                title: 'Aucune simulation sélectionnée',
+                points: [
+                    'Sélectionnez un mode de daltonisme ci-dessus pour en savoir plus.',
+                    'Les cases ci-dessous montreront à quoi ressemble votre conception dans ce mode.'
+                ]
+            },
+            protanopia: {
+                title: 'Protanopie (aveugle au rouge)',
+                points: [
+                    "La protanopie est un type de daltonisme où l'œil ne peut pas détecter la lumière rouge.",
+                    'Les personnes atteintes confondent souvent le rouge avec le vert ou le marron.',
+                    "Les teintes rouges peuvent paraître plus sombres qu'elles ne le sont réellement.",
+                    "C'est généralement héréditaire et présent dès la naissance.",
+                    'La vie quotidienne est normale, mais certaines tâches liées aux couleurs peuvent être plus difficiles.'
+                ]
+            },
+            protanomaly: {
+                title: 'Protanomalie (rouge faible)',
+                points: [
+                    "La protanomalie est une forme plus légère de déficience au rouge, pas un daltonisme complet.",
+                    'Les rouges, oranges et verts peuvent paraître atténués ou décalés.',
+                    'Le curseur de sévérité montre une version plus légère du décalage de la protanopie.',
+                    "C'est généralement héréditaire et présent dès la naissance."
+                ]
+            },
+            deuteranopia: {
+                title: 'Deutéranopie (aveugle au vert)',
+                points: [
+                    "La deutéranopie est un type de daltonisme où l'œil ne peut pas détecter la lumière verte.",
+                    'Les personnes atteintes confondent souvent le vert avec le rouge ou le jaune.',
+                    'Les teintes vertes peuvent paraître ternes ou fanées.',
+                    "C'est généralement héréditaire et présent dès la naissance.",
+                    'La vie quotidienne est normale, mais certaines tâches liées aux couleurs peuvent être plus difficiles.'
+                ]
+            },
+            deuteranomaly: {
+                title: 'Deutéranomalie (vert faible)',
+                points: [
+                    'La deutéranomalie est la déficience de couleur la plus courante, une forme plus légère de faiblesse au vert.',
+                    "Le vert et le rouge peuvent paraître plus proches qu'ils ne le sont réellement.",
+                    'Le curseur de sévérité montre une version plus légère du décalage de la deutéranopie.',
+                    "C'est généralement héréditaire et présent dès la naissance."
+                ]
+            },
+            tritanopia: {
+                title: 'Tritanopie (aveugle au bleu)',
+                points: [
+                    "La tritanopie est un type de daltonisme où l'œil ne peut pas détecter la lumière bleue.",
+                    'Les personnes atteintes confondent souvent le bleu avec le vert ou le jaune.',
+                    'Les teintes bleues peuvent paraître plus verdâtres ou fanées.',
+                    "C'est généralement héréditaire et présent dès la naissance.",
+                    'La vie quotidienne est normale, mais certaines tâches liées aux couleurs peuvent être plus difficiles.'
+                ]
+            },
+            tritanomaly: {
+                title: 'Tritanomalie (bleu faible)',
+                points: [
+                    'La tritanomalie est une forme plus rare et plus légère de déficience bleu-jaune.',
+                    'Il peut être plus difficile de distinguer le bleu du vert, ou le jaune du rose.',
+                    'Le curseur de sévérité montre une version plus légère du décalage de la tritanopie.'
+                ]
+            },
+            achromatopsia: {
+                title: 'Achromatopsie (monochrome)',
+                points: [
+                    "La monochromie est une forme rare de daltonisme où l'œil ne peut distinguer aucune couleur.",
+                    'Les personnes atteintes voient le monde en nuances de gris, de noir et de blanc.',
+                    'Cela se produit lorsque deux ou les trois types de cônes ne fonctionnent pas.',
+                    "C'est généralement héréditaire et présent dès la naissance.",
+                    'La vie quotidienne est normale, mais les tâches liées aux couleurs peuvent être bien plus difficiles.'
+                ]
+            },
+            achromatomaly: {
+                title: 'Achromatomalie (monochrome faible)',
+                points: [
+                    "L'achromatomalie est une forme plus légère de monochromie — les couleurs paraissent délavées plutôt que totalement grises.",
+                    'Cela se produit lorsque les cônes fonctionnent, mais faiblement.',
+                    "Le curseur de sévérité montre une version plus légère du décalage de l'achromatopsie."
+                ]
+            }
+        },
+        facts: [
+            'Environ 1 homme sur 12 et 1 femme sur 200 ont une forme de déficience de la vision des couleurs.',
+            'La deutéranomalie (vert faible) est le type de daltonisme le plus courant.',
+            'Les chiens ne sont pas complètement daltoniens — ils voient bien le bleu et le jaune, mais pas très bien le rouge et le vert.',
+            'Le daltonisme total (achromatopsie) est rare, touchant environ 1 personne sur 30 000.',
+            'Le bleu est la couleur la plus universellement appréciée à travers les cultures.',
+            'Les crevettes-mantes ont jusqu\'à 16 types de récepteurs de couleur — les humains n\'en ont que 3.',
+            'Le daltonisme est bien plus courant chez les hommes car les gènes impliqués se trouvent sur le chromosome X.',
+            "Le test d'Ishihara, encore utilisé aujourd'hui, a été conçu en 1917 par le Dr Shinobu Ishihara."
+        ]
+    },
+    de: {
+        dir: 'ltr',
+        main_title: 'Farbwähler & Werte',
+        hsl_controls: 'HSL-Steuerung',
+        simulation_title: 'Farbenblindheits-Ansicht',
+        simulation_desc: 'Simulation für barrierefreies Design:',
+        normal_vision: 'Test für normales Sehen',
+        deuteranopia: 'Deuteranopie-Test',
+        protanopia: 'Protanopie-Test',
+        settings_h2: 'Einstellungen',
+        theme_h3: 'Design',
+        light_mode: 'Heller Modus',
+        dark_mode: 'Dunkler Modus',
+        custom_mode: 'Benutzerdefiniert',
+        language_h3: 'Sprache',
+        layout_h3: 'Anzeigelayout',
+        pc_layout: 'PC-Layout',
+        mobile_layout: 'Mobiles Layout',
+        upload_btn: 'Bild für Simulation hochladen',
+        clear_btn: 'Löschen',
+        single_line_footer: 'ColorView Pro erstellt von Ahmed Sameh und Nour Eldeen. | ColorView Pro © Alle Rechte vorbehalten.',
+        disclaimer: 'Für die beste Nutzung dieser Funktion sollte eine nicht farbenblinde Person bei Ihnen sein',
+        disclaimer_ok: 'Ok',
+        disclaimer_never: 'Nicht mehr anzeigen',
+        closest_name: 'Nächster Name:',
+        danger_pairs_title: 'Gefährliche Paare',
+        danger_pairs_desc: 'Vergleicht Ihre aktuelle Farbe mit häufig verwechselten Farben bei jedem Farbenblindheitstyp.',
+        contrast_title: 'Kontrastprüfung (WCAG)',
+        foreground: 'Vordergrund',
+        background: 'Hintergrund',
+        palette_title: 'Farbenblind-sichere Palette',
+        generate: 'Erzeugen',
+        harmony_title: 'Farbharmonie',
+        complementary: 'Komplementär',
+        analogous: 'Analog',
+        triadic: 'Triadisch',
+        recent_title: 'Letzte Farben',
+        favorites_title: 'Favoriten',
+        export_css: 'CSS-Variablen exportieren',
+        export_json: 'JSON exportieren',
+        export_png: 'Farbmuster als PNG exportieren',
+        whole_site_label: 'Gesamte Website in diesem Modus anzeigen',
+        image_tools_title: 'Bildwerkzeuge',
+        drop_zone: 'Bild hierher ziehen und ablegen oder aus der Zwischenablage einfügen',
+        webcam_btn: 'Live-Webcam-Modus',
+        batch_btn: 'Stapel-Upload',
+        download_btn: 'Ergebnis herunterladen',
+        share_card_btn: 'Vorher/Nachher-Karte',
+        chart_checker_title: 'Diagramm-Prüfung',
+        chart_upload_btn: 'Diagramm hochladen',
+        chart_checker_placeholder: 'Laden Sie ein Diagramm- oder Grafikbild hoch, um zu prüfen, ob dessen Farben für Farbenblinde unterscheidbar bleiben.',
+        accessibility_h3: 'Barrierefreiheit',
+        dyslexia_font_label: 'Legasthenie-freundliche Schrift',
+        reduce_motion_label: 'Bewegung reduzieren',
+        personalization_h3: 'Personalisierung',
+        my_condition_label: 'Meine Erkrankung (wählt Simulation automatisch aus):',
+        image_history_label: 'Letzte Bilder (nur auf diesem Gerät gespeichert):',
+        about_h3: 'Über uns',
+        about_text: 'Hallo an alle, die dies geöffnet haben, um mehr über uns zu erfahren. Wir sind zwei ganz normale Studenten, Nour Eldeen und Ahmed Sameh. Wir wollten etwas bauen, das der Gemeinschaft hilft, also haben wir ColorView Pro entwickelt, um farbenblinden Menschen und denjenigen, die für sie gestalten, zu helfen. Sie können Farben in HEX, RGB und HSL auswählen, 8 Arten von Farbenblindheit mit einstellbarem Schweregrad simulieren, Kontrast und sichere Paletten prüfen und Ihre eigenen Bilder und sogar Ihre Kamera in jedem Modus vorschauen. Wir haben KI-Tools verwendet, um schneller zu lernen und voranzukommen, während wir das gebaut haben. Danke, dass Sie es ausprobieren — weitere Updates folgen bald.',
+        about_credit: '— Nour Eldeen & Ahmed Sameh',
+        danger_safe_note: '✓ Für diese Farbe wurden keine häufigen Verwechslungen festgestellt.',
+        danger_warning_template: '⚠ Bei {mode} kann diese Farbe verwechselt werden mit: {names}.',
+        danger_colors: {
+            Red: 'Rot', Green: 'Grün', Brown: 'Braun',
+            Orange: 'Orange', Blue: 'Blau', Purple: 'Lila'
+        },
+        custom_accent_label: 'Benutzerdefinierte Akzentfarbe:',
+        achievement_unlocked_prefix: 'Erfolg freigeschaltet: ',
+        locked_label: 'Gesperrt',
+        unlocked_label: 'Freigeschaltet',
+        select_options: {
+            none_full: 'Keine Simulation (normales Sehen)',
+            protanopia_full: 'Protanopie (rot-blind)',
+            protanomaly_full: 'Protanomalie (rot-schwach)',
+            deuteranopia_full: 'Deuteranopie (grün-blind)',
+            deuteranomaly_full: 'Deuteranomalie (grün-schwach)',
+            tritanopia_full: 'Tritanopie (blau-blind)',
+            tritanomaly_full: 'Tritanomalie (blau-schwach)',
+            achromatopsia_full: 'Achromatopsie (monochrom)',
+            achromatomaly_full: 'Achromatomalie (schwach monochrom)',
+            none_short: 'Keine / Nicht sicher',
+            protanopia_short: 'Protanopie',
+            protanomaly_short: 'Protanomalie',
+            deuteranopia_short: 'Deuteranopie',
+            deuteranomaly_short: 'Deuteranomalie',
+            tritanopia_short: 'Tritanopie',
+            tritanomaly_short: 'Tritanomalie',
+            achromatopsia_short: 'Achromatopsie'
+        },
+        achievements: {
+            uploaded_image: 'Erster Upload',
+            used_eyedropper: 'Pipetten-Profi',
+            favorite_color: 'Farbsammler',
+            tried_all_modes: 'Volles Spektrum',
+            used_webcam: 'Live-Betrachter',
+            used_batch: 'Stapel-Meister',
+            exported_palette: 'Exporteur',
+            checked_chart: 'Diagramm-Prüfer',
+            downloaded_result: 'Downloader',
+            shared_card: 'Geschichtenerzähler',
+            dark_mode_used: 'Nachteule',
+            custom_theme_used: 'Persönliche Note'
+        },
+        lang_options: [
+            { code: 'en', name: 'English' },
+            { code: 'ar', name: 'العربية' },
+            { code: 'es', name: 'Español' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'pt', name: 'Português' }
+        ],
+        info: {
+            none: {
+                title: 'Keine Simulation ausgewählt',
+                points: [
+                    'Wählen Sie oben einen Farbenblindheitsmodus aus, um mehr darüber zu erfahren.',
+                    'Die Kästen unten zeigen, wie Ihr Design in diesem Modus aussieht.'
+                ]
+            },
+            protanopia: {
+                title: 'Protanopie (rot-blind)',
+                points: [
+                    'Protanopie ist eine Form der Farbenblindheit, bei der das Auge kein rotes Licht wahrnehmen kann.',
+                    'Betroffene verwechseln Rot oft mit Grün oder Braun.',
+                    'Rottöne können dunkler erscheinen, als sie tatsächlich sind.',
+                    'Sie ist meist vererbt und von Geburt an vorhanden.',
+                    'Der Alltag ist normal, aber manche farbbasierten Aufgaben können schwieriger sein.'
+                ]
+            },
+            protanomaly: {
+                title: 'Protanomalie (rot-schwach)',
+                points: [
+                    'Protanomalie ist eine mildere Form der Rotschwäche, keine vollständige Farbenblindheit.',
+                    'Rot, Orange und Grün können gedämpft oder verschoben wirken.',
+                    'Der Schweregrad-Regler zeigt eine leichtere Version der Protanopie-Verschiebung.',
+                    'Sie ist meist vererbt und von Geburt an vorhanden.'
+                ]
+            },
+            deuteranopia: {
+                title: 'Deuteranopie (grün-blind)',
+                points: [
+                    'Deuteranopie ist eine Form der Farbenblindheit, bei der das Auge kein grünes Licht wahrnehmen kann.',
+                    'Betroffene verwechseln Grün oft mit Rot oder Gelb.',
+                    'Grüntöne können matt oder verblasst erscheinen.',
+                    'Sie ist meist vererbt und von Geburt an vorhanden.',
+                    'Der Alltag ist normal, aber manche farbbasierten Aufgaben können schwieriger sein.'
+                ]
+            },
+            deuteranomaly: {
+                title: 'Deuteranomalie (grün-schwach)',
+                points: [
+                    'Deuteranomalie ist die häufigste Farbfehlsichtigkeit, eine mildere Form der Grünschwäche.',
+                    'Grün und Rot können näher beieinander wirken, als sie tatsächlich sind.',
+                    'Der Schweregrad-Regler zeigt eine leichtere Version der Deuteranopie-Verschiebung.',
+                    'Sie ist meist vererbt und von Geburt an vorhanden.'
+                ]
+            },
+            tritanopia: {
+                title: 'Tritanopie (blau-blind)',
+                points: [
+                    'Tritanopie ist eine Form der Farbenblindheit, bei der das Auge kein blaues Licht wahrnehmen kann.',
+                    'Betroffene verwechseln Blau oft mit Grün oder Gelb.',
+                    'Blautöne können grünlicher oder verblasst erscheinen.',
+                    'Sie ist meist vererbt und von Geburt an vorhanden.',
+                    'Der Alltag ist normal, aber manche farbbasierten Aufgaben können schwieriger sein.'
+                ]
+            },
+            tritanomaly: {
+                title: 'Tritanomalie (blau-schwach)',
+                points: [
+                    'Tritanomalie ist eine seltenere, mildere Form der Blau-Gelb-Farbfehlsichtigkeit.',
+                    'Blau und Grün, oder Gelb und Rosa, können schwerer zu unterscheiden sein.',
+                    'Der Schweregrad-Regler zeigt eine leichtere Version der Tritanopie-Verschiebung.'
+                ]
+            },
+            achromatopsia: {
+                title: 'Achromatopsie (monochrom)',
+                points: [
+                    'Monochromasie ist eine seltene Form der Farbenblindheit, bei der das Auge überhaupt keine Farben unterscheiden kann.',
+                    'Betroffene sehen die Welt in Grau-, Schwarz- und Weißtönen.',
+                    'Sie tritt auf, wenn zwei oder alle drei Zapfentypen nicht funktionieren.',
+                    'Sie ist meist vererbt und von Geburt an vorhanden.',
+                    'Der Alltag ist normal, aber farbbasierte Aufgaben können deutlich schwieriger sein.'
+                ]
+            },
+            achromatomaly: {
+                title: 'Achromatomalie (schwach monochrom)',
+                points: [
+                    'Achromatomalie ist eine mildere Form der Monochromasie — Farben wirken blass statt vollständig grau.',
+                    'Sie tritt auf, wenn die Zapfen funktionieren, aber nur schwach.',
+                    'Der Schweregrad-Regler zeigt eine leichtere Version der Achromatopsie-Verschiebung.'
+                ]
+            }
+        },
+        facts: [
+            'Etwa 1 von 12 Männern und 1 von 200 Frauen hat eine Form von Farbsehschwäche.',
+            'Deuteranomalie (grün-schwach) ist die häufigste Art der Farbenblindheit.',
+            'Hunde sind nicht vollständig farbenblind — sie sehen Blau und Gelb gut, aber Rot und Grün weniger gut.',
+            'Vollständige Farbenblindheit (Achromatopsie) ist selten und betrifft etwa 1 von 30.000 Menschen.',
+            'Blau ist die weltweit universell beliebteste Farbe über alle Kulturen hinweg.',
+            'Fangschreckenkrebse haben bis zu 16 Arten von Farbrezeptoren — Menschen haben nur 3.',
+            'Farbenblindheit ist bei Männern viel häufiger, weil die beteiligten Gene auf dem X-Chromosom liegen.',
+            'Der Ishihara-Test, der noch heute verwendet wird, wurde 1917 von Dr. Shinobu Ishihara entwickelt.'
+        ]
+    },
+    pt: {
+        dir: 'ltr',
+        main_title: 'Seletor de Cor e Valores',
+        hsl_controls: 'Controles HSL',
+        simulation_title: 'Visão de Daltonismo',
+        simulation_desc: 'Simular para um design acessível:',
+        normal_vision: 'Teste de Visão Normal',
+        deuteranopia: 'Teste de Deuteranopia',
+        protanopia: 'Teste de Protanopia',
+        settings_h2: 'Configurações',
+        theme_h3: 'Tema',
+        light_mode: 'Modo Claro',
+        dark_mode: 'Modo Escuro',
+        custom_mode: 'Personalizado',
+        language_h3: 'Idioma',
+        layout_h3: 'Layout de Exibição',
+        pc_layout: 'Layout de PC',
+        mobile_layout: 'Layout Móvel',
+        upload_btn: 'Enviar Imagem para Simulação',
+        clear_btn: 'Limpar',
+        single_line_footer: 'ColorView Pro criado por Ahmed Sameh e Nour Eldeen. | ColorView Pro © Todos os direitos reservados.',
+        disclaimer: 'Para melhor uso deste recurso, você deve ter alguém que não seja daltônico com você',
+        disclaimer_ok: 'Ok',
+        disclaimer_never: 'Não Mostrar Novamente',
+        closest_name: 'Nome mais próximo:',
+        danger_pairs_title: 'Pares Perigosos',
+        danger_pairs_desc: 'Compara sua cor atual com cores comumente confundidas em cada tipo de daltonismo.',
+        contrast_title: 'Verificador de Contraste (WCAG)',
+        foreground: 'Primeiro Plano',
+        background: 'Fundo',
+        palette_title: 'Paleta Segura para Daltônicos',
+        generate: 'Gerar',
+        harmony_title: 'Harmonia de Cores',
+        complementary: 'Complementar',
+        analogous: 'Análogo',
+        triadic: 'Tríade',
+        recent_title: 'Cores Recentes',
+        favorites_title: 'Favoritos',
+        export_css: 'Exportar Variáveis CSS',
+        export_json: 'Exportar JSON',
+        export_png: 'Exportar Amostra PNG',
+        whole_site_label: 'Pré-visualizar todo o site neste modo',
+        image_tools_title: 'Ferramentas de Imagem',
+        drop_zone: 'Arraste e solte uma imagem aqui, ou cole da área de transferência',
+        webcam_btn: 'Modo de Câmera ao Vivo',
+        batch_btn: 'Envio em Lote',
+        download_btn: 'Baixar Resultado',
+        share_card_btn: 'Cartão Antes/Depois',
+        chart_checker_title: 'Verificador de Gráficos',
+        chart_upload_btn: 'Enviar Gráfico',
+        chart_checker_placeholder: 'Envie uma imagem de gráfico para verificar se suas cores permanecem distinguíveis para pessoas daltônicas.',
+        accessibility_h3: 'Acessibilidade',
+        dyslexia_font_label: 'Fonte amigável para dislexia',
+        reduce_motion_label: 'Reduzir movimento',
+        personalization_h3: 'Personalização',
+        my_condition_label: 'Minha condição (seleciona a simulação automaticamente):',
+        image_history_label: 'Imagens recentes (armazenadas apenas neste dispositivo):',
+        about_h3: 'Sobre',
+        about_text: 'Olá a todos que abriram isto para saber sobre nós. Somos 2 estudantes normais, Nour Eldeen e Ahmed Sameh. Queríamos construir algo que ajudasse a comunidade, então criamos o ColorView Pro para ajudar pessoas daltônicas e quem projeta para elas. Você pode escolher cores em HEX, RGB e HSL, simular 8 tipos de daltonismo com severidade ajustável, verificar contraste e paletas seguras, e pré-visualizar suas próprias imagens e até sua câmera em cada modo. Usamos ferramentas de IA para aprender e avançar mais rápido enquanto construíamos isso. Obrigado por experimentar — mais atualizações estão chegando em breve.',
+        about_credit: '— Nour Eldeen & Ahmed Sameh',
+        danger_safe_note: '✓ Nenhuma confusão comum detectada para esta cor.',
+        danger_warning_template: '⚠ No modo {mode}, esta cor pode ser confundida com: {names}.',
+        danger_colors: {
+            Red: 'Vermelho', Green: 'Verde', Brown: 'Marrom',
+            Orange: 'Laranja', Blue: 'Azul', Purple: 'Roxo'
+        },
+        custom_accent_label: 'Cor de destaque personalizada:',
+        achievement_unlocked_prefix: 'Conquista desbloqueada: ',
+        locked_label: 'Bloqueado',
+        unlocked_label: 'Desbloqueado',
+        select_options: {
+            none_full: 'Sem Simulação (Visão Normal)',
+            protanopia_full: 'Protanopia (Cego ao Vermelho)',
+            protanomaly_full: 'Protanomalia (Vermelho Fraco)',
+            deuteranopia_full: 'Deuteranopia (Cego ao Verde)',
+            deuteranomaly_full: 'Deuteranomalia (Verde Fraco)',
+            tritanopia_full: 'Tritanopia (Cego ao Azul)',
+            tritanomaly_full: 'Tritanomalia (Azul Fraco)',
+            achromatopsia_full: 'Acromatopsia (Monocromático)',
+            achromatomaly_full: 'Acromatomalia (Monocromático Fraco)',
+            none_short: 'Nenhum / Não tenho certeza',
+            protanopia_short: 'Protanopia',
+            protanomaly_short: 'Protanomalia',
+            deuteranopia_short: 'Deuteranopia',
+            deuteranomaly_short: 'Deuteranomalia',
+            tritanopia_short: 'Tritanopia',
+            tritanomaly_short: 'Tritanomalia',
+            achromatopsia_short: 'Acromatopsia'
+        },
+        achievements: {
+            uploaded_image: 'Primeiro Envio',
+            used_eyedropper: 'Profissional do Conta-gotas',
+            favorite_color: 'Colecionador de Cores',
+            tried_all_modes: 'Espectro Completo',
+            used_webcam: 'Espectador ao Vivo',
+            used_batch: 'Mestre dos Lotes',
+            exported_palette: 'Exportador',
+            checked_chart: 'Verificador de Gráficos',
+            downloaded_result: 'Baixador',
+            shared_card: 'Contador de Histórias',
+            dark_mode_used: 'Coruja Noturna',
+            custom_theme_used: 'Toque Pessoal'
+        },
+        lang_options: [
+            { code: 'en', name: 'English' },
+            { code: 'ar', name: 'العربية' },
+            { code: 'es', name: 'Español' },
+            { code: 'ru', name: 'Русский' },
+            { code: 'fr', name: 'Français' },
+            { code: 'de', name: 'Deutsch' },
+            { code: 'pt', name: 'Português' }
+        ],
+        info: {
+            none: {
+                title: 'Nenhuma Simulação Selecionada',
+                points: [
+                    'Selecione um modo de daltonismo acima para saber mais sobre ele.',
+                    'As caixas abaixo mostrarão como seu design fica nesse modo.'
+                ]
+            },
+            protanopia: {
+                title: 'Protanopia (Cego ao Vermelho)',
+                points: [
+                    'A protanopia é um tipo de daltonismo em que o olho não consegue detectar a luz vermelha.',
+                    'Pessoas com essa condição costumam confundir vermelho com verde ou marrom.',
+                    'Tons vermelhos podem parecer mais escuros do que realmente são.',
+                    'Geralmente é hereditária e está presente desde o nascimento.',
+                    'A vida diária é normal, mas algumas tarefas baseadas em cor podem ser mais difíceis.'
+                ]
+            },
+            protanomaly: {
+                title: 'Protanomalia (Vermelho Fraco)',
+                points: [
+                    'A protanomalia é uma forma mais leve de deficiência ao vermelho, não daltonismo completo.',
+                    'Vermelhos, laranjas e verdes podem parecer suaves ou deslocados.',
+                    'O controle de severidade mostra uma versão mais leve da mudança da protanopia.',
+                    'Geralmente é hereditária e está presente desde o nascimento.'
+                ]
+            },
+            deuteranopia: {
+                title: 'Deuteranopia (Cego ao Verde)',
+                points: [
+                    'A deuteranopia é um tipo de daltonismo em que o olho não consegue detectar a luz verde.',
+                    'Pessoas com essa condição costumam confundir verde com vermelho ou amarelo.',
+                    'Tons verdes podem parecer opacos ou desbotados.',
+                    'Geralmente é hereditária e está presente desde o nascimento.',
+                    'A vida diária é normal, mas algumas tarefas baseadas em cor podem ser mais difíceis.'
+                ]
+            },
+            deuteranomaly: {
+                title: 'Deuteranomalia (Verde Fraco)',
+                points: [
+                    'A deuteranomalia é a deficiência de cor mais comum, uma forma mais leve de fraqueza ao verde.',
+                    'Verde e vermelho podem parecer mais próximos do que realmente são.',
+                    'O controle de severidade mostra uma versão mais leve da mudança da deuteranopia.',
+                    'Geralmente é hereditária e está presente desde o nascimento.'
+                ]
+            },
+            tritanopia: {
+                title: 'Tritanopia (Cego ao Azul)',
+                points: [
+                    'A tritanopia é um tipo de daltonismo em que o olho não consegue detectar a luz azul.',
+                    'Pessoas com essa condição costumam confundir azul com verde ou amarelo.',
+                    'Tons azuis podem parecer mais esverdeados ou desbotados.',
+                    'Geralmente é hereditária e está presente desde o nascimento.',
+                    'A vida diária é normal, mas algumas tarefas baseadas em cor podem ser mais difíceis.'
+                ]
+            },
+            tritanomaly: {
+                title: 'Tritanomalia (Azul Fraco)',
+                points: [
+                    'A tritanomalia é uma forma mais rara e leve de deficiência azul-amarelo.',
+                    'Pode ser mais difícil diferenciar azul de verde, ou amarelo de rosa.',
+                    'O controle de severidade mostra uma versão mais leve da mudança da tritanopia.'
+                ]
+            },
+            achromatopsia: {
+                title: 'Acromatopsia (Monocromático)',
+                points: [
+                    'A monocromacia é uma forma rara de daltonismo em que o olho não consegue distinguir nenhuma cor.',
+                    'Pessoas com essa condição veem o mundo em tons de cinza, preto e branco.',
+                    'Ocorre quando dois ou todos os três tipos de células cone não funcionam.',
+                    'Geralmente é hereditária e aparece desde o nascimento.',
+                    'A vida diária é normal, mas tarefas baseadas em cor podem ser muito mais difíceis.'
+                ]
+            },
+            achromatomaly: {
+                title: 'Acromatomalia (Monocromático Fraco)',
+                points: [
+                    'A acromatomalia é uma forma mais leve de monocromacia — as cores parecem desbotadas em vez de totalmente cinzas.',
+                    'Ocorre quando as células cone funcionam, mas fracamente.',
+                    'O controle de severidade mostra uma versão mais leve da mudança da acromatopsia.'
+                ]
+            }
+        },
+        facts: [
+            'Aproximadamente 1 em cada 12 homens e 1 em cada 200 mulheres têm alguma forma de deficiência na visão de cores.',
+            'A deuteranomalia (verde fraco) é o tipo mais comum de daltonismo.',
+            'Os cães não são totalmente daltônicos — eles veem bem azuis e amarelos, mas não muito bem vermelhos e verdes.',
+            'O daltonismo total (acromatopsia) é raro, afetando cerca de 1 em cada 30.000 pessoas.',
+            'O azul é a cor mais universalmente preferida em todas as culturas.',
+            'Os camarões-louva-a-deus têm até 16 tipos de receptores de cor — os humanos têm apenas 3.',
+            'O daltonismo é muito mais comum em homens porque os genes envolvidos estão no cromossomo X.',
+            'O teste de Ishihara, ainda usado hoje, foi criado em 1917 pelo Dr. Shinobu Ishihara.'
         ]
     }
 };
