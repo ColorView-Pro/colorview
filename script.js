@@ -177,6 +177,12 @@ const translations = {
         about_h3: 'About',
         about_text: 'Hello to everyone who opened this to know about us. We are 2 normal students, Nour Eldeen and Ahmed Sameh. We wanted to build something that helps the community, so we made ColorView Pro to help colorblind people and the people designing for them. You can pick colors with HEX, RGB and HSL, simulate 8 types of color blindness with adjustable severity, check contrast and safe palettes, and preview your own images and even your camera through each mode. We used AI tools to help us learn and move faster while building this. Thank you for trying it out — more updates are coming soon.',
         about_credit: '— Nour Eldeen & Ahmed Sameh',
+        danger_safe_note: '✓ No common confusions detected for this color.',
+        danger_warning_template: '⚠ Under {mode}, this color may be confused with: {names}.',
+        danger_colors: {
+            Red: 'Red', Green: 'Green', Brown: 'Brown',
+            Orange: 'Orange', Blue: 'Blue', Purple: 'Purple'
+        },
         custom_accent_label: 'Custom accent color:',
         achievement_unlocked_prefix: 'Achievement unlocked: ',
         locked_label: 'Locked',
@@ -372,6 +378,12 @@ const translations = {
         about_h3: 'عنّا',
         about_text: 'أهلاً بكل من فتح هذا ليعرف عنّا. نحن طالبان عاديان، نور الدين وأحمد سامح. أردنا أن نصنع شيئًا يفيد المجتمع، فصنعنا ColorView Pro لمساعدة مرضى عمى الألوان ومصممي المحتوى لهم. يمكنك اختيار الألوان بصيغ HEX وRGB وHSL، ومحاكاة 8 أنواع من عمى الألوان بشدة قابلة للتعديل، وفحص التباين والألوان الآمنة، ومعاينة صورك وحتى كاميرتك في كل وضع. استخدمنا أدوات الذكاء الاصطناعي لمساعدتنا على التعلم والعمل بشكل أسرع أثناء بناء هذا التطبيق. شكرًا لتجربته — المزيد من التحديثات قادم قريبًا.',
         about_credit: '— نور الدين وأحمد سامح',
+        danger_safe_note: '✓ لا توجد ألوان يسهل الخلط بينها وبين هذا اللون.',
+        danger_warning_template: '⚠ في وضع {mode}، قد يُخلط هذا اللون مع: {names}.',
+        danger_colors: {
+            Red: 'أحمر', Green: 'أخضر', Brown: 'بني',
+            Orange: 'برتقالي', Blue: 'أزرق', Purple: 'بنفسجي'
+        },
         custom_accent_label: 'لون مخصص:',
         achievement_unlocked_prefix: 'تم فتح إنجاز: ',
         locked_label: 'مغلق',
@@ -818,13 +830,14 @@ function renderSwatchLists() {
 // ====================================
 function renderDangerPairs(hex) {
     if (!dangerPairsBox) return;
+    const lang = currentLangData();
     const results = checkDangerPairs(hex);
     dangerPairsBox.innerHTML = '';
     dangerPairsBox.classList.add('visible');
     if (results.length === 0) {
         const p = document.createElement('p');
         p.className = 'safe-note';
-        p.textContent = '✓ No common confusions detected for this color.';
+        p.textContent = lang.danger_safe_note;
         dangerPairsBox.appendChild(p);
         return;
     }
@@ -832,11 +845,15 @@ function renderDangerPairs(hex) {
     results.forEach(r => {
         seenModes.add(r.mode);
     });
+    const modeKey = { protanopia: 'protanopia_short', deuteranopia: 'deuteranopia_short', tritanopia: 'tritanopia_short' };
     seenModes.forEach(mode => {
-        const namesForMode = results.filter(r => r.mode === mode).map(r => r.name);
+        const namesForMode = results.filter(r => r.mode === mode).map(r => (lang.danger_colors && lang.danger_colors[r.name]) || r.name);
+        const modeName = (lang.select_options && lang.select_options[modeKey[mode]]) || mode;
         const p = document.createElement('p');
         p.className = 'danger-warning';
-        p.textContent = `⚠ Under ${mode}, this color may be confused with: ${namesForMode.join(', ')}.`;
+        p.textContent = lang.danger_warning_template
+            .replace('{mode}', modeName)
+            .replace('{names}', namesForMode.join(', '));
         dangerPairsBox.appendChild(p);
     });
 }
@@ -1350,6 +1367,7 @@ if ('serviceWorker' in navigator) {
 // ====================================
 function updateUIContent(langCode) {
     const lang = translations[langCode] || translations.en;
+    localStorage.setItem('cvp_language', langCode);
     const modeVal = colorblindSelect.value;
     document.body.dir = lang.dir;
     document.getElementById('main-content-title').textContent = lang.main_title;
@@ -1438,6 +1456,9 @@ function updateUIContent(langCode) {
         setText('opt-mc-achromatopsia', so.achromatopsia_short);
     }
     renderAchievements();
+    if (dangerPairsBox && dangerPairsBox.classList.contains('visible') && hexInput) {
+        renderDangerPairs(hexInput.value);
+    }
     updateModeInfo(modeVal, lang);
     languageSelect.innerHTML = '';
     lang.lang_options.forEach(option => {
@@ -1447,7 +1468,6 @@ function updateUIContent(langCode) {
         languageSelect.appendChild(opt);
     });
     languageSelect.value = langCode;
-    localStorage.setItem('cvp_language', langCode);
     showColorFact();
 }
 function updateModeInfo(mode, currentLang) {
