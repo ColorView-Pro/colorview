@@ -37,6 +37,7 @@ body {
 #app-container {
 display: grid;
 grid-template-columns: 2fr 1fr; /* PC Layout default */
+align-items: start; /* don't stretch the shorter column to match the taller one */
 max-width: 1400px;
 margin: 0 auto;
 min-height: calc(100vh - 50px);
@@ -275,6 +276,23 @@ flex-grow: 1; /* Allows controls to take available space */
     font-weight: bold;
     color: var(--color-text-secondary);
 }
+/* Search-by-name group has a longer label than HEX/RGB/HSL,
+   so it gets its own row instead of squeezing into the 40px column. */
+#colorSearchGroup {
+    flex-wrap: wrap;
+    row-gap: 6px;
+}
+#colorSearchGroup label {
+    width: 100%;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+#colorSearchGroup input#colorSearchInput {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-transform: none;
+}
 .input-group input[type="text"] {
     flex-grow: 1;
     background: none;
@@ -327,7 +345,7 @@ border-left: 1px solid var(--color-border);
 display: flex;
 flex-direction: column;
 gap: 20px;
-height: 100%;
+min-height: 100%;
 transition: background-color 0.4s, border-color 0.4s;
 }
 /* Style for the info box */
@@ -534,6 +552,8 @@ body.whole-site-filter #main-footer {
     border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 16px;
+    align-self: start; /* hard guarantee: never stretch to match a taller sibling in the same grid row */
+    height: fit-content;
     transition: background-color 0.4s, border-color 0.4s;
 }
 .tool-card h3, .tool-card h4 {
@@ -619,39 +639,8 @@ body.whole-site-filter #main-footer {
 #dangerPairsBox.visible { display: block; }
 #dangerPairsBox p { margin: 4px 0; font-size: 13px; }
 .danger-warning { color: #e74c3c; font-weight: bold; }
+.danger-mode-name { color: var(--color-accent); }
 .safe-note { color: #2ecc71; font-weight: bold; }
-
-.contrast-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 8px;
-    flex-wrap: wrap;
-}
-.contrast-swatch {
-    width: 60px;
-    height: 60px;
-    border-radius: 6px;
-    border: 1px solid var(--color-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    text-align: center;
-}
-.contrast-result {
-    font-size: 14px;
-}
-.contrast-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: bold;
-    margin-left: 6px;
-}
-.badge-pass { background: #2ecc71; color: #fff; }
-.badge-fail { background: #e74c3c; color: #fff; }
 
 .harmony-group { margin-top: 10px; }
 .harmony-group h5 { margin: 8px 0 4px; font-size: 12px; color: var(--color-text-secondary); text-transform: uppercase; }
@@ -681,12 +670,14 @@ body.whole-site-filter #main-footer {
 }
 .severity-row input[type="range"] { flex-grow: 1; }
 .three-panel-view {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: none; /* hidden until an image is uploaded, so no broken-image boxes/empty gaps show beforehand */
     gap: 10px;
     margin-top: 12px;
 }
-.three-panel-view.active { grid-template-columns: repeat(3, 1fr); }
+.three-panel-view.active { display: grid; grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 500px) {
+    .three-panel-view.active { grid-template-columns: 1fr; }
+}
 .panel-block { text-align: center; }
 .panel-block h5 { font-size: 11px; margin: 0 0 4px; color: var(--color-text-secondary); }
 .panel-block img, .panel-block video {
@@ -846,9 +837,118 @@ body.whole-site-filter #main-footer {
 #colorToolsGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: start; /* keep short cards (e.g. Danger Pairs) from stretching to match a taller sibling */
     gap: 15px;
     margin-top: 15px;
 }
 @media (max-width: 900px) {
     #colorToolsGrid { grid-template-columns: 1fr; }
+}
+
+/* ====================================
+ * Ishihara Colorblindness Self-Test Modal
+ * ==================================== */
+.ishihara-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.ishihara-card {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    border-radius: 10px;
+    padding: 28px;
+    max-width: 420px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+.ishihara-card h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+#ishiharaIntroDesc {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+}
+.ishihara-intro-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+}
+.ishihara-intro-actions button,
+#ishiharaRetakeBtn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: opacity 0.2s;
+}
+.ishihara-intro-actions button:hover,
+#ishiharaRetakeBtn:hover {
+    opacity: 0.85;
+}
+.ishihara-secondary-btn {
+    background-color: transparent !important;
+    color: var(--color-text) !important;
+    border: 1px solid var(--color-border) !important;
+    font-weight: 500 !important;
+}
+.ishihara-link-btn {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px;
+    margin-top: 10px;
+}
+#ishiharaCanvas {
+    display: block;
+    margin: 10px auto 0;
+    border-radius: 50%;
+    max-width: 100%;
+    height: auto;
+}
+.ishihara-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+}
+.ishihara-choice-btn {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+.ishihara-choice-btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border-color: var(--color-accent);
+}
+.ishihara-cant-see-btn {
+    grid-column: 1 / -1;
+    font-size: 13px;
+    font-weight: 500;
 }

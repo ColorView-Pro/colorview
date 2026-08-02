@@ -9,7 +9,7 @@
 // cached script.js forever, even after the real file was updated on the
 // server, because it never re-checked the network. It's now network-first
 // (falls back to cache only when offline), so updates show up automatically.
-const CACHE_NAME = 'colorview-pro-v3';
+const CACHE_NAME = 'colorview-pro-v7';
 const APP_SHELL = [
     './',
     './index.html',

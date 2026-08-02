@@ -112,13 +112,21 @@
                     <div id="colorNameRow">
                         <span id="closestNameLabel">Closest name:</span> <span id="colorNameValue">Curious Blue</span>
                     </div>
+                    <div class="input-group" id="colorSearchGroup">
+                        <label for="colorSearchInput" id="colorSearchLabel">Search by color name</label>
+                        <input type="text" id="colorSearchInput" placeholder="e.g. dark blue" autocomplete="off">
+                        <button type="button" id="colorSearchBtn" class="icon-btn" aria-label="Search" title="Search">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+                        </button>
+                    </div>
+                    <p id="colorSearchMsg" role="status" style="font-size:12px; color:var(--color-text-secondary); display:none; margin:-4px 0 8px;"></p>
                     <div class="input-group">
                         <label for="rgbInput">RGB</label>
-                        <input type="text" id="rgbInput" value="52, 152, 219" readonly>
+                        <input type="text" id="rgbInput" value="52, 152, 219">
                     </div>
                     <div class="input-group">
                         <label for="hslInput">HSL</label>
-                        <input type="text" id="hslInput" value="203, 63%, 53%" readonly>
+                        <input type="text" id="hslInput" value="203, 63%, 53%">
                     </div>
                     <div class="input-group" style="padding: 0; border: none; background: none;">
                         <input type="file" id="imageUpload" accept="image/*" style="display: none;">
@@ -163,21 +171,6 @@
                     <h4 id="dangerPairsTitle">Danger Pairs</h4>
                     <p id="dangerPairsDesc" style="font-size:13px; color:var(--color-text-secondary); margin:0;">Checks your current color against commonly-confused colors under each colorblindness type.</p>
                     <div id="dangerPairsBox"></div>
-                </div>
-                <div class="tool-card" id="contrastCard">
-                    <h4 id="contrastTitle">Contrast Checker (WCAG)</h4>
-                    <div class="contrast-row">
-                        <div>
-                            <label for="contrastColor1" id="foregroundLabel" style="font-size:12px;">Foreground</label><br>
-                            <input type="text" id="contrastColor1" value="#3498DB" maxlength="7" style="width:80px;">
-                        </div>
-                        <div>
-                            <label for="contrastColor2" id="backgroundLabel" style="font-size:12px;">Background</label><br>
-                            <input type="text" id="contrastColor2" value="#FFFFFF" maxlength="7" style="width:80px;">
-                        </div>
-                        <div class="contrast-swatch" id="contrastPreview">Aa</div>
-                    </div>
-                    <div class="contrast-result" id="contrastResultText">Ratio: --</div>
                 </div>
                 <div class="tool-card" id="paletteCard">
                     <div class="tool-card-header">
@@ -305,6 +298,16 @@
                 <input type="file" id="chartUpload" accept="image/*" style="display:none;">
                 <div id="chartCheckerResult">Upload a chart or graph image to check whether its colors stay distinguishable for colorblind viewers.</div>
             </div>
+
+            <div class="tool-card" id="accessibilityAuditCard">
+                <div class="tool-card-header">
+                    <h4 id="accessibilityAuditTitle" style="margin:0;">Accessibility Audit</h4>
+                    <label class="small-btn" for="auditImageUpload" id="auditUploadLabel" style="cursor:pointer;">Upload Design</label>
+                </div>
+                <p id="accessibilityAuditDesc" style="font-size:13px; color:var(--color-text-secondary); margin:0 0 8px;">Upload a design or image to audit its dominant colors for text contrast (WCAG) and colorblind safety.</p>
+                <input type="file" id="auditImageUpload" accept="image/*" style="display:none;">
+                <div id="auditResult">Upload an image to run an accessibility audit.</div>
+            </div>
         </aside>
     </div>
     <footer id="main-footer">
@@ -378,6 +381,8 @@
                     <option value="achromatopsia" id="opt-mc-achromatopsia">Achromatopsia</option>
                 </select>
             </div>
+            <button id="ishiharaRetakeBtn" type="button" style="margin-top:8px; width:100%;">Take the Colorblindness Test</button>
+            <p id="ishiharaLastResultNote" style="font-size:12px; margin-top:6px; color:var(--color-text-secondary); display:none;"></p>
             <p id="imageHistoryLabel" style="font-size:13px; margin-bottom:4px;">Recent images (stored on this device only):</p>
             <div id="imageHistoryGallery"></div>
         </div>
@@ -385,6 +390,41 @@
             <h3 id="aboutH3">About</h3>
             <p id="aboutText" style="font-size:13px; line-height:1.6;">Hello to everyone who opened this to know about us. We are 2 normal students, Nour Eldeen and Ahmed Sameh. We wanted to build something that helps the community, so we made ColorView Pro to help colorblind people and the people designing for them. You can pick colors with HEX, RGB and HSL, simulate 8 types of color blindness with adjustable severity, check contrast and safe palettes, and preview your own images and even your camera through each mode. We used AI tools to help us learn and move faster while building this. Thank you for trying it out — more updates are coming soon.</p>
             <p id="aboutCredit" style="font-size:12px; color:var(--color-text-secondary);">— Nour Eldeen & Ahmed Sameh</p>
+        </div>
+    </div>
+
+    <!-- ==================================== -->
+    <!-- Ishihara Colorblindness Self-Test Modal -->
+    <!-- ==================================== -->
+    <div id="ishiharaOverlay" class="ishihara-overlay" style="display:none;">
+        <div class="ishihara-card">
+            <!-- Intro screen -->
+            <div id="ishiharaIntroScreen">
+                <h2 id="ishiharaModalTitle">Colorblindness Self-Test</h2>
+                <p id="ishiharaIntroDesc">Take a short test to see which type of color vision you might have. This uses generated plates, not a medical device.</p>
+                <div class="ishihara-intro-actions">
+                    <button id="ishiharaStartBtn" type="button">Take the Test</button>
+                    <button id="ishiharaKnowBtn" type="button" class="ishihara-secondary-btn">I Know My Condition</button>
+                    <button id="ishiharaSkipBtn" type="button" class="ishihara-secondary-btn">Skip</button>
+                </div>
+            </div>
+            <!-- Test screen -->
+            <div id="ishiharaTestScreen" style="display:none;">
+                <p id="ishiharaProgress" style="font-size:13px; color:var(--color-text-secondary);"></p>
+                <canvas id="ishiharaCanvas" width="260" height="260"></canvas>
+                <p id="ishiharaQuestion" style="font-weight:600; margin-top:10px;">What number do you see?</p>
+                <div id="ishiharaChoices" class="ishihara-choices"></div>
+                <button id="ishiharaSkipMidTestBtn" type="button" class="ishihara-link-btn">Skip test</button>
+            </div>
+            <!-- Result screen -->
+            <div id="ishiharaResultScreen" style="display:none;">
+                <h2 id="ishiharaResultTitle">You have...</h2>
+                <p id="ishiharaDisclaimer" style="font-size:12px; color:var(--color-text-secondary);">This is a fun self-check, not a medical diagnosis. See an eye care professional for an official diagnosis.</p>
+                <div class="ishihara-intro-actions">
+                    <button id="ishiharaApplyBtn" type="button">Apply &amp; Close</button>
+                    <button id="ishiharaRetakeLinkBtn" type="button" class="ishihara-link-btn">Retake test</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

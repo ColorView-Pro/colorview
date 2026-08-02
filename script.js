@@ -44,10 +44,6 @@ const eyedropperBtn = document.getElementById('eyedropperBtn');
 const favBtn = document.getElementById('favBtn');
 const colorNameValue = document.getElementById('colorNameValue');
 const dangerPairsBox = document.getElementById('dangerPairsBox');
-const contrastColor1 = document.getElementById('contrastColor1');
-const contrastColor2 = document.getElementById('contrastColor2');
-const contrastPreview = document.getElementById('contrastPreview');
-const contrastResultText = document.getElementById('contrastResultText');
 const generatePaletteBtn = document.getElementById('generatePaletteBtn');
 const paletteSwatchRow = document.getElementById('paletteSwatchRow');
 const complementarySwatches = document.getElementById('complementarySwatches');
@@ -79,6 +75,13 @@ const downloadSimBtn = document.getElementById('downloadSimBtn');
 const shareCardBtn = document.getElementById('shareCardBtn');
 const chartUpload = document.getElementById('chartUpload');
 const chartCheckerResult = document.getElementById('chartCheckerResult');
+// New: color name search
+const colorSearchInput = document.getElementById('colorSearchInput');
+const colorSearchBtn = document.getElementById('colorSearchBtn');
+const colorSearchMsg = document.getElementById('colorSearchMsg');
+// New: accessibility audit
+const auditImageUpload = document.getElementById('auditImageUpload');
+const auditResult = document.getElementById('auditResult');
 // New: fun extras
 const colorFactBanner = document.getElementById('colorFactBanner');
 const colorFactText = document.getElementById('colorFactText');
@@ -144,9 +147,6 @@ const translations = {
         closest_name: 'Closest name:',
         danger_pairs_title: 'Danger Pairs',
         danger_pairs_desc: 'Checks your current color against commonly-confused colors under each colorblindness type.',
-        contrast_title: 'Contrast Checker (WCAG)',
-        foreground: 'Foreground',
-        background: 'Background',
         palette_title: 'Colorblind-Safe Palette',
         generate: 'Generate',
         harmony_title: 'Color Harmony',
@@ -168,6 +168,24 @@ const translations = {
         chart_checker_title: 'Chart / Graph Checker',
         chart_upload_btn: 'Upload Chart',
         chart_checker_placeholder: 'Upload a chart or graph image to check whether its colors stay distinguishable for colorblind viewers.',
+        color_search_label: 'Search by color name',
+        color_search_placeholder: 'e.g. dark blue',
+        color_search_not_found: 'No matching color name found in this language.',
+        accessibility_audit_title: 'Accessibility Audit',
+        accessibility_audit_desc: 'Upload a design or image to audit its dominant colors for text contrast (WCAG) and colorblind safety.',
+        accessibility_audit_upload_btn: 'Upload Design',
+        accessibility_audit_placeholder: 'Upload an image to run an accessibility audit.',
+        audit_not_enough_colors: 'Not enough distinct colors detected to audit.',
+        audit_contrast_title: 'Text Contrast (WCAG)',
+        audit_cb_title: 'Colorblind Safety',
+        audit_pass_aa: 'Passes AA for normal text (4.5:1+)',
+        audit_pass_aa_large: 'Passes AA for large text/UI only (3:1+)',
+        audit_fail_aa: 'Fails WCAG AA — too low contrast for text',
+        audit_ratio_prefix: 'Contrast ratio: ',
+        audit_low_contrast_intro: 'These color pairs may not have enough contrast for text:',
+        audit_no_low_contrast: 'No low-contrast pairs detected among dominant colors.',
+        audit_cb_warning_intro: 'These color pairs may look alike to colorblind viewers:',
+        audit_cb_safe: 'Dominant colors stay distinguishable across colorblind simulations.',
         accessibility_h3: 'Accessibility',
         dyslexia_font_label: 'Dyslexia-friendly font',
         reduce_motion_label: 'Reduce motion',
@@ -177,6 +195,20 @@ const translations = {
         about_h3: 'About',
         about_text: 'Hello to everyone who opened this to know about us. We are 2 normal students, Nour Eldeen and Ahmed Sameh. We wanted to build something that helps the community, so we made ColorView Pro to help colorblind people and the people designing for them. You can pick colors with HEX, RGB and HSL, simulate 8 types of color blindness with adjustable severity, check contrast and safe palettes, and preview your own images and even your camera through each mode. We used AI tools to help us learn and move faster while building this. Thank you for trying it out — more updates are coming soon.',
         about_credit: '— Nour Eldeen & Ahmed Sameh',
+        ishihara_modal_title: 'Colorblindness Self-Test',
+        ishihara_intro_desc: 'Take a short test to see which type of color vision you might have. This uses generated plates, not a medical device.',
+        ishihara_start_btn: 'Take the Test',
+        ishihara_know_btn: 'I Know My Condition',
+        ishihara_skip_btn: 'Skip',
+        ishihara_question: 'What number do you see?',
+        ishihara_cant_see: "I can't see a number",
+        ishihara_skip_test_link: 'Skip test',
+        ishihara_result_prefix: 'You have ',
+        ishihara_result_normal: 'You have normal color vision!',
+        ishihara_disclaimer: 'This is a fun self-check, not a medical diagnosis. See an eye care professional for an official diagnosis.',
+        ishihara_apply_btn: 'Apply & Close',
+        ishihara_retake_link: 'Retake test',
+        ishihara_retake_settings_btn: 'Take the Colorblindness Test',
         danger_safe_note: '✓ No common confusions detected for this color.',
         danger_warning_template: '⚠ Under {mode}, this color may be confused with: {names}.',
         danger_colors: {
@@ -350,9 +382,6 @@ const translations = {
         closest_name: 'أقرب اسم:',
         danger_pairs_title: 'الألوان الخطرة',
         danger_pairs_desc: 'يفحص لونك الحالي مقابل الألوان التي يسهل الخلط بينها في كل نوع من عمى الألوان.',
-        contrast_title: 'فاحص التباين (WCAG)',
-        foreground: 'الأمامي',
-        background: 'الخلفية',
         palette_title: 'لوحة ألوان آمنة لعمى الألوان',
         generate: 'إنشاء',
         harmony_title: 'توافق الألوان',
@@ -374,6 +403,24 @@ const translations = {
         chart_checker_title: 'فحص الرسوم البيانية',
         chart_upload_btn: 'تحميل رسم بياني',
         chart_checker_placeholder: 'حمّل صورة رسم بياني للتحقق من بقاء ألوانه واضحة لمرضى عمى الألوان.',
+        color_search_label: 'البحث باسم اللون',
+        color_search_placeholder: 'مثال: أزرق غامق',
+        color_search_not_found: 'لم يتم العثور على اسم لون مطابق بهذه اللغة.',
+        accessibility_audit_title: 'تدقيق إمكانية الوصول',
+        accessibility_audit_desc: 'ارفع تصميمًا أو صورة لتدقيق ألوانها السائدة من حيث تباين النص (WCAG) وسلامتها لمرضى عمى الألوان.',
+        accessibility_audit_upload_btn: 'رفع التصميم',
+        accessibility_audit_placeholder: 'ارفع صورة لإجراء تدقيق إمكانية الوصول.',
+        audit_not_enough_colors: 'لا توجد ألوان مميزة كافية لإجراء التدقيق.',
+        audit_contrast_title: 'تباين النص (WCAG)',
+        audit_cb_title: 'السلامة لمرضى عمى الألوان',
+        audit_pass_aa: 'يجتاز معيار AA للنص العادي (4.5:1+)',
+        audit_pass_aa_large: 'يجتاز معيار AA للنص الكبير/الواجهة فقط (3:1+)',
+        audit_fail_aa: 'لا يجتاز معيار WCAG AA — تباين منخفض جدًا للنص',
+        audit_ratio_prefix: 'نسبة التباين: ',
+        audit_low_contrast_intro: 'قد لا تحتوي أزواج الألوان هذه على تباين كافٍ للنص:',
+        audit_no_low_contrast: 'لم يتم رصد أزواج ألوان منخفضة التباين بين الألوان السائدة.',
+        audit_cb_warning_intro: 'قد تبدو أزواج الألوان هذه متشابهة لمرضى عمى الألوان:',
+        audit_cb_safe: 'تبقى الألوان السائدة مميزة عبر محاكاة عمى الألوان.',
         accessibility_h3: 'إمكانية الوصول',
         dyslexia_font_label: 'خط مناسب لعسر القراءة',
         reduce_motion_label: 'تقليل الحركة',
@@ -383,6 +430,20 @@ const translations = {
         about_h3: 'عنّا',
         about_text: 'أهلاً بكل من فتح هذا ليعرف عنّا. نحن طالبان عاديان، نور الدين وأحمد سامح. أردنا أن نصنع شيئًا يفيد المجتمع، فصنعنا ColorView Pro لمساعدة مرضى عمى الألوان ومصممي المحتوى لهم. يمكنك اختيار الألوان بصيغ HEX وRGB وHSL، ومحاكاة 8 أنواع من عمى الألوان بشدة قابلة للتعديل، وفحص التباين والألوان الآمنة، ومعاينة صورك وحتى كاميرتك في كل وضع. استخدمنا أدوات الذكاء الاصطناعي لمساعدتنا على التعلم والعمل بشكل أسرع أثناء بناء هذا التطبيق. شكرًا لتجربته — المزيد من التحديثات قادم قريبًا.',
         about_credit: '— نور الدين وأحمد سامح',
+        ishihara_modal_title: 'اختبار ذاتي لعمى الألوان',
+        ishihara_intro_desc: 'أجرِ اختبارًا قصيرًا لمعرفة نوع رؤية الألوان الذي قد يكون لديك. يستخدم هذا لوحات منشأة وليس جهازًا طبيًا.',
+        ishihara_start_btn: 'ابدأ الاختبار',
+        ishihara_know_btn: 'أعرف حالتي',
+        ishihara_skip_btn: 'تخطي',
+        ishihara_question: 'ما الرقم الذي تراه؟',
+        ishihara_cant_see: 'لا أستطيع رؤية رقم',
+        ishihara_skip_test_link: 'تخطي الاختبار',
+        ishihara_result_prefix: 'لديك ',
+        ishihara_result_normal: 'لديك رؤية ألوان طبيعية!',
+        ishihara_disclaimer: 'هذا فحص ذاتي للتسلية وليس تشخيصًا طبيًا. راجع طبيب عيون للحصول على تشخيص رسمي.',
+        ishihara_apply_btn: 'تطبيق وإغلاق',
+        ishihara_retake_link: 'إعادة الاختبار',
+        ishihara_retake_settings_btn: 'إجراء اختبار عمى الألوان',
         danger_safe_note: '✓ لا توجد ألوان يسهل الخلط بينها وبين هذا اللون.',
         danger_warning_template: '⚠ في وضع {mode}، قد يُخلط هذا اللون مع: {names}.',
         danger_colors: {
@@ -550,9 +611,6 @@ const translations = {
         closest_name: 'Nombre más cercano:',
         danger_pairs_title: 'Pares Peligrosos',
         danger_pairs_desc: 'Compara tu color actual con colores comúnmente confundidos en cada tipo de daltonismo.',
-        contrast_title: 'Verificador de Contraste (WCAG)',
-        foreground: 'Primer Plano',
-        background: 'Fondo',
         palette_title: 'Paleta Segura para Daltónicos',
         generate: 'Generar',
         harmony_title: 'Armonía de Color',
@@ -574,6 +632,24 @@ const translations = {
         chart_checker_title: 'Verificador de Gráficos',
         chart_upload_btn: 'Subir Gráfico',
         chart_checker_placeholder: 'Sube una imagen de gráfico para comprobar si sus colores siguen siendo distinguibles para personas daltónicas.',
+        color_search_label: 'Buscar por nombre de color',
+        color_search_placeholder: 'ej. azul oscuro',
+        color_search_not_found: 'No se encontró un nombre de color coincidente en este idioma.',
+        accessibility_audit_title: 'Auditoría de Accesibilidad',
+        accessibility_audit_desc: 'Sube un diseño o imagen para auditar sus colores dominantes por contraste de texto (WCAG) y seguridad para daltónicos.',
+        accessibility_audit_upload_btn: 'Subir Diseño',
+        accessibility_audit_placeholder: 'Sube una imagen para ejecutar una auditoría de accesibilidad.',
+        audit_not_enough_colors: 'No se detectaron suficientes colores distintos para auditar.',
+        audit_contrast_title: 'Contraste de Texto (WCAG)',
+        audit_cb_title: 'Seguridad para Daltónicos',
+        audit_pass_aa: 'Aprueba AA para texto normal (4.5:1+)',
+        audit_pass_aa_large: 'Aprueba AA solo para texto grande/UI (3:1+)',
+        audit_fail_aa: 'No aprueba WCAG AA — contraste demasiado bajo para texto',
+        audit_ratio_prefix: 'Ratio de contraste: ',
+        audit_low_contrast_intro: 'Estos pares de colores pueden no tener suficiente contraste para texto:',
+        audit_no_low_contrast: 'No se detectaron pares de bajo contraste entre los colores dominantes.',
+        audit_cb_warning_intro: 'Estos pares de colores pueden parecer iguales para personas daltónicas:',
+        audit_cb_safe: 'Los colores dominantes siguen siendo distinguibles en las simulaciones de daltonismo.',
         accessibility_h3: 'Accesibilidad',
         dyslexia_font_label: 'Fuente para dislexia',
         reduce_motion_label: 'Reducir movimiento',
@@ -583,6 +659,20 @@ const translations = {
         about_h3: 'Acerca de',
         about_text: 'Hola a todos los que abrieron esto para saber sobre nosotros. Somos 2 estudiantes normales, Nour Eldeen y Ahmed Sameh. Queríamos construir algo que ayudara a la comunidad, así que creamos ColorView Pro para ayudar a las personas daltónicas y a quienes diseñan para ellas. Puedes elegir colores en HEX, RGB y HSL, simular 8 tipos de daltonismo con severidad ajustable, comprobar el contraste y paletas seguras, y previsualizar tus propias imágenes e incluso tu cámara en cada modo. Usamos herramientas de IA para aprender y avanzar más rápido mientras construíamos esto. Gracias por probarlo — pronto llegarán más actualizaciones.',
         about_credit: '— Nour Eldeen y Ahmed Sameh',
+        ishihara_modal_title: 'Autoevaluación de Daltonismo',
+        ishihara_intro_desc: 'Realiza una breve prueba para ver qué tipo de visión de color podrías tener. Usa láminas generadas, no es un dispositivo médico.',
+        ishihara_start_btn: 'Hacer la Prueba',
+        ishihara_know_btn: 'Ya Sé Mi Condición',
+        ishihara_skip_btn: 'Omitir',
+        ishihara_question: '¿Qué número ves?',
+        ishihara_cant_see: 'No puedo ver ningún número',
+        ishihara_skip_test_link: 'Omitir prueba',
+        ishihara_result_prefix: 'Tienes ',
+        ishihara_result_normal: '¡Tienes visión de color normal!',
+        ishihara_disclaimer: 'Esto es una autoevaluación informal, no un diagnóstico médico. Consulta a un oftalmólogo para un diagnóstico oficial.',
+        ishihara_apply_btn: 'Aplicar y Cerrar',
+        ishihara_retake_link: 'Repetir prueba',
+        ishihara_retake_settings_btn: 'Hacer la Prueba de Daltonismo',
         danger_safe_note: '✓ No se detectaron confusiones comunes para este color.',
         danger_warning_template: '⚠ Bajo {mode}, este color puede confundirse con: {names}.',
         danger_colors: {
@@ -756,9 +846,6 @@ const translations = {
         closest_name: 'Ближайшее название:',
         danger_pairs_title: 'Опасные пары',
         danger_pairs_desc: 'Сравнивает текущий цвет с часто путаемыми цветами при каждом типе дальтонизма.',
-        contrast_title: 'Проверка контраста (WCAG)',
-        foreground: 'Передний план',
-        background: 'Фон',
         palette_title: 'Безопасная палитра для дальтоников',
         generate: 'Создать',
         harmony_title: 'Гармония цвета',
@@ -780,6 +867,24 @@ const translations = {
         chart_checker_title: 'Проверка графиков',
         chart_upload_btn: 'Загрузить график',
         chart_checker_placeholder: 'Загрузите изображение диаграммы или графика, чтобы проверить, остаются ли его цвета различимыми для людей с дальтонизмом.',
+        color_search_label: 'Поиск по названию цвета',
+        color_search_placeholder: 'напр. тёмно-синий',
+        color_search_not_found: 'Совпадающее название цвета на этом языке не найдено.',
+        accessibility_audit_title: 'Аудит доступности',
+        accessibility_audit_desc: 'Загрузите дизайн или изображение, чтобы проверить его основные цвета на контраст текста (WCAG) и безопасность для дальтоников.',
+        accessibility_audit_upload_btn: 'Загрузить дизайн',
+        accessibility_audit_placeholder: 'Загрузите изображение для проверки доступности.',
+        audit_not_enough_colors: 'Недостаточно различимых цветов для проверки.',
+        audit_contrast_title: 'Контраст текста (WCAG)',
+        audit_cb_title: 'Безопасность для дальтоников',
+        audit_pass_aa: 'Соответствует AA для обычного текста (4.5:1+)',
+        audit_pass_aa_large: 'Соответствует AA только для крупного текста/интерфейса (3:1+)',
+        audit_fail_aa: 'Не соответствует WCAG AA — слишком низкий контраст для текста',
+        audit_ratio_prefix: 'Коэффициент контраста: ',
+        audit_low_contrast_intro: 'Этим парам цветов может не хватать контраста для текста:',
+        audit_no_low_contrast: 'Пар цветов с низким контрастом среди основных цветов не обнаружено.',
+        audit_cb_warning_intro: 'Эти пары цветов могут выглядеть одинаково для людей с дальтонизмом:',
+        audit_cb_safe: 'Основные цвета остаются различимыми при симуляции дальтонизма.',
         accessibility_h3: 'Доступность',
         dyslexia_font_label: 'Шрифт для дислексии',
         reduce_motion_label: 'Уменьшить анимацию',
@@ -789,6 +894,20 @@ const translations = {
         about_h3: 'О нас',
         about_text: 'Привет всем, кто открыл это, чтобы узнать о нас. Мы — два обычных студента, Нур Эльдин и Ахмед Самех. Мы хотели создать что-то полезное для сообщества, поэтому сделали ColorView Pro, чтобы помочь людям с дальтонизмом и тем, кто создаёт дизайн для них. Вы можете выбирать цвета в форматах HEX, RGB и HSL, симулировать 8 типов дальтонизма с регулируемой степенью тяжести, проверять контраст и безопасные палитры, а также просматривать свои изображения и даже камеру в каждом режиме. Мы использовали инструменты ИИ, чтобы учиться и работать быстрее при создании этого приложения. Спасибо, что попробовали — скоро появятся новые обновления.',
         about_credit: '— Нур Эльдин и Ахмед Самех',
+        ishihara_modal_title: 'Самопроверка на дальтонизм',
+        ishihara_intro_desc: 'Пройдите короткий тест, чтобы узнать, какой тип цветовосприятия у вас может быть. Используются сгенерированные таблицы, это не медицинское устройство.',
+        ishihara_start_btn: 'Пройти тест',
+        ishihara_know_btn: 'Я знаю своё состояние',
+        ishihara_skip_btn: 'Пропустить',
+        ishihara_question: 'Какую цифру вы видите?',
+        ishihara_cant_see: 'Я не вижу цифру',
+        ishihara_skip_test_link: 'Пропустить тест',
+        ishihara_result_prefix: 'У вас ',
+        ishihara_result_normal: 'У вас нормальное цветовое зрение!',
+        ishihara_disclaimer: 'Это развлекательная самопроверка, а не медицинский диагноз. Обратитесь к офтальмологу для официального диагноза.',
+        ishihara_apply_btn: 'Применить и закрыть',
+        ishihara_retake_link: 'Пройти тест снова',
+        ishihara_retake_settings_btn: 'Пройти тест на дальтонизм',
         danger_safe_note: '✓ Обычных путаниц для этого цвета не обнаружено.',
         danger_warning_template: '⚠ При режиме {mode} этот цвет можно спутать с: {names}.',
         danger_colors: {
@@ -962,9 +1081,6 @@ const translations = {
         closest_name: 'Nom le plus proche :',
         danger_pairs_title: 'Paires à risque',
         danger_pairs_desc: 'Compare votre couleur actuelle à des couleurs couramment confondues pour chaque type de daltonisme.',
-        contrast_title: 'Vérificateur de contraste (WCAG)',
-        foreground: 'Premier plan',
-        background: 'Arrière-plan',
         palette_title: 'Palette sûre pour daltoniens',
         generate: 'Générer',
         harmony_title: 'Harmonie des couleurs',
@@ -986,6 +1102,24 @@ const translations = {
         chart_checker_title: 'Vérificateur de graphiques',
         chart_upload_btn: 'Téléverser un graphique',
         chart_checker_placeholder: 'Téléversez une image de graphique pour vérifier si ses couleurs restent distinguables pour les personnes daltoniennes.',
+        color_search_label: 'Rechercher par nom de couleur',
+        color_search_placeholder: 'ex. bleu foncé',
+        color_search_not_found: 'Aucun nom de couleur correspondant trouvé dans cette langue.',
+        accessibility_audit_title: 'Audit d\'Accessibilité',
+        accessibility_audit_desc: 'Téléversez un design ou une image pour auditer ses couleurs dominantes en matière de contraste de texte (WCAG) et de sécurité pour daltoniens.',
+        accessibility_audit_upload_btn: 'Téléverser un Design',
+        accessibility_audit_placeholder: 'Téléversez une image pour lancer un audit d\'accessibilité.',
+        audit_not_enough_colors: 'Pas assez de couleurs distinctes détectées pour auditer.',
+        audit_contrast_title: 'Contraste du Texte (WCAG)',
+        audit_cb_title: 'Sécurité pour Daltoniens',
+        audit_pass_aa: 'Conforme AA pour texte normal (4.5:1+)',
+        audit_pass_aa_large: 'Conforme AA pour texte large/UI uniquement (3:1+)',
+        audit_fail_aa: 'Non conforme WCAG AA — contraste trop faible pour le texte',
+        audit_ratio_prefix: 'Ratio de contraste : ',
+        audit_low_contrast_intro: 'Ces paires de couleurs peuvent manquer de contraste pour le texte :',
+        audit_no_low_contrast: 'Aucune paire à faible contraste détectée parmi les couleurs dominantes.',
+        audit_cb_warning_intro: 'Ces paires de couleurs peuvent sembler identiques pour les daltoniens :',
+        audit_cb_safe: 'Les couleurs dominantes restent distinguables dans les simulations de daltonisme.',
         accessibility_h3: 'Accessibilité',
         dyslexia_font_label: 'Police adaptée à la dyslexie',
         reduce_motion_label: 'Réduire les animations',
@@ -995,6 +1129,20 @@ const translations = {
         about_h3: 'À propos',
         about_text: "Bonjour à tous ceux qui ont ouvert cette page pour en savoir plus sur nous. Nous sommes deux étudiants ordinaires, Nour Eldeen et Ahmed Sameh. Nous voulions créer quelque chose d'utile pour la communauté, alors nous avons conçu ColorView Pro pour aider les personnes daltoniennes et celles qui conçoivent pour elles. Vous pouvez choisir des couleurs en HEX, RGB et HSL, simuler 8 types de daltonisme avec une sévérité ajustable, vérifier le contraste et les palettes sûres, et prévisualiser vos propres images et même votre caméra dans chaque mode. Nous avons utilisé des outils d'IA pour apprendre et avancer plus vite en construisant ceci. Merci de l'essayer — d'autres mises à jour arrivent bientôt.",
         about_credit: '— Nour Eldeen & Ahmed Sameh',
+        ishihara_modal_title: 'Autotest de Daltonisme',
+        ishihara_intro_desc: 'Passez un court test pour voir quel type de vision des couleurs vous pourriez avoir. Utilise des planches générées, pas un dispositif médical.',
+        ishihara_start_btn: 'Passer le Test',
+        ishihara_know_btn: 'Je Connais Ma Condition',
+        ishihara_skip_btn: 'Ignorer',
+        ishihara_question: 'Quel chiffre voyez-vous ?',
+        ishihara_cant_see: 'Je ne vois aucun chiffre',
+        ishihara_skip_test_link: 'Ignorer le test',
+        ishihara_result_prefix: 'Vous avez ',
+        ishihara_result_normal: 'Vous avez une vision des couleurs normale !',
+        ishihara_disclaimer: "Ceci est un autotest ludique, pas un diagnostic médical. Consultez un ophtalmologiste pour un diagnostic officiel.",
+        ishihara_apply_btn: 'Appliquer et Fermer',
+        ishihara_retake_link: 'Repasser le test',
+        ishihara_retake_settings_btn: 'Passer le Test de Daltonisme',
         danger_safe_note: '✓ Aucune confusion courante détectée pour cette couleur.',
         danger_warning_template: '⚠ En mode {mode}, cette couleur peut être confondue avec : {names}.',
         danger_colors: {
@@ -1168,9 +1316,6 @@ const translations = {
         closest_name: 'Nächster Name:',
         danger_pairs_title: 'Gefährliche Paare',
         danger_pairs_desc: 'Vergleicht Ihre aktuelle Farbe mit häufig verwechselten Farben bei jedem Farbenblindheitstyp.',
-        contrast_title: 'Kontrastprüfung (WCAG)',
-        foreground: 'Vordergrund',
-        background: 'Hintergrund',
         palette_title: 'Farbenblind-sichere Palette',
         generate: 'Erzeugen',
         harmony_title: 'Farbharmonie',
@@ -1192,6 +1337,24 @@ const translations = {
         chart_checker_title: 'Diagramm-Prüfung',
         chart_upload_btn: 'Diagramm hochladen',
         chart_checker_placeholder: 'Laden Sie ein Diagramm- oder Grafikbild hoch, um zu prüfen, ob dessen Farben für Farbenblinde unterscheidbar bleiben.',
+        color_search_label: 'Nach Farbname suchen',
+        color_search_placeholder: 'z. B. dunkelblau',
+        color_search_not_found: 'Kein passender Farbname in dieser Sprache gefunden.',
+        accessibility_audit_title: 'Barrierefreiheits-Audit',
+        accessibility_audit_desc: 'Laden Sie ein Design oder Bild hoch, um dessen dominante Farben auf Textkontrast (WCAG) und Farbenblind-Sicherheit zu prüfen.',
+        accessibility_audit_upload_btn: 'Design hochladen',
+        accessibility_audit_placeholder: 'Laden Sie ein Bild hoch, um ein Barrierefreiheits-Audit durchzuführen.',
+        audit_not_enough_colors: 'Nicht genügend unterschiedliche Farben erkannt, um zu prüfen.',
+        audit_contrast_title: 'Textkontrast (WCAG)',
+        audit_cb_title: 'Farbenblind-Sicherheit',
+        audit_pass_aa: 'Besteht AA für normalen Text (4.5:1+)',
+        audit_pass_aa_large: 'Besteht AA nur für großen Text/UI (3:1+)',
+        audit_fail_aa: 'Besteht WCAG AA nicht — Kontrast für Text zu niedrig',
+        audit_ratio_prefix: 'Kontrastverhältnis: ',
+        audit_low_contrast_intro: 'Diese Farbpaare haben möglicherweise nicht genug Kontrast für Text:',
+        audit_no_low_contrast: 'Keine kontrastarmen Paare unter den dominanten Farben erkannt.',
+        audit_cb_warning_intro: 'Diese Farbpaare könnten für Farbenblinde ähnlich aussehen:',
+        audit_cb_safe: 'Die dominanten Farben bleiben in den Farbenblind-Simulationen unterscheidbar.',
         accessibility_h3: 'Barrierefreiheit',
         dyslexia_font_label: 'Legasthenie-freundliche Schrift',
         reduce_motion_label: 'Bewegung reduzieren',
@@ -1201,6 +1364,20 @@ const translations = {
         about_h3: 'Über uns',
         about_text: 'Hallo an alle, die dies geöffnet haben, um mehr über uns zu erfahren. Wir sind zwei ganz normale Studenten, Nour Eldeen und Ahmed Sameh. Wir wollten etwas bauen, das der Gemeinschaft hilft, also haben wir ColorView Pro entwickelt, um farbenblinden Menschen und denjenigen, die für sie gestalten, zu helfen. Sie können Farben in HEX, RGB und HSL auswählen, 8 Arten von Farbenblindheit mit einstellbarem Schweregrad simulieren, Kontrast und sichere Paletten prüfen und Ihre eigenen Bilder und sogar Ihre Kamera in jedem Modus vorschauen. Wir haben KI-Tools verwendet, um schneller zu lernen und voranzukommen, während wir das gebaut haben. Danke, dass Sie es ausprobieren — weitere Updates folgen bald.',
         about_credit: '— Nour Eldeen & Ahmed Sameh',
+        ishihara_modal_title: 'Farbenblindheits-Selbsttest',
+        ishihara_intro_desc: 'Machen Sie einen kurzen Test, um zu sehen, welche Art von Farbsehen Sie haben könnten. Verwendet generierte Tafeln, kein medizinisches Gerät.',
+        ishihara_start_btn: 'Test starten',
+        ishihara_know_btn: 'Ich kenne meine Erkrankung',
+        ishihara_skip_btn: 'Überspringen',
+        ishihara_question: 'Welche Zahl sehen Sie?',
+        ishihara_cant_see: 'Ich sehe keine Zahl',
+        ishihara_skip_test_link: 'Test überspringen',
+        ishihara_result_prefix: 'Sie haben ',
+        ishihara_result_normal: 'Sie haben normales Farbsehen!',
+        ishihara_disclaimer: 'Dies ist ein unterhaltsamer Selbsttest, keine medizinische Diagnose. Für eine offizielle Diagnose wenden Sie sich an einen Augenarzt.',
+        ishihara_apply_btn: 'Anwenden & Schließen',
+        ishihara_retake_link: 'Test wiederholen',
+        ishihara_retake_settings_btn: 'Farbenblindheitstest machen',
         danger_safe_note: '✓ Für diese Farbe wurden keine häufigen Verwechslungen festgestellt.',
         danger_warning_template: '⚠ Bei {mode} kann diese Farbe verwechselt werden mit: {names}.',
         danger_colors: {
@@ -1374,9 +1551,6 @@ const translations = {
         closest_name: 'Nome mais próximo:',
         danger_pairs_title: 'Pares Perigosos',
         danger_pairs_desc: 'Compara sua cor atual com cores comumente confundidas em cada tipo de daltonismo.',
-        contrast_title: 'Verificador de Contraste (WCAG)',
-        foreground: 'Primeiro Plano',
-        background: 'Fundo',
         palette_title: 'Paleta Segura para Daltônicos',
         generate: 'Gerar',
         harmony_title: 'Harmonia de Cores',
@@ -1398,6 +1572,24 @@ const translations = {
         chart_checker_title: 'Verificador de Gráficos',
         chart_upload_btn: 'Enviar Gráfico',
         chart_checker_placeholder: 'Envie uma imagem de gráfico para verificar se suas cores permanecem distinguíveis para pessoas daltônicas.',
+        color_search_label: 'Pesquisar por nome de cor',
+        color_search_placeholder: 'ex. azul escuro',
+        color_search_not_found: 'Nenhum nome de cor correspondente encontrado neste idioma.',
+        accessibility_audit_title: 'Auditoria de Acessibilidade',
+        accessibility_audit_desc: 'Envie um design ou imagem para auditar suas cores dominantes quanto ao contraste de texto (WCAG) e segurança para daltônicos.',
+        accessibility_audit_upload_btn: 'Enviar Design',
+        accessibility_audit_placeholder: 'Envie uma imagem para executar uma auditoria de acessibilidade.',
+        audit_not_enough_colors: 'Não há cores distintas suficientes detectadas para auditar.',
+        audit_contrast_title: 'Contraste de Texto (WCAG)',
+        audit_cb_title: 'Segurança para Daltônicos',
+        audit_pass_aa: 'Aprova AA para texto normal (4.5:1+)',
+        audit_pass_aa_large: 'Aprova AA somente para texto grande/UI (3:1+)',
+        audit_fail_aa: 'Não aprova WCAG AA — contraste muito baixo para texto',
+        audit_ratio_prefix: 'Proporção de contraste: ',
+        audit_low_contrast_intro: 'Estes pares de cores podem não ter contraste suficiente para texto:',
+        audit_no_low_contrast: 'Nenhum par de baixo contraste detectado entre as cores dominantes.',
+        audit_cb_warning_intro: 'Estes pares de cores podem parecer iguais para pessoas daltônicas:',
+        audit_cb_safe: 'As cores dominantes permanecem distinguíveis nas simulações de daltonismo.',
         accessibility_h3: 'Acessibilidade',
         dyslexia_font_label: 'Fonte amigável para dislexia',
         reduce_motion_label: 'Reduzir movimento',
@@ -1407,6 +1599,20 @@ const translations = {
         about_h3: 'Sobre',
         about_text: 'Olá a todos que abriram isto para saber sobre nós. Somos 2 estudantes normais, Nour Eldeen e Ahmed Sameh. Queríamos construir algo que ajudasse a comunidade, então criamos o ColorView Pro para ajudar pessoas daltônicas e quem projeta para elas. Você pode escolher cores em HEX, RGB e HSL, simular 8 tipos de daltonismo com severidade ajustável, verificar contraste e paletas seguras, e pré-visualizar suas próprias imagens e até sua câmera em cada modo. Usamos ferramentas de IA para aprender e avançar mais rápido enquanto construíamos isso. Obrigado por experimentar — mais atualizações estão chegando em breve.',
         about_credit: '— Nour Eldeen & Ahmed Sameh',
+        ishihara_modal_title: 'Autoteste de Daltonismo',
+        ishihara_intro_desc: 'Faça um teste curto para ver que tipo de visão de cor você pode ter. Usa pranchas geradas, não é um dispositivo médico.',
+        ishihara_start_btn: 'Fazer o Teste',
+        ishihara_know_btn: 'Já Sei Minha Condição',
+        ishihara_skip_btn: 'Pular',
+        ishihara_question: 'Que número você vê?',
+        ishihara_cant_see: 'Não consigo ver nenhum número',
+        ishihara_skip_test_link: 'Pular teste',
+        ishihara_result_prefix: 'Você tem ',
+        ishihara_result_normal: 'Você tem visão de cor normal!',
+        ishihara_disclaimer: 'Isto é uma autoavaliação informal, não um diagnóstico médico. Consulte um oftalmologista para um diagnóstico oficial.',
+        ishihara_apply_btn: 'Aplicar e Fechar',
+        ishihara_retake_link: 'Refazer teste',
+        ishihara_retake_settings_btn: 'Fazer o Teste de Daltonismo',
         danger_safe_note: '✓ Nenhuma confusão comum detectada para esta cor.',
         danger_warning_template: '⚠ No modo {mode}, esta cor pode ser confundida com: {names}.',
         danger_colors: {
@@ -1631,22 +1837,173 @@ function closestColorName(hex) {
 }
 
 // ====================================
-// WCAG Contrast
+// Multilingual color-name search
+// Only understands the 7 languages the site itself supports (see `translations`
+// above). A query in any other language simply won't match anything, which is
+// intentional: it keeps results predictable instead of guessing.
 // ====================================
-function relativeLuminance([r, g, b]) {
-    const chan = (c) => {
-        c /= 255;
-        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
-    };
-    const [rl, gl, bl] = [chan(r), chan(g), chan(b)];
-    return 0.2126 * rl + 0.7152 * gl + 0.0722 * bl;
+const COLOR_SEARCH_DATA = {
+    en: {
+        bases: {
+            red: '#FF0000', orange: '#FFA500', yellow: '#FFFF00', green: '#008000', cyan: '#00FFFF',
+            blue: '#0000FF', purple: '#800080', pink: '#FFC0CB', magenta: '#FF00FF', brown: '#A52A2A',
+            gray: '#808080', grey: '#808080', black: '#000000', white: '#FFFFFF', teal: '#008080',
+            navy: '#000080', maroon: '#800000', olive: '#808000', gold: '#FFD700', silver: '#C0C0C0',
+            beige: '#F5F5DC', turquoise: '#40E0D0', indigo: '#4B0082', violet: '#8A2BE2', lime: '#00FF00',
+            mint: '#98FF98', coral: '#FF7F50', salmon: '#FA8072', khaki: '#F0E68C', lavender: '#E6E6FA', plum: '#DDA0DD'
+        },
+        modifiers: {
+            dark: ['dark'], light: ['light'], bright: ['bright', 'vivid'], pale: ['pale']
+        }
+    },
+    ar: {
+        bases: {
+            'احمر': '#FF0000', 'برتقالي': '#FFA500', 'اصفر': '#FFFF00', 'اخضر': '#008000', 'سماوي': '#00FFFF',
+            'ازرق': '#0000FF', 'بنفسجي': '#800080', 'وردي': '#FFC0CB', 'ارجواني': '#FF00FF', 'بني': '#A52A2A',
+            'رمادي': '#808080', 'اسود': '#000000', 'ابيض': '#FFFFFF', 'كحلي': '#000080', 'عنابي': '#800000',
+            'زيتي': '#808000', 'ذهبي': '#FFD700', 'فضي': '#C0C0C0', 'بيج': '#F5F5DC', 'فيروزي': '#40E0D0',
+            'نيلي': '#4B0082'
+        },
+        modifiers: {
+            dark: ['غامق', 'داكن'], light: ['فاتح'], bright: ['زاهي', 'ساطع'], pale: ['باهت']
+        }
+    },
+    es: {
+        bases: {
+            rojo: '#FF0000', naranja: '#FFA500', amarillo: '#FFFF00', verde: '#008000', cian: '#00FFFF',
+            azul: '#0000FF', morado: '#800080', purpura: '#800080', rosa: '#FFC0CB', magenta: '#FF00FF',
+            marron: '#A52A2A', gris: '#808080', negro: '#000000', blanco: '#FFFFFF', dorado: '#FFD700',
+            plateado: '#C0C0C0', turquesa: '#40E0D0', violeta: '#8A2BE2', beige: '#F5F5DC', oliva: '#808000',
+            granate: '#800000', indigo: '#4B0082', marino: '#000080'
+        },
+        modifiers: {
+            dark: ['oscuro'], light: ['claro'], bright: ['brillante', 'vivo'], pale: ['palido']
+        }
+    },
+    ru: {
+        bases: {
+            'красный': '#FF0000', 'оранжевый': '#FFA500', 'желтый': '#FFFF00', 'зеленый': '#008000', 'голубой': '#00FFFF',
+            'синий': '#0000FF', 'фиолетовый': '#800080', 'розовый': '#FFC0CB', 'пурпурный': '#FF00FF', 'коричневый': '#A52A2A',
+            'серый': '#808080', 'черный': '#000000', 'белый': '#FFFFFF', 'золотой': '#FFD700', 'серебристый': '#C0C0C0',
+            'бирюзовый': '#40E0D0', 'сиреневый': '#8A2BE2', 'бежевый': '#F5F5DC', 'оливковый': '#808000',
+            'бордовый': '#800000', 'индиго': '#4B0082', 'морской': '#000080'
+        },
+        modifiers: {
+            dark: ['темный', 'темно'], light: ['светлый', 'светло'], bright: ['яркий', 'ярко'], pale: ['бледный', 'бледно']
+        }
+    },
+    fr: {
+        bases: {
+            rouge: '#FF0000', orange: '#FFA500', jaune: '#FFFF00', vert: '#008000', cyan: '#00FFFF',
+            bleu: '#0000FF', violet: '#800080', rose: '#FFC0CB', magenta: '#FF00FF', marron: '#A52A2A',
+            gris: '#808080', noir: '#000000', blanc: '#FFFFFF', dore: '#FFD700', argente: '#C0C0C0',
+            turquoise: '#40E0D0', beige: '#F5F5DC', olive: '#808000', bordeaux: '#800000', indigo: '#4B0082',
+            marine: '#000080'
+        },
+        modifiers: {
+            dark: ['fonce', 'sombre'], light: ['clair'], bright: ['vif'], pale: ['pale']
+        }
+    },
+    de: {
+        bases: {
+            rot: '#FF0000', orange: '#FFA500', gelb: '#FFFF00', grun: '#008000', cyan: '#00FFFF',
+            blau: '#0000FF', lila: '#800080', violett: '#800080', rosa: '#FFC0CB', magenta: '#FF00FF',
+            braun: '#A52A2A', grau: '#808080', schwarz: '#000000', weiss: '#FFFFFF', gold: '#FFD700',
+            silber: '#C0C0C0', turkis: '#40E0D0', beige: '#F5F5DC', oliv: '#808000', bordeaux: '#800000',
+            indigo: '#4B0082', marine: '#000080'
+        },
+        modifiers: {
+            dark: ['dunkel'], light: ['hell'], bright: ['leuchtend', 'knallig'], pale: ['blass']
+        },
+        // German commonly writes modifier+color as one compound word (e.g. "dunkelblau")
+        compoundPrefixes: {
+            dark: ['dunkel'], light: ['hell']
+        }
+    },
+    pt: {
+        bases: {
+            vermelho: '#FF0000', laranja: '#FFA500', amarelo: '#FFFF00', verde: '#008000', ciano: '#00FFFF',
+            azul: '#0000FF', roxo: '#800080', rosa: '#FFC0CB', magenta: '#FF00FF', marrom: '#A52A2A',
+            cinza: '#808080', preto: '#000000', branco: '#FFFFFF', dourado: '#FFD700', prateado: '#C0C0C0',
+            turquesa: '#40E0D0', bege: '#F5F5DC', oliva: '#808000', bordo: '#800000', indigo: '#4B0082',
+            marinho: '#000080'
+        },
+        modifiers: {
+            dark: ['escuro'], light: ['claro'], bright: ['vivo', 'brilhante'], pale: ['palido']
+        }
+    }
+};
+// Normalizes a query so accents/diacritics and Arabic letter variants don't
+// prevent an otherwise-correct match (e.g. "café" vs "cafe", or Arabic alef forms).
+function normalizeColorQuery(str, langCode) {
+    let s = (str || '').trim().toLowerCase();
+    if (langCode === 'ar') {
+        s = s.replace(/[\u064B-\u0652\u0640]/g, ''); // strip harakat/tatweel
+        s = s.replace(/[إأآا]/g, 'ا');
+        s = s.replace(/ى/g, 'ي');
+        s = s.replace(/ة/g, 'ه');
+        s = s.split(/\s+/).map(tok => tok.replace(/^ال/, '')).join(' ');
+    } else if (langCode === 'ru') {
+        s = s.replace(/ё/g, 'е'); // common alternate spelling, no NFD stripping (would corrupt й)
+    } else {
+        s = s.normalize('NFD').replace(/[\u0300-\u036f]/g, ''); // strip Latin accents (es/fr/de/pt/en)
+    }
+    s = s.replace(/-/g, ' ');
+    return s.replace(/\s+/g, ' ').trim();
 }
-function contrastRatio(hex1, hex2) {
-    const rgb1 = hexToRgb(hex1), rgb2 = hexToRgb(hex2);
-    if (!rgb1 || !rgb2) return null;
-    const L1 = relativeLuminance(rgb1), L2 = relativeLuminance(rgb2);
-    const lighter = Math.max(L1, L2), darker = Math.min(L1, L2);
-    return (lighter + 0.05) / (darker + 0.05);
+// Nudges a base hue's HSL lightness/saturation to reflect a "dark/light/bright/pale" modifier.
+function applyColorModifier(hex, modifierKey) {
+    const [h, s, l] = hexToHsl(hex);
+    let ns = s, nl = l;
+    if (modifierKey === 'dark') { nl = Math.max(8, Math.round(l * 0.5)); }
+    else if (modifierKey === 'light') { nl = Math.min(90, Math.round(l + (100 - l) * 0.55)); }
+    else if (modifierKey === 'bright') { ns = Math.min(100, s + 30); nl = Math.max(35, Math.min(60, l)); }
+    else if (modifierKey === 'pale') { ns = Math.max(10, Math.round(s * 0.35)); nl = Math.min(90, Math.round(l + (100 - l) * 0.5)); }
+    const [r, g, b] = hslToRgb(h, ns, nl);
+    return rgbToHex(r, g, b).toUpperCase();
+}
+// Looks up a color by name, restricted to the language passed in (one of the
+// site's 7 supported languages). Returns a hex string, or null if nothing matched.
+function searchColorByName(query, langCode) {
+    const data = COLOR_SEARCH_DATA[langCode] || COLOR_SEARCH_DATA.en;
+    const q = normalizeColorQuery(query, langCode);
+    if (!q) return null;
+    // Allow matching one of the site's extended English display names too (e.g. "Curious Blue")
+    if (langCode === 'en') {
+        const direct = NAMED_COLORS.find(([name]) => normalizeColorQuery(name, 'en') === q);
+        if (direct) return direct[1].toUpperCase();
+    }
+    let modifierKey = null;
+    let remaining = q;
+    // German-style compound words: "dunkelblau" -> "dunkel" + "blau"
+    if (data.compoundPrefixes) {
+        for (const [modKey, prefixes] of Object.entries(data.compoundPrefixes)) {
+            for (const prefix of prefixes) {
+                if (q.startsWith(prefix) && q.length > prefix.length && data.bases[q.slice(prefix.length)]) {
+                    modifierKey = modKey;
+                    remaining = q.slice(prefix.length);
+                    break;
+                }
+            }
+            if (modifierKey) break;
+        }
+    }
+    if (data.bases[remaining]) {
+        return modifierKey ? applyColorModifier(data.bases[remaining], modifierKey) : data.bases[remaining].toUpperCase();
+    }
+    // Space-separated forms: "dark blue", "ازرق غامق", "bleu foncé" (order doesn't matter)
+    const tokens = q.split(' ').filter(Boolean);
+    let baseHex = null;
+    tokens.forEach(tok => {
+        if (data.bases[tok]) baseHex = data.bases[tok];
+        if (!modifierKey) {
+            for (const [modKey, words] of Object.entries(data.modifiers)) {
+                if (words.includes(tok)) { modifierKey = modKey; break; }
+            }
+        }
+    });
+    if (!baseHex) return null;
+    return modifierKey ? applyColorModifier(baseHex, modifierKey) : baseHex.toUpperCase();
 }
 
 // ====================================
@@ -1789,8 +2146,12 @@ function updateColor(source, newH, newS, newL) {
     if (source !== 'hex') {
         hexInput.value = hex;
     }
-    rgbInput.value = `${R}, ${G}, ${B}`;
-    hslInput.value = `${H}, ${S}%, ${L}%`;
+    if (source !== 'rgb') {
+        rgbInput.value = `${R}, ${G}, ${B}`;
+    }
+    if (source !== 'hsl') {
+        hslInput.value = `${H}, ${S}%, ${L}%`;
+    }
     if(uploadedImage.style.display !== 'block') {
         preview.style.backgroundColor = `hsl(${H}, ${S}%, ${L}%)`;
     }
@@ -1889,34 +2250,23 @@ function renderDangerPairs(hex) {
     seenModes.forEach(mode => {
         const namesForMode = results.filter(r => r.mode === mode).map(r => (lang.danger_colors && lang.danger_colors[r.name]) || r.name);
         const modeName = (lang.select_options && lang.select_options[modeKey[mode]]) || mode;
+        const namesText = namesForMode.join(', ');
+        // Split the template around {mode} so the mode name can be wrapped in its own
+        // themed span (accent color) while the rest of the sentence stays warning-red.
+        const filled = lang.danger_warning_template
+            .replace('{mode}', '\u0000MODE\u0000')
+            .replace('{names}', namesText);
+        const [beforeMode, afterMode = ''] = filled.split('\u0000MODE\u0000');
         const p = document.createElement('p');
         p.className = 'danger-warning';
-        p.textContent = lang.danger_warning_template
-            .replace('{mode}', modeName)
-            .replace('{names}', namesForMode.join(', '));
+        p.appendChild(document.createTextNode(beforeMode));
+        const modeSpan = document.createElement('span');
+        modeSpan.className = 'danger-mode-name';
+        modeSpan.textContent = modeName;
+        p.appendChild(modeSpan);
+        p.appendChild(document.createTextNode(afterMode));
         dangerPairsBox.appendChild(p);
     });
-}
-
-// ====================================
-// Contrast checker rendering
-// ====================================
-function updateContrastChecker() {
-    if (!contrastColor1 || !contrastColor2) return;
-    const c1 = contrastColor1.value, c2 = contrastColor2.value;
-    if (!/^#[0-9A-Fa-f]{6}$/.test(c1) || !/^#[0-9A-Fa-f]{6}$/.test(c2)) return;
-    const ratio = contrastRatio(c1, c2);
-    if (!ratio) return;
-    contrastPreview.style.backgroundColor = c2;
-    contrastPreview.style.color = c1;
-    const rounded = ratio.toFixed(2);
-    const aaNormal = ratio >= 4.5, aaLarge = ratio >= 3, aaaNormal = ratio >= 7, aaaLarge = ratio >= 4.5;
-    contrastResultText.innerHTML =
-        `Ratio: <strong>${rounded}:1</strong><br>` +
-        `AA Normal Text <span class="contrast-badge ${aaNormal ? 'badge-pass' : 'badge-fail'}">${aaNormal ? 'PASS' : 'FAIL'}</span> ` +
-        `AA Large Text <span class="contrast-badge ${aaLarge ? 'badge-pass' : 'badge-fail'}">${aaLarge ? 'PASS' : 'FAIL'}</span><br>` +
-        `AAA Normal Text <span class="contrast-badge ${aaaNormal ? 'badge-pass' : 'badge-fail'}">${aaaNormal ? 'PASS' : 'FAIL'}</span> ` +
-        `AAA Large Text <span class="contrast-badge ${aaaLarge ? 'badge-pass' : 'badge-fail'}">${aaaLarge ? 'PASS' : 'FAIL'}</span>`;
 }
 
 // ====================================
@@ -2237,6 +2587,131 @@ if (chartUpload) {
 }
 
 // ====================================
+// Accessibility Audit (contrast + colorblind safety for an uploaded design)
+// ====================================
+// WCAG 2.x relative luminance / contrast ratio (see w3.org/TR/WCAG21/#dfn-relative-luminance)
+function relativeLuminance(hex) {
+    const rgb = hexToRgb(hex);
+    if (!rgb) return 0;
+    const [r, g, b] = rgb.map(v => {
+        const c = v / 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+function contrastRatio(hex1, hex2) {
+    const l1 = relativeLuminance(hex1), l2 = relativeLuminance(hex2);
+    const lighter = Math.max(l1, l2), darker = Math.min(l1, l2);
+    return (lighter + 0.05) / (darker + 0.05);
+}
+// Samples an image onto a small canvas and buckets pixels into a handful of dominant colors.
+// Unlike the Chart Checker (which skips near-white/near-black), the audit keeps them,
+// since a light background vs. dark text is exactly the kind of pair we need to check.
+function getDominantColors(dataUrl, callback) {
+    const img = new Image();
+    img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const scale = Math.min(1, 200 / img.naturalWidth);
+        canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+        canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        let data;
+        try {
+            data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+        } catch (e) {
+            callback(null);
+            return;
+        }
+        const buckets = {};
+        for (let i = 0; i < data.length; i += 4 * 5) {
+            const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+            if (a < 200) continue;
+            const key = [Math.round(r / 24) * 24, Math.round(g / 24) * 24, Math.round(b / 24) * 24].join(',');
+            buckets[key] = (buckets[key] || 0) + 1;
+        }
+        const sorted = Object.entries(buckets).sort((a, b) => b[1] - a[1]).slice(0, 6);
+        callback(sorted.map(([key]) => {
+            const [r, g, b] = key.split(',').map(Number);
+            return rgbToHex(r, g, b);
+        }));
+    };
+    img.src = dataUrl;
+}
+function pairSwatchesHtml(hexA, hexB) {
+    return `<div class="audit-pair-swatches"><div class="swatch" style="background:${hexA};" title="${hexA}"></div><div class="swatch" style="background:${hexB};" title="${hexB}"></div></div>`;
+}
+function runAccessibilityAudit(dataUrl) {
+    const langCode = localStorage.getItem('cvp_language') || 'en';
+    const lang = translations[langCode] || translations.en;
+    getDominantColors(dataUrl, (dominant) => {
+        if (!dominant) {
+            auditResult.textContent = 'Could not analyze this image (it may be from a different origin).';
+            return;
+        }
+        if (dominant.length < 2) {
+            auditResult.innerHTML = `<p>${lang.audit_not_enough_colors}</p>`;
+            return;
+        }
+        // --- Contrast pairs (every combination, sorted worst-first) ---
+        const contrastPairs = [];
+        for (let i = 0; i < dominant.length; i++) {
+            for (let j = i + 1; j < dominant.length; j++) {
+                contrastPairs.push({ a: dominant[i], b: dominant[j], ratio: contrastRatio(dominant[i], dominant[j]) });
+            }
+        }
+        contrastPairs.sort((x, y) => x.ratio - y.ratio);
+        const lowContrast = contrastPairs.filter(p => p.ratio < 4.5).slice(0, 5);
+
+        let html = '<div class="swatch-row">' + dominant.map(c => `<div class="swatch" style="background:${c};" title="${c}"></div>`).join('') + '</div>';
+
+        html += `<div class="audit-section"><h5>${lang.audit_contrast_title}</h5>`;
+        if (lowContrast.length) {
+            html += `<p>${lang.audit_low_contrast_intro}</p>`;
+            lowContrast.forEach(p => {
+                const badge = p.ratio >= 3 ? `<span class="audit-badge pass-large">${lang.audit_pass_aa_large}</span>` : `<span class="audit-badge fail">${lang.audit_fail_aa}</span>`;
+                html += `<div class="audit-pair-row">${pairSwatchesHtml(p.a, p.b)}<div class="audit-pair-info">${lang.audit_ratio_prefix}${p.ratio.toFixed(2)}:1 ${badge}</div></div>`;
+            });
+        } else {
+            html += `<p class="safe-note">✓ ${lang.audit_no_low_contrast}</p>`;
+        }
+        html += '</div>';
+
+        // --- Colorblind-confusion pairs ---
+        let cbWarnings = [];
+        ['protanopia', 'deuteranopia', 'tritanopia'].forEach(mode => {
+            for (let i = 0; i < dominant.length; i++) {
+                for (let j = i + 1; j < dominant.length; j++) {
+                    const simA = simulateHex(dominant[i], mode, 100);
+                    const simB = simulateHex(dominant[j], mode, 100);
+                    if (colorDistance(simA, simB) < 30) {
+                        cbWarnings.push({ mode, a: dominant[i], b: dominant[j] });
+                    }
+                }
+            }
+        });
+        html += `<div class="audit-section"><h5>${lang.audit_cb_title}</h5>`;
+        if (cbWarnings.length) {
+            html += `<p>${lang.audit_cb_warning_intro}</p>`;
+            cbWarnings.slice(0, 5).forEach(w => {
+                html += `<div class="audit-pair-row">${pairSwatchesHtml(w.a, w.b)}<div class="audit-pair-info"><span class="danger-mode-name">${w.mode}</span></div></div>`;
+            });
+        } else {
+            html += `<p class="safe-note">✓ ${lang.audit_cb_safe}</p>`;
+        }
+        html += '</div>';
+
+        auditResult.innerHTML = html;
+    });
+}
+if (auditImageUpload) {
+    auditImageUpload.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) handleImageFile(file, runAccessibilityAudit);
+    });
+}
+
+// ====================================
 // Eyedropper
 // ====================================
 if (eyedropperBtn) {
@@ -2437,7 +2912,6 @@ function updateUIContent(langCode) {
     // New elements
     const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
     setText('dangerPairsTitle', lang.danger_pairs_title);
-    setText('contrastTitle', lang.contrast_title);
     setText('paletteTitle', lang.palette_title);
     setText('generatePaletteBtn', lang.generate);
     setText('harmonyTitle', lang.harmony_title);
@@ -2470,12 +2944,35 @@ function updateUIContent(langCode) {
     // Previously untranslated elements
     setText('closestNameLabel', lang.closest_name);
     setText('dangerPairsDesc', lang.danger_pairs_desc);
-    setText('foregroundLabel', lang.foreground);
-    setText('backgroundLabel', lang.background);
     setText('chartUploadLabel', lang.chart_upload_btn);
+    // Color name search
+    setText('colorSearchLabel', lang.color_search_label);
+    if (colorSearchInput) colorSearchInput.placeholder = lang.color_search_placeholder;
+    if (colorSearchMsg && colorSearchMsg.style.display !== 'none') {
+        colorSearchMsg.textContent = lang.color_search_not_found;
+    }
+    // Accessibility audit
+    setText('accessibilityAuditTitle', lang.accessibility_audit_title);
+    setText('accessibilityAuditDesc', lang.accessibility_audit_desc);
+    setText('auditUploadLabel', lang.accessibility_audit_upload_btn);
+    if (auditResult && !auditResult.querySelector('.audit-section')) {
+        auditResult.textContent = lang.accessibility_audit_placeholder;
+    }
     setText('customAccentLabel', lang.custom_accent_label);
     setText('aboutText', lang.about_text);
     setText('aboutCredit', lang.about_credit);
+    // Ishihara self-test
+    setText('ishiharaModalTitle', lang.ishihara_modal_title);
+    setText('ishiharaIntroDesc', lang.ishihara_intro_desc);
+    setText('ishiharaStartBtn', lang.ishihara_start_btn);
+    setText('ishiharaKnowBtn', lang.ishihara_know_btn);
+    setText('ishiharaSkipBtn', lang.ishihara_skip_btn);
+    setText('ishiharaSkipMidTestBtn', lang.ishihara_skip_test_link);
+    setText('ishiharaDisclaimer', lang.ishihara_disclaimer);
+    setText('ishiharaApplyBtn', lang.ishihara_apply_btn);
+    setText('ishiharaRetakeLinkBtn', lang.ishihara_retake_link);
+    setText('ishiharaRetakeBtn', lang.ishihara_retake_settings_btn);
+    updateIshiharaStatusNote();
     // Dropdown option text
     const so = lang.select_options;
     if (so) {
@@ -2527,6 +3024,13 @@ function updateModeInfo(mode, currentLang) {
 // ====================================
 // Layout Control
 // ====================================
+function detectDeviceLayout() {
+    const ua = navigator.userAgent || '';
+    const isMobileUA = /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(ua);
+    const isNarrowScreen = window.matchMedia('(max-width: 768px)').matches;
+    return (isMobileUA || isNarrowScreen) ? 'mobile' : 'pc';
+}
+
 function setLayout(layoutMode) {
     if (layoutMode === 'mobile') {
         body.classList.add('mobile-layout');
@@ -2559,6 +3063,53 @@ hexInput.addEventListener('input', (e) => {
         updateColor('hex', newH, newS, newL);
     }
 });
+// --- RGB input (editable) ---
+rgbInput.addEventListener('input', (e) => {
+    const match = e.target.value.match(/(-?\d+)\D+(-?\d+)\D+(-?\d+)/);
+    if (!match) return;
+    const r = Math.max(0, Math.min(255, parseInt(match[1], 10)));
+    const g = Math.max(0, Math.min(255, parseInt(match[2], 10)));
+    const b = Math.max(0, Math.min(255, parseInt(match[3], 10)));
+    const [newH, newS, newL] = hexToHsl(rgbToHex(r, g, b));
+    updateColor('rgb', newH, newS, newL);
+});
+rgbInput.addEventListener('blur', () => updateColor('rgb-blur', H, S, L)); // snap back to a clean "r, g, b" format
+rgbInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); rgbInput.blur(); } });
+// --- HSL input (editable) ---
+hslInput.addEventListener('input', (e) => {
+    const match = e.target.value.match(/(-?\d+)\D+(-?\d+)%?\D+(-?\d+)%?/);
+    if (!match) return;
+    const h = ((parseInt(match[1], 10) % 360) + 360) % 360;
+    const s = Math.max(0, Math.min(100, parseInt(match[2], 10)));
+    const l = Math.max(0, Math.min(100, parseInt(match[3], 10)));
+    updateColor('hsl', h, s, l);
+});
+hslInput.addEventListener('blur', () => updateColor('hsl-blur', H, S, L)); // snap back to a clean "h, s%, l%" format
+hslInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); hslInput.blur(); } });
+// --- Color name search ---
+function runColorSearch() {
+    if (!colorSearchInput) return;
+    const langCode = localStorage.getItem('cvp_language') || 'en';
+    const lang = translations[langCode] || translations.en;
+    const hex = searchColorByName(colorSearchInput.value, langCode);
+    if (colorSearchMsg) colorSearchMsg.style.display = 'none';
+    if (hex) {
+        const [newH, newS, newL] = hexToHsl(hex);
+        updateColor('search', newH, newS, newL);
+    } else if (colorSearchMsg) {
+        colorSearchMsg.textContent = lang.color_search_not_found;
+        colorSearchMsg.style.display = 'block';
+    }
+}
+if (colorSearchBtn) colorSearchBtn.addEventListener('click', runColorSearch);
+if (colorSearchInput) {
+    colorSearchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); runColorSearch(); }
+    });
+    colorSearchInput.addEventListener('input', () => {
+        if (colorSearchMsg) colorSearchMsg.style.display = 'none';
+    });
+}
 uploadBtn.addEventListener('click', () => imageUpload.click());
 clearImageBtn.addEventListener('click', () => {
     uploadedImage.src = '';
@@ -2630,8 +3181,6 @@ severityRange.addEventListener('input', () => {
     applySimulationMode(colorblindSelect.value, parseInt(severityRange.value));
     updateCorrectedFilter();
 });
-if (contrastColor1) contrastColor1.addEventListener('input', updateContrastChecker);
-if (contrastColor2) contrastColor2.addEventListener('input', updateContrastChecker);
 if (generatePaletteBtn) {
     generatePaletteBtn.addEventListener('click', () => {
         const palette = generateSafePalette(5);
@@ -2642,6 +3191,238 @@ if (generatePaletteBtn) {
 if (exportCssBtn) exportCssBtn.addEventListener('click', exportCssVariables);
 if (exportJsonBtn) exportJsonBtn.addEventListener('click', exportJsonPalette);
 if (exportPngBtn) exportPngBtn.addEventListener('click', exportSwatchPng);
+
+// ====================================
+// Ishihara-style Colorblindness Self-Test
+// ====================================
+const ishiharaOverlay = document.getElementById('ishiharaOverlay');
+const ishiharaIntroScreen = document.getElementById('ishiharaIntroScreen');
+const ishiharaTestScreen = document.getElementById('ishiharaTestScreen');
+const ishiharaResultScreen = document.getElementById('ishiharaResultScreen');
+const ishiharaStartBtn = document.getElementById('ishiharaStartBtn');
+const ishiharaKnowBtn = document.getElementById('ishiharaKnowBtn');
+const ishiharaSkipBtn = document.getElementById('ishiharaSkipBtn');
+const ishiharaSkipMidTestBtn = document.getElementById('ishiharaSkipMidTestBtn');
+const ishiharaCanvas = document.getElementById('ishiharaCanvas');
+const ishiharaProgress = document.getElementById('ishiharaProgress');
+const ishiharaQuestion = document.getElementById('ishiharaQuestion');
+const ishiharaChoices = document.getElementById('ishiharaChoices');
+const ishiharaResultTitle = document.getElementById('ishiharaResultTitle');
+const ishiharaApplyBtn = document.getElementById('ishiharaApplyBtn');
+const ishiharaRetakeLinkBtn = document.getElementById('ishiharaRetakeLinkBtn');
+const ishiharaRetakeBtn = document.getElementById('ishiharaRetakeBtn');
+const ishiharaLastResultNote = document.getElementById('ishiharaLastResultNote');
+
+// Plate order matters for scoring below: [control, red-green #1, red-green #2 (protan-leaning), blue-yellow, isoluminant/hue-only]
+const ISHIHARA_PLATES = [
+    { id: 'control', digit: '5', figure: { h: 170, s: 55, l: 45 }, bg: { h: 330, s: 60, l: 75 }, choices: ['5', '6', '8'] },
+    { id: 'rg1', digit: '8', figure: { h: 20, s: 80, l: 55 }, bg: { h: 140, s: 45, l: 55 }, choices: ['8', '3', '6'] },
+    { id: 'rg2', digit: '6', figure: { h: 0, s: 55, l: 28 }, bg: { h: 0, s: 0, l: 60 }, choices: ['6', '8', '5'] },
+    { id: 'by', digit: '2', figure: { h: 225, s: 65, l: 45 }, bg: { h: 55, s: 70, l: 65 }, choices: ['2', '7', '3'] },
+    { id: 'iso', digit: '9', figure: { h: 260, s: 40, l: 55 }, bg: { h: 160, s: 40, l: 55 }, choices: ['9', '4', '7'] }
+];
+
+let ishiharaIndex = 0;
+let ishiharaAnswers = [];
+
+function digitMask(digit, size) {
+    const off = document.createElement('canvas');
+    off.width = size;
+    off.height = size;
+    const octx = off.getContext('2d');
+    octx.clearRect(0, 0, size, size);
+    octx.fillStyle = '#000';
+    octx.font = `bold ${Math.floor(size * 0.72)}px sans-serif`;
+    octx.textAlign = 'center';
+    octx.textBaseline = 'middle';
+    octx.fillText(digit, size / 2, size / 2 + size * 0.03);
+    return octx.getImageData(0, 0, size, size);
+}
+
+function renderIshiharaPlate(canvas, plate) {
+    const size = canvas.width;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, size, size);
+    const mask = digitMask(plate.digit, size);
+    const R = size / 2;
+    const cx = R, cy = R;
+    const dotCount = Math.floor((size * size) / 30);
+    for (let i = 0; i < dotCount; i++) {
+        let x, y, dist;
+        do {
+            x = Math.random() * size;
+            y = Math.random() * size;
+            dist = Math.hypot(x - cx, y - cy);
+        } while (dist > R - 4);
+        const idx = (Math.floor(y) * size + Math.floor(x)) * 4;
+        const isFigure = mask.data[idx + 3] > 128;
+        const base = isFigure ? plate.figure : plate.bg;
+        const hue = base.h + (Math.random() * 14 - 7);
+        const sat = Math.max(0, Math.min(100, base.s + (Math.random() * 16 - 8)));
+        const light = Math.max(0, Math.min(100, base.l + (Math.random() * 14 - 7)));
+        const radius = 2.5 + Math.random() * 4.5;
+        ctx.beginPath();
+        ctx.fillStyle = `hsl(${hue}, ${sat}%, ${light}%)`;
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+function getIshiharaLang() {
+    return translations[localStorage.getItem('cvp_language') || 'en'] || translations.en;
+}
+
+function showIshiharaScreen(name) {
+    ishiharaIntroScreen.style.display = name === 'intro' ? 'block' : 'none';
+    ishiharaTestScreen.style.display = name === 'test' ? 'block' : 'none';
+    ishiharaResultScreen.style.display = name === 'result' ? 'block' : 'none';
+}
+
+function openIshiharaModal(screen) {
+    ishiharaOverlay.style.display = 'flex';
+    showIshiharaScreen(screen);
+}
+
+function closeIshiharaModal() {
+    ishiharaOverlay.style.display = 'none';
+}
+
+function startIshiharaTest() {
+    ishiharaIndex = 0;
+    ishiharaAnswers = [];
+    showIshiharaScreen('test');
+    renderIshiharaQuestion();
+}
+
+function renderIshiharaQuestion() {
+    const lang = getIshiharaLang();
+    const plate = ISHIHARA_PLATES[ishiharaIndex];
+    renderIshiharaPlate(ishiharaCanvas, plate);
+    ishiharaProgress.textContent = `${ishiharaIndex + 1} / ${ISHIHARA_PLATES.length}`;
+    ishiharaQuestion.textContent = lang.ishihara_question;
+    const opts = [...plate.choices];
+    for (let i = opts.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [opts[i], opts[j]] = [opts[j], opts[i]];
+    }
+    ishiharaChoices.innerHTML = '';
+    opts.forEach((val) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'ishihara-choice-btn';
+        btn.textContent = val;
+        btn.addEventListener('click', () => handleIshiharaAnswer(val, plate.digit));
+        ishiharaChoices.appendChild(btn);
+    });
+    const cantSeeBtn = document.createElement('button');
+    cantSeeBtn.type = 'button';
+    cantSeeBtn.className = 'ishihara-choice-btn ishihara-cant-see-btn';
+    cantSeeBtn.textContent = lang.ishihara_cant_see;
+    cantSeeBtn.addEventListener('click', () => handleIshiharaAnswer('none', plate.digit));
+    ishiharaChoices.appendChild(cantSeeBtn);
+}
+
+function handleIshiharaAnswer(value) {
+    const plate = ISHIHARA_PLATES[ishiharaIndex];
+    ishiharaAnswers.push({ id: plate.id, correct: value === plate.digit, cantSee: value === 'none' });
+    ishiharaIndex++;
+    if (ishiharaIndex < ISHIHARA_PLATES.length) {
+        renderIshiharaQuestion();
+    } else {
+        finishIshiharaTest();
+    }
+}
+
+function scoreIshiharaAnswers(answers) {
+    const byId = {};
+    answers.forEach((a) => { byId[a.id] = a; });
+    const control = byId.control, rg1 = byId.rg1, rg2 = byId.rg2, by = byId.by, iso = byId.iso;
+    let result = 'none';
+    if (!control.correct && !rg1.correct && !rg2.correct && !by.correct) {
+        result = iso.cantSee ? 'achromatopsia' : (!iso.correct ? 'achromatomaly' : 'none');
+    } else if (!rg1.correct) {
+        if (!rg2.correct) {
+            result = (rg1.cantSee || rg2.cantSee) ? 'protanopia' : 'protanomaly';
+        } else {
+            result = rg1.cantSee ? 'deuteranopia' : 'deuteranomaly';
+        }
+    } else if (!by.correct) {
+        result = by.cantSee ? 'tritanopia' : 'tritanomaly';
+    } else if (!iso.correct) {
+        result = iso.cantSee ? 'achromatopsia' : 'achromatomaly';
+    } else {
+        result = 'none';
+    }
+    return result;
+}
+
+function finishIshiharaTest() {
+    const result = scoreIshiharaAnswers(ishiharaAnswers);
+    localStorage.setItem('cvp_ishihara_status', 'done');
+    localStorage.setItem('cvp_ishihara_result', result);
+    showIshiharaResult(result);
+}
+
+function showIshiharaResult(resultCode) {
+    const lang = getIshiharaLang();
+    ishiharaResultTitle.textContent = resultCode === 'none'
+        ? lang.ishihara_result_normal
+        : lang.ishihara_result_prefix + (lang.select_options[resultCode + '_full'] || resultCode);
+    showIshiharaScreen('result');
+    updateIshiharaStatusNote();
+}
+
+function updateIshiharaStatusNote() {
+    if (!ishiharaLastResultNote) return;
+    const status = localStorage.getItem('cvp_ishihara_status');
+    const result = localStorage.getItem('cvp_ishihara_result');
+    if (status === 'done' && result) {
+        const lang = getIshiharaLang();
+        const label = result === 'none' ? lang.ishihara_result_normal : lang.ishihara_result_prefix + (lang.select_options[result + '_full'] || result);
+        ishiharaLastResultNote.textContent = label;
+        ishiharaLastResultNote.style.display = 'block';
+    } else {
+        ishiharaLastResultNote.style.display = 'none';
+    }
+}
+
+function applyIshiharaResult() {
+    const result = localStorage.getItem('cvp_ishihara_result') || 'none';
+    myConditionSelect.value = result;
+    localStorage.setItem('cvp_my_condition', result);
+    if (result !== 'none') {
+        colorblindSelect.value = result;
+        colorblindSelect.dispatchEvent(new Event('change'));
+    }
+    closeIshiharaModal();
+}
+
+function ishiharaKnowCondition() {
+    localStorage.setItem('cvp_ishihara_status', 'skipped');
+    closeIshiharaModal();
+    settingsDrawer.classList.add('open');
+    myConditionSelect.focus();
+}
+
+function skipIshiharaTest() {
+    localStorage.setItem('cvp_ishihara_status', 'skipped');
+    closeIshiharaModal();
+}
+
+function checkAndShowIshiharaPrompt() {
+    const status = localStorage.getItem('cvp_ishihara_status');
+    if (!status) {
+        openIshiharaModal('intro');
+    }
+}
+
+if (ishiharaStartBtn) ishiharaStartBtn.addEventListener('click', startIshiharaTest);
+if (ishiharaKnowBtn) ishiharaKnowBtn.addEventListener('click', ishiharaKnowCondition);
+if (ishiharaSkipBtn) ishiharaSkipBtn.addEventListener('click', skipIshiharaTest);
+if (ishiharaSkipMidTestBtn) ishiharaSkipMidTestBtn.addEventListener('click', skipIshiharaTest);
+if (ishiharaApplyBtn) ishiharaApplyBtn.addEventListener('click', applyIshiharaResult);
+if (ishiharaRetakeLinkBtn) ishiharaRetakeLinkBtn.addEventListener('click', startIshiharaTest);
+if (ishiharaRetakeBtn) ishiharaRetakeBtn.addEventListener('click', () => openIshiharaModal('intro'));
 
 // ====================================
 // Initialization
@@ -2662,12 +3443,11 @@ if (storedTheme === 'custom') {
     setTimeout(() => setTheme(storedTheme), 0);
 }
 
-const storedLayout = localStorage.getItem('cvp_layout') || 'pc';
+const storedLayout = localStorage.getItem('cvp_layout') || detectDeviceLayout();
 setLayout(storedLayout);
 
 checkAndShowDisclaimer();
 updateModeInfo(colorblindSelect.value);
-updateContrastChecker();
 renderImageHistory();
 
 // Restore accessibility + personalization preferences
@@ -2696,3 +3476,6 @@ setTimeout(() => {
     splashScreen.style.opacity = '0';
     setTimeout(() => { splashScreen.style.display = 'none'; }, 500);
 }, 2000);
+
+updateIshiharaStatusNote();
+setTimeout(() => { checkAndShowIshiharaPrompt(); }, 2600);
